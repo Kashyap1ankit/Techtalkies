@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { authMiddleware } from "../middleware";
+import { createBlogSchema, updateBlogSchema } from "package-medium";
 const blogRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
@@ -17,12 +18,18 @@ blogRouter.use(authMiddleware);
 
 blogRouter.post("/", async (c) => {
   const authorId = c.get("userId");
-  console.log(authorId);
   const body = await c.req.json();
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   try {
+    //zod validation
+    const { success } = createBlogSchema.safeParse(body);
+    c.status;
+    if (!success) {
+      c.status(411);
+      return c.json({ message: "Input validation failed" });
+    }
     const insertPost = await prisma.post.create({
       data: {
         title: body.title,
@@ -49,6 +56,14 @@ blogRouter.put("/", async (c) => {
   }).$extends(withAccelerate());
 
   try {
+    //zod validation
+    const { success } = updateBlogSchema.safeParse(body);
+    c.status;
+    if (!success) {
+      c.status(411);
+      return c.json({ message: "Input validation failed" });
+    }
+
     const res = await prisma.post.update({
       where: {
         id: body.id,

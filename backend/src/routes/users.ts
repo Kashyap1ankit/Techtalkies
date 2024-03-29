@@ -2,15 +2,19 @@ import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign } from "hono/jwt";
-
+import { signupSchema, signinSchema } from "package-medium";
+import { authMiddleware } from "../middleware";
 const userRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
     JWT_SECRET: string;
   };
+  Variables: {
+    userId: string;
+  };
 }>();
 
-//Signup route
+// --------------------------------------Signup route-----------------------
 
 userRouter.post("/signup", async (c) => {
   //Generating the client
@@ -29,6 +33,11 @@ userRouter.post("/signup", async (c) => {
 
   //Zod validation
 
+  const { success } = signupSchema.safeParse(body);
+  if (!success) {
+    c.status(411);
+    return c.json({ message: "Input validation failed" });
+  }
   //Inserting the user in db
 
   try {
@@ -61,6 +70,8 @@ userRouter.post("/signup", async (c) => {
   return c.json({ message: "Database Error" });
 });
 
+// -------------------------------Signin Route ----------------------------
+
 userRouter.post("/signin", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -73,7 +84,16 @@ userRouter.post("/signin", async (c) => {
   //Getting details from body
 
   const body = await c.req.json();
+
   try {
+    //Zod validation
+
+    const { success } = signinSchema.safeParse(body);
+    if (!success) {
+      c.status(411);
+      return c.json({ message: "Input validation failed" });
+    }
+
     const res = await prisma.user.findFirst({
       where: {
         username: body.username,
@@ -96,7 +116,29 @@ userRouter.post("/signin", async (c) => {
     c.status(200);
     return c.json({ token });
   } catch (error: any) {
+    c.status(406);
     return c.json({ message: error.message });
+  }
+});
+
+// -------------------------------Delete Route ----------------------------
+
+userRouter.delete("/destroy", authMiddleware, async (c) => {
+  const userId = c.get("userId");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  });
+
+  try {
+    const res = await prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+    return c.json({ res });
+  } catch (error: any) {
+    c.status(406);
+    return c.json({ error });
   }
 });
 
