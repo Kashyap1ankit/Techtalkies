@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -16,8 +16,22 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+
+    fontFamily: {
+      title: ["Kanit", "serif"],
+      intro: ["Patua One", "serif"],
+      introSub: ["Rubik Scribble", "system-ui"],
+      kanit: ["Kanit", "sans-serif"],
+    },
     extend: {
       colors: {
+        //Custom color
+        outlineMixed: "linear-gradient(red, yellow);",
+        white: "white",
+        mixedShadow: "#828fb1",
+        gray: "#cbd5e1",
+        slate: "#e5e7eb",
+        ///
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -74,4 +88,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
