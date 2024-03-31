@@ -12,9 +12,15 @@ module.exports = {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+    },
+
+    screens: {
+      xsm: "300px",
+      sm: "400px",
+      md: "520px",
+      lg: "800px",
+      xl: "1024px",
+      "2xl": "1400px",
     },
 
     fontFamily: {
@@ -26,11 +32,15 @@ module.exports = {
     extend: {
       colors: {
         //Custom color
-        outlineMixed: "linear-gradient(red, yellow);",
+        nav: "#475569",
         white: "white",
         mixedShadow: "#828fb1",
-        gray: "#cbd5e1",
+        gray: "#94a3b8",
         slate: "#e5e7eb",
+        login: "#2563eb",
+        black: "black",
+        yellow: "yellow",
+        green: "green",
         ///
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Title from "@/components/Title";
+import Background from "@/components/Bg";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -12,17 +13,16 @@ export default function Landing() {
 
   return (
     <div className="xl:p-8 overflow-x-hidden text-center">
-      <div>
-        <Navbar />
-      </div>
+      <Background />
+      <Navbar />
 
       {/* intro part  */}
 
-      <div className="mt-52  overflow-y-hidden">
+      <div className="mt-40  overflow-y-hidden">
         <motion.div animate={{ y: [-100, 0] }} transition={{ duration: 1.1 }}>
           <Title
             text="Welcome to TechTalkies"
-            className="text-white xl:text-7xl font-intro"
+            className=" xl:text-7xl font-intro"
           />
         </motion.div>
 
@@ -36,28 +36,47 @@ export default function Landing() {
 
       {/* Buton section  */}
 
-      <motion.div
-        animate={{
-          scale: [0.5, 1],
-        }}
-        transition={{
-          duration: 1.1,
-        }}
-      >
-        <Button
-          className="bg-white text-white text-black mt-24 hover:bg-slate rounded-full"
-          onClick={handleSignupClick}
-          variant="outline"
+      <div className="flex justify-evenly xl:w-1/4 mx-auto mt-24">
+        <motion.div
+          animate={{
+            scale: [0.5, 1],
+          }}
+          transition={{
+            duration: 1.1,
+          }}
         >
-          Start For Free
-        </Button>
-      </motion.div>
+          <Button
+            className="bg-black text-white hover:bg-slate rounded-full xl:text-lg xl:mr-14"
+            onClick={handleSignupClick}
+            variant="outline"
+          >
+            Signup
+          </Button>
+        </motion.div>
+
+        <motion.div
+          animate={{
+            scale: [0.5, 1],
+          }}
+          transition={{
+            duration: 1.1,
+          }}
+        >
+          <Button
+            className="bg-login text-white hover:bg-slate rounded-full xl:text-lg"
+            onClick={handleSignupClick}
+            variant="outline"
+          >
+            Login
+          </Button>
+        </motion.div>
+      </div>
 
       {/* Features section  */}
-      <div className="xl:mt-36 text-center ">
+      <div className="xl:mt-24 text-center ">
         <Title
           text="Our Offerings "
-          className="text-white text-white tracking-wider xl:text-5xl font-kanit"
+          className="tracking-wider xl:text-5xl font-kanit"
         />
         <div className=" md:flex md:justify-between mt-20">
           <CardComp
