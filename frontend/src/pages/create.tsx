@@ -31,7 +31,7 @@ export default function CreateBlog() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="bg-white  w-2/3 space-y-6 shadow-md px-8 py-4 mx-auto rounded-md"
+            className="bg-white drop-shadow-xl  w-2/3 space-y-6 px-8 py-4 mx-auto rounded-md"
           >
             <FormField
               control={form.control}
@@ -66,7 +66,7 @@ export default function CreateBlog() {
               )}
             />
 
-            <Button className="bg-green" type="submit">
+            <Button name="published" className="bg-green" type="submit">
               Publish
             </Button>
           </form>
