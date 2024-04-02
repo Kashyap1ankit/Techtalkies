@@ -19,40 +19,65 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Rocket from "../lottie/rocket.json";
+import useAuth from "@/hooks/auth";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const [error, setServerError] = useState(false);
+  const [error, setServerError] = useState({
+    status: false,
+    message: "",
+  });
   const [loading, setLoading] = useState(false);
+
+  const { authloading, loggedIn } = useAuth();
+
+  useEffect(() => {
+    if (authloading) {
+      setLoading(true);
+    }
+    if (!authloading) {
+      setLoading(false);
+      if (loggedIn) navigate("/dashboard");
+    }
+  }, [authloading]);
 
   const form = useForm<signupInput>({
     resolver: zodResolver(signupSchema),
   });
-
-  const navigate = useNavigate();
 
   function onSubmit(data: signupInput) {
     setLoading(true);
     const postUser = async () => {
       try {
         const res = await axios.post(`${BASE_URL}/api/v1/user/signup`, data);
+        localStorage.setItem("blog-token", `Bearer ${res.data.token}`);
         navigate("/dashboard");
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
-        setServerError(true);
+        setServerError({
+          status: true,
+          message: error.response.data.message,
+        });
+
+        setTimeout(() => {
+          setServerError({
+            status: false,
+            message: "",
+          });
+        }, 3500);
       } finally {
         setLoading(false);
       }
     };
-
     postUser();
   }
 
   return (
     <div>
-      {error ? <Alert /> : ""}
+      {error.status ? <Alert message={error.message} /> : ""}
 
       {/* animation section  */}
 

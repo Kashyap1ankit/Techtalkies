@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import Profile from "../assets/svg/profile.svg";
 import Create from "../assets/svg/add.svg";
+import useAuth from "@/hooks/auth";
+import { useEffect } from "react";
 export default function Navbar() {
   const navigate = useNavigate();
 
@@ -12,6 +14,13 @@ export default function Navbar() {
 
   function handleSignupClick() {
     navigate("/signup");
+  }
+
+  const { setLoggedIn, authloading, loggedIn } = useAuth();
+
+  function handleLogoutClick() {
+    localStorage.removeItem("blog-token");
+    setLoggedIn(false);
   }
 
   return (
@@ -29,41 +38,50 @@ export default function Navbar() {
 
       <div className="btn-group md:flex md:justify-evenly md:w-1/2 items-center">
         <Button
-          className="bg-black text-white hover:text-black"
+          className={`bg-black text-white hover:text-black ${
+            loggedIn ? "hidden" : ""
+          }`}
           onClick={handleLoginClick}
           variant="secondary"
         >
           Login
         </Button>
 
-        {/* <Button
-          className="bg-black text-white hover:text-black"
+        <Button
+          className={`bg-black text-white hover:text-black ${
+            loggedIn ? "" : "hidden"
+          }`}
           variant="secondary"
+          onClick={handleLogoutClick}
         >
           Logout
-        </Button> */}
+        </Button>
 
         <Button
-          className="bg-black text-white"
+          className={`bg-black text-white ${loggedIn ? "hidden" : ""}`}
           onClick={handleSignupClick}
           variant="outline"
         >
           Signup
         </Button>
 
-        {/* <div>
+        <div>
           <img
             src={Profile}
             alt=""
-            className="cursor-pointer invert xl:size-8"
+            className={`cursor-pointer invert xl:size-8 ${
+              loggedIn ? "" : "hidden"
+            }`}
           />
-        </div> */}
+        </div>
 
         <div onClick={() => navigate("/blog/new")}>
           <img
             src={Create}
             alt=""
-            className="cursor-pointer invert xl:size-8"
+            className={`cursor-pointer invert xl:size-8 ${
+              loggedIn ? "" : "hidden"
+            }`}
           />
         </div>
       </div>

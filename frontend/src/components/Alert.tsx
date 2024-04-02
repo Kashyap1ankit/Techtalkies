@@ -7,26 +7,21 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useEffect, useState } from "react";
 
-export default function Alert() {
+export default function Alert({ message }: { message: string }) {
+  const [closed, setClosed] = useState(false);
+
   return (
     <div>
-      <AlertDialog>
-        <AlertDialogTrigger>Open</AlertDialogTrigger>
+      <AlertDialog open={closed ? false : true}>
+        {/* <AlertDialogTrigger>Open</AlertDialogTrigger> */}
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </AlertDialogDescription>
+            <AlertDialogTitle>Error Occured</AlertDialogTitle>
+            <AlertDialogDescription>{message}</AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
-          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </div>

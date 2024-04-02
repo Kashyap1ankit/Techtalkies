@@ -2,10 +2,24 @@ import Background2 from "@/components/Bg2";
 import Navbar from "@/components/Navbar";
 import Title from "@/components/Title";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import useAuth from "@/hooks/auth";
 
 export default function Blog() {
   let [searchParams, setSearchParams] = useSearchParams();
   const id = searchParams.get("id");
+
+  const navigate = useNavigate();
+  const { authloading, loggedIn } = useAuth();
+
+  useEffect(() => {
+    if (authloading) console.log("hi");
+    if (!authloading) {
+      if (loggedIn) navigate("/dashboard");
+      if (!loggedIn) navigate("/signin");
+    }
+  }, [authloading, loggedIn, navigate]);
 
   return (
     <div>

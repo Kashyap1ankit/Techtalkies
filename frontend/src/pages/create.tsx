@@ -14,8 +14,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "@/hooks/auth";
 
 export default function CreateBlog() {
+  const navigate = useNavigate();
+
+  const { authloading, loggedIn } = useAuth();
+
+  useEffect(() => {
+    if (authloading) console.log("hi");
+    if (!authloading) {
+      if (!loggedIn) navigate("/signin");
+    }
+  }, [authloading, loggedIn, navigate]);
+
   const form = useForm<createBlogInput>({
     resolver: zodResolver(createBlogSchema),
   });

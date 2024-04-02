@@ -11,6 +11,9 @@ export default function Landing() {
     navigate("/signup");
   }
 
+  function handleSigninClick() {
+    navigate("/signin");
+  }
   return (
     <div className="xl:p-8 overflow-x-hidden text-center">
       <Background />
@@ -64,7 +67,7 @@ export default function Landing() {
         >
           <Button
             className="bg-login text-white hover:bg-slate rounded-full xl:text-lg"
-            onClick={handleSignupClick}
+            onClick={handleSigninClick}
             variant="outline"
           >
             Login
