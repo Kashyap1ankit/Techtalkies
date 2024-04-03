@@ -93,7 +93,19 @@ blogRouter.get("/bulk", async (c) => {
   }).$extends(withAccelerate());
 
   try {
-    const allPosts = await prisma.post.findMany({});
+    const allPosts = await prisma.post.findMany({
+      select: {
+        title: true,
+        description: true,
+        id: true,
+        published: true,
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    });
     return c.json({ allPosts });
   } catch (error) {
     return c.json({ message: "Not Logged In" });
@@ -113,8 +125,20 @@ blogRouter.get("/:id", async (c) => {
       where: {
         id: id,
       },
+
+      select: {
+        title: true,
+        description: true,
+        id: true,
+        published: true,
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
     });
-    return c.json({ post });
+    return c.json({ post: [post] });
   } catch (error) {
     return c.json({ message: "Not Logged In" });
   }

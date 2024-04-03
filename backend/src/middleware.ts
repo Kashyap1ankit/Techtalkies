@@ -7,7 +7,7 @@ export async function authMiddleware(c: any, next: () => void) {
     const { success } = authMiddleZodSchema.safeParse(hToken);
     if (!success) {
       c.status(411);
-      return c.json({ message: "Invalid Token" });
+      return c.json({ message: "Invalid Token Type" });
     }
     let token = c.req.header("Authorization").split(" ")[1];
     const JWT_SECRET = c.env.JWT_SECRET;

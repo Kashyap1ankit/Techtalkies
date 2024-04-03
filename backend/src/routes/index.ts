@@ -27,6 +27,7 @@ indexRouter.get("/auth", authMiddleware, async (c) => {
       },
     });
 
+    if (!res) throw new Error();
     c.status(200);
     return c.json({ userId: userId });
   } catch (error) {
