@@ -17,9 +17,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
+import axios from "axios";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const { authloading, loggedIn } = useAuth();
 
@@ -35,7 +37,22 @@ export default function CreateBlog() {
   });
 
   function onSubmit(data: createBlogInput) {
-    console.log(data);
+    const post = async () => {
+      try {
+        const res = await axios.post(`${BASE_URL}/api/v1/blog`, data, {
+          headers: {
+            Authorization: localStorage.getItem("blog-token"),
+          },
+        });
+
+        navigate("/dashboard");
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    post();
   }
 
   return (
@@ -80,7 +97,7 @@ export default function CreateBlog() {
               )}
             />
 
-            <Button name="published" className="bg-green" type="submit">
+            <Button className="bg-green" type="submit">
               Publish
             </Button>
           </form>

@@ -67,7 +67,10 @@ export default function Blog() {
               className="mt-4 text-left font-title xl:text-lg text-gray"
             />
 
-            <Title text={e.description} className="mt-12" />
+            {/* Apply styles to limit description text size and prevent overflow */}
+            <div>
+              <Title text={e.description} className="mt-12 break-words" />
+            </div>
           </div>
         );
       })}

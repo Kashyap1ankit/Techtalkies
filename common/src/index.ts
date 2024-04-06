@@ -22,7 +22,6 @@ export const signinSchema = z.object({
 export const createBlogSchema = z.object({
   title: z.string().min(3),
   description: z.string(),
-  published: z.boolean(),
 });
 
 //Update new Blog schema
@@ -33,11 +32,20 @@ export const updateBlogSchema = z.object({
   published: z.boolean().optional(),
 });
 
+//Update profile schema
+
+export const updateProfileSchema = z.object({
+  firstName: z.string().optional(),
+  oldPassword: z.string().min(4).max(8),
+  newPassword: z.string().min(4).max(8),
+});
+
 //Auth middleware
 
 export const authMiddleZodSchema = z.string().startsWith("Bearer ");
 
 export type signupInput = z.infer<typeof signupSchema>;
 export type signinInput = z.infer<typeof signinSchema>;
+export type updateInput = z.infer<typeof updateProfileSchema>;
 export type createBlogInput = z.infer<typeof createBlogSchema>;
 export type updateBlogInput = z.infer<typeof updateBlogSchema>;

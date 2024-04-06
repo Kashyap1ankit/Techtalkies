@@ -6,7 +6,7 @@
   "dependencies": {
     "@prisma/extension-accelerate": "^1.0.0",
     "hono": "^4.1.4",
-    "package-medium": "^1.0.5",
+    "package-medium": "^1.0.8",
     "prisma": "^5.11.0"
   },
   "devDependencies": {

@@ -81,7 +81,7 @@ export default function Navbar() {
               Signup
             </Button>
 
-            <div>
+            <div onClick={() => navigate("/profile")}>
               <img
                 src={Profile}
                 alt=""

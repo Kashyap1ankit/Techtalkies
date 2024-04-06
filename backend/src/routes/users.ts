@@ -2,7 +2,11 @@ import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign } from "hono/jwt";
-import { signupSchema, signinSchema } from "package-medium";
+import {
+  signupSchema,
+  signinSchema,
+  updateProfileSchema,
+} from "package-medium";
 import { authMiddleware } from "../middleware";
 const userRouter = new Hono<{
   Bindings: {
@@ -121,24 +125,93 @@ userRouter.post("/signin", async (c) => {
   }
 });
 
-// -------------------------------Delete Route ----------------------------
+// -------------------------------Update Route ----------------------------
 
-userRouter.delete("/destroy", authMiddleware, async (c) => {
+userRouter.put("/", authMiddleware, async (c) => {
   const userId = c.get("userId");
+  const body = await c.req.json();
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   });
 
   try {
+    //Zod validation
+    const { success } = updateProfileSchema.safeParse(body);
+    if (!success) {
+      c.status(411);
+      return c.json({ message: "Input validation failed" });
+    }
+
+    const getUser = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+      select: {
+        firstName: true,
+        password: true,
+      },
+    });
+
+    const oldPassword = body.oldPassword;
+    const newPassword = body.newPassword;
+    const firstName = body.firstName;
+
+    if (oldPassword !== getUser?.password) {
+      c.status(411);
+      return c.json({ message: "Password mismatched" });
+    }
+
+    const update = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        firstName: firstName,
+        password: newPassword,
+      },
+    });
+    c.status(200);
+    return c.json({ message: "Password Updated" });
+  } catch (error) {
+    c.status(406);
+    return c.json({ message: "Wrong old password" });
+  }
+});
+
+// -------------------------------Delete Route ----------------------------
+
+userRouter.delete("/destroy", authMiddleware, async (c) => {
+  const userId = c.get("userId");
+  const body = await c.req.json();
+  const passwordForm = body.password;
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  });
+
+  try {
+    const getUser = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+      select: {
+        password: true,
+      },
+    });
+
+    if (passwordForm !== getUser?.password) {
+      c.status(411);
+      return c.json({ message: "Password mismatched" });
+    }
+
     const res = await prisma.user.delete({
       where: {
         id: userId,
       },
     });
-    return c.json({ res });
+    return c.json({ message: "Account Deleted Successfully" });
   } catch (error: any) {
     c.status(406);
-    return c.json({ error });
+    return c.json({ message: "Wrong old password" });
   }
 });
 

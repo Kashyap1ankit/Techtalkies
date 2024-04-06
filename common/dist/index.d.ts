@@ -31,15 +31,12 @@ export declare const signinSchema: z.ZodObject<{
 export declare const createBlogSchema: z.ZodObject<{
     title: z.ZodString;
     description: z.ZodString;
-    published: z.ZodBoolean;
 }, "strip", z.ZodTypeAny, {
     title: string;
     description: string;
-    published: boolean;
 }, {
     title: string;
     description: string;
-    published: boolean;
 }>;
 export declare const updateBlogSchema: z.ZodObject<{
     title: z.ZodOptional<z.ZodString>;
@@ -54,8 +51,22 @@ export declare const updateBlogSchema: z.ZodObject<{
     description?: string | undefined;
     published?: boolean | undefined;
 }>;
+export declare const updateProfileSchema: z.ZodObject<{
+    firstName: z.ZodOptional<z.ZodString>;
+    oldPassword: z.ZodString;
+    newPassword: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    oldPassword: string;
+    newPassword: string;
+    firstName?: string | undefined;
+}, {
+    oldPassword: string;
+    newPassword: string;
+    firstName?: string | undefined;
+}>;
 export declare const authMiddleZodSchema: z.ZodString;
 export type signupInput = z.infer<typeof signupSchema>;
 export type signinInput = z.infer<typeof signinSchema>;
+export type updateInput = z.infer<typeof updateProfileSchema>;
 export type createBlogInput = z.infer<typeof createBlogSchema>;
 export type updateBlogInput = z.infer<typeof updateBlogSchema>;

@@ -25,7 +25,7 @@ export default function BlogCard(props: propsType) {
       onClick={handleClick}
     >
       {/* --Upper Part--- */}
-      <div className="flex justify-start ">
+      <div className="flex justify-start break-words">
         <div className="xl:mr-12 text-center xl:w-1/8">
           <img className="xl:size-10 mx-auto" src={Profile} alt="" />
           <Title
@@ -37,11 +37,14 @@ export default function BlogCard(props: propsType) {
         <div className="xl:w-7/8">
           <Title
             text={props.title}
-            className="xl:mb-4 xl:text-3xl font-intro tracking-wide"
+            className="truncate xl:mb-4 xl:text-3xl font-intro tracking-wide"
           />
 
-          <div className="text-sm tracking-wide">
-            <Title text={props.des} className="border-2" />
+          <div className="b">
+            <Title
+              text={props.des}
+              className="border-2 text-sm tracking-wide "
+            />
           </div>
         </div>
       </div>

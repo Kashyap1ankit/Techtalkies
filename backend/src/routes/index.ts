@@ -25,11 +25,16 @@ indexRouter.get("/auth", authMiddleware, async (c) => {
       where: {
         id: userId,
       },
+
+      select: {
+        id: true,
+        firstName: true,
+      },
     });
 
     if (!res) throw new Error();
     c.status(200);
-    return c.json({ userId: userId });
+    return c.json({ res });
   } catch (error) {
     c.status(406);
     return c.json({ message: "User doesn't exists" });
