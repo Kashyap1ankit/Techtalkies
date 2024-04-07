@@ -5,7 +5,7 @@ export default function useAuth() {
   const [authloading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-
+  const [currentUser, setCurrentUser] = useState("");
   const checkAuth = async () => {
     setLoading(true);
     try {
@@ -14,6 +14,7 @@ export default function useAuth() {
           Authorization: localStorage.getItem("blog-token"),
         },
       });
+      setCurrentUser(res.data.res.username);
 
       setLoggedIn(true);
     } catch (error) {
@@ -27,5 +28,5 @@ export default function useAuth() {
     checkAuth();
   }, []);
 
-  return { authloading, loggedIn, setLoggedIn };
+  return { authloading, loggedIn, setLoggedIn, currentUser };
 }

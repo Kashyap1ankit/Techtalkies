@@ -4,20 +4,38 @@ import Share from "../assets/svg/share.svg";
 import Bookmark from "../assets/svg/bookmark.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Trash from "../assets/svg/trash.svg";
+import axios from "axios";
 type propsType = {
   id: string;
   title: string;
   des: string;
   author: string;
+  currentUser: string;
 };
 
 export default function BlogCard(props: propsType) {
   const [clicked, setClick] = useState(false);
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   function handleClick() {
     navigate(`/blog/${props.id}`);
+  }
+  function handleDelete() {
+    const call = async () => {
+      try {
+        const res = await axios.delete(`${BASE_URL}/api/v1/blog/${props.id}`, {
+          headers: {
+            Authorization: localStorage.getItem("blog-token"),
+          },
+        });
+        navigate("/dashboard");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    call();
   }
   return (
     <div
@@ -42,8 +60,8 @@ export default function BlogCard(props: propsType) {
 
           <div className="b">
             <Title
-              text={props.des}
-              className="border-2 text-sm tracking-wide "
+              text={`${props.des.slice(0, 350)}....`}
+              className=" text-sm tracking-wide "
             />
           </div>
         </div>
@@ -51,16 +69,31 @@ export default function BlogCard(props: propsType) {
 
       {/* --Bottom Part--- */}
 
-      <div className="flex justify-start xl:mt-12 ">
-        <img className="xl:size-6 cursor-pointer mr-12" src={Share} alt="" />
-        <img
-          className={`xl:size-6 cursor-pointer ${clicked ? "fill-yellow" : ""}`}
-          src={Bookmark}
-          alt=""
-          onClick={() => {
-            setClick(!clicked);
-          }}
-        />
+      <div className="flex justify-between xl:mt-12 ">
+        <div className="flex justify-start ">
+          <img className="xl:size-6 cursor-pointer mr-12" src={Share} alt="" />
+          <img
+            className={`xl:size-6 cursor-pointer`}
+            src={Bookmark}
+            alt=""
+            onClick={() => {
+              setClick(!clicked);
+            }}
+          />
+        </div>
+
+        <div>
+          {props.currentUser === props.author ? (
+            <img
+              onClick={handleDelete}
+              className="xl:size-6 cursor-pointer mr-12"
+              src={Trash}
+              alt=""
+            />
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );

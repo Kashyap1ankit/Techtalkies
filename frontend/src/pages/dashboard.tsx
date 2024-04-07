@@ -4,13 +4,12 @@ import BlogCard from "@/components/blogCard";
 import useAuth from "@/hooks/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Verify from "../lottie/verifying.json";
-import Lottie from "lottie-react";
 import axios from "axios";
+import SkeletonCard from "@/components/skeleton";
 export default function Dashboard() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
-  const { authloading, loggedIn } = useAuth();
+  const { authloading, loggedIn, currentUser } = useAuth();
   const [allBlogs, setAllBlogs] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -50,11 +49,15 @@ export default function Dashboard() {
 
     getAllBlogs();
   }, []);
+
   return (
     <div>
       {loading ? (
-        <div className="xl:size-52 m-auto">
-          <Lottie animationData={Verify} />
+        <div className="xl:mt-52 mx-auto">
+          <SkeletonCard
+            count={allBlogs.length || 3}
+            classname={"p-4 xl:mb-12 xl:h-36"}
+          />
         </div>
       ) : (
         <div>
@@ -70,6 +73,7 @@ export default function Dashboard() {
                   title={e.title}
                   author={e.author.username}
                   des={e.description}
+                  currentUser={currentUser}
                 />
               );
             })}

@@ -18,7 +18,7 @@ exports.signinSchema = zod_1.z.object({
 //Create new Blog schema
 exports.createBlogSchema = zod_1.z.object({
     title: zod_1.z.string().min(3),
-    description: zod_1.z.string(),
+    description: zod_1.z.string().optional(),
 });
 //Update new Blog schema
 exports.updateBlogSchema = zod_1.z.object({

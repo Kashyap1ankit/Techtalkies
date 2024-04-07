@@ -144,4 +144,36 @@ blogRouter.get("/:id", async (c) => {
   }
 });
 
+//Destroy Blog route
+
+blogRouter.delete("/:id", async (c) => {
+  const id = c.req.param("id");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const getPost = await prisma.post.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!getPost) {
+      c.status(406);
+      return c.json({ message: "No such Post found" });
+    }
+    const del = await prisma.post.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return c.json({ message: "Post deleted succesfuuly" });
+  } catch (error) {
+    c.status(406);
+    return c.json({ message: "No such Post found" });
+  }
+});
+
 export default blogRouter;

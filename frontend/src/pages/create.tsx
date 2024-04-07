@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { createBlogInput, createBlogSchema } from "package-medium";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -13,17 +14,23 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
 import axios from "axios";
+import AiModal from "@/components/ai";
+import { useRecoilValue } from "recoil";
+import { geminiData } from "@/store/atoms";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [value, setValue] = useState("");
 
   const { authloading, loggedIn } = useAuth();
+  const aiData = useRecoilValue(geminiData);
 
   useEffect(() => {
     if (authloading) console.log("hi");
@@ -37,6 +44,7 @@ export default function CreateBlog() {
   });
 
   function onSubmit(data: createBlogInput) {
+    data.description = value;
     const post = async () => {
       try {
         const res = await axios.post(`${BASE_URL}/api/v1/blog`, data, {
@@ -46,7 +54,7 @@ export default function CreateBlog() {
         });
 
         navigate("/dashboard");
-        console.log(res);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -58,7 +66,14 @@ export default function CreateBlog() {
   return (
     <div>
       <Background />
-      <div className="w-2/3 mt-12 ">
+
+      {/* Ai icon  */}
+
+      <div className="fixed bottom-12 right-12">
+        <AiModal />
+      </div>
+
+      <div className="w-full mt-12 ">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -86,10 +101,10 @@ export default function CreateBlog() {
                 <FormItem>
                   <FormLabel>Description </FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="Write your Blog Here"
-                      className="resize-vertical"
-                      {...field}
+                    <ReactQuill
+                      theme="snow"
+                      value={value}
+                      onChange={setValue}
                     />
                   </FormControl>
                   <FormMessage />
