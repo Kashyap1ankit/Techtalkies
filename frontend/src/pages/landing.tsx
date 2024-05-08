@@ -21,25 +21,25 @@ export default function Landing() {
 
       {/* intro part  */}
 
-      <div className="mt-40  overflow-y-hidden">
+      <div className="xsm:mt-36 md:mt-40  overflow-y-hidden">
         <motion.div animate={{ y: [-100, 0] }} transition={{ duration: 1.1 }}>
           <Title
             text="Welcome to TechTalkies"
-            className=" xl:text-7xl font-intro"
+            className="xsm:text-2xl sm:text-4xl md:text-5xl lg:text-6xl  xl:text-7xl font-intro"
           />
         </motion.div>
 
         <motion.div animate={{ y: [100, 0] }} transition={{ duration: 1.1 }}>
           <Title
             text=" where your stories come to life and your voice finds its home."
-            className="text-gray md:mt-4 xl:text-xl font-kanit"
+            className="text-gray xsm:mt-4 xsm:text-sm md:text-md xl:text-xl font-kanit"
           />
         </motion.div>
       </div>
 
       {/* Buton section  */}
 
-      <div className="flex justify-evenly xl:w-1/4 mx-auto mt-24">
+      <div className="flex justify-evenly  xl:w-1/4 mx-auto xsm:mt-12 xl:mt-24">
         <motion.div
           animate={{
             scale: [0.5, 1],
@@ -49,7 +49,7 @@ export default function Landing() {
           }}
         >
           <Button
-            className="bg-black text-white hover:bg-slate rounded-full xl:text-lg xl:mr-14"
+            className="bg-black text-white hover:bg-slate rounded-full xsm:text-sm md:text-lg xl:mr-14"
             onClick={handleSignupClick}
             variant="outline"
           >
@@ -66,7 +66,7 @@ export default function Landing() {
           }}
         >
           <Button
-            className="bg-login text-white hover:bg-slate rounded-full xl:text-lg"
+            className="bg-login text-white hover:bg-slate rounded-full xsm:text-md md:text-lg"
             onClick={handleSigninClick}
             variant="outline"
           >
@@ -76,12 +76,12 @@ export default function Landing() {
       </div>
 
       {/* Features section  */}
-      <div className="xl:mt-24 text-center ">
+      <div className="xsm:mt-20 xl:mt-24 text-center ">
         <Title
           text="Our Offerings "
-          className="tracking-wider xl:text-5xl font-kanit"
+          className="tracking-wider xsm:text-3xl md:text-4xl lg:text-5xl font-kanit"
         />
-        <div className=" md:flex md:justify-between mt-20">
+        <div className=" flex justify-between mt-20 xsm:p-4 md:p-0 overflow-scroll  no-scrollbar">
           <CardComp
             title="AI"
             subhead="Ai generated Blogs"
@@ -89,7 +89,7 @@ export default function Landing() {
               "Write your blogs with the help of Ai.",
               "Get recommendation",
             ]}
-            className="w-fit"
+            className="xsm:w-full sm:w-max-fit xsm:mr-4 lg:w-fit"
           />
 
           <CardComp
@@ -99,7 +99,7 @@ export default function Landing() {
               "Summarise Blogs in few Lines",
               "Note Things in Bullet points",
             ]}
-            className="w-fit"
+            className="xsm:w-full sm:w-max-fit xsm:mr-4 lg:w-fit"
           />
 
           <CardComp
@@ -109,7 +109,7 @@ export default function Landing() {
               "Share your blogs with others ",
               "Other's can see and give feedback",
             ]}
-            className="w-fit"
+            className="xsm:w-full sm:w-max-fit xsm:mr-4 lg:w-fit"
           />
         </div>
       </div>

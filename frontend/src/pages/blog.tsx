@@ -8,6 +8,9 @@ import useAuth from "@/hooks/auth";
 import axios from "axios";
 import SkeletonCard from "@/components/skeleton";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 export default function Blog() {
   interface data {
     id: string;
@@ -35,7 +38,6 @@ export default function Blog() {
           },
         });
         setData(res.data.post);
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -74,20 +76,41 @@ export default function Blog() {
           {data.map((e: data) => {
             return (
               <div className="mt-48 mx-auto bg-white xl:w-2/3 px-6 py-4">
-                <Title
+                {/* <Title
                   text={e.title}
                   className="text-left font-title xl:text-7xl "
+               /> */}
+
+                <ReactQuill
+                  modules={{ toolbar: false }}
+                  readOnly={true}
+                  theme="snow"
+                  value={e.title}
                 />
 
-                <Title
+                {/* <Title
                   text={`Author @ ${e.author.username}`}
                   className="mt-4 text-left font-title xl:text-lg text-gray"
+                /> */}
+
+                <ReactQuill
+                  modules={{ toolbar: false }}
+                  readOnly={true}
+                  theme="snow"
+                  value={`Author @ ${e.author.username}`}
                 />
 
                 {/* Apply styles to limit description text size and prevent overflow */}
-                <div>
+                {/* <div>
                   <Title text={e.description} className="mt-12 break-words" />
-                </div>
+                </div> */}
+
+                <ReactQuill
+                  modules={{ toolbar: false }}
+                  readOnly={true}
+                  theme="snow"
+                  value={e.description}
+                />
               </div>
             );
           })}

@@ -36,25 +36,27 @@ export default function Navbar() {
 
   return (
     <div>
-      <div className="fixed top-6 left-1/4 md:flex md:justify-between md:w-1/2 items-center border-b-2  lg:p-4 rounded-full mx-auto z-50 bg-black">
+      <div className=" fixed top-6 md:left-24 lg:left-1/4 xsm:flex xsm:justify-between xsm:w-full md:w-9/12 lg:w-1/2 items-center border-b-2  xsm:py-1 lg:p-4 rounded-full mx-auto z-50 bg-black">
         {/* Logo section  */}
 
-        <div className="md:w-1/2" onClick={() => navigate("/")}>
+        <div className="xsm:w-1/2" onClick={() => navigate("/")}>
           <Title
             text="TechTakies"
-            className="lg:text-3xl font-title tracking-wider text-white"
+            className="xms:text-xl md:text-2xl lg:text-3xl font-title tracking-wider text-white"
           />
         </div>
 
         {loading ? (
           <div>
-            <Lottie className="xl:size-12" animationData={Loading} />
+            <Lottie
+              className="xsm:size-6 sm:size-8 md:size-10 lg:size-12"
+              animationData={Loading}
+            />
           </div>
         ) : (
-          // <div className="text-white">Loading.....</div>
-          <div className="btn-group md:flex md:justify-evenly md:w-1/2 items-center">
+          <div className="btn-group xsm:flex xsm:justify-evenly xsm:w-1/2 items-center">
             <Button
-              className={`bg-black text-white hover:text-black ${
+              className={`xsm:text-sm md:text-lg bg-black text-white hover:text-black ${
                 loggedIn ? "hidden" : ""
               }`}
               onClick={handleLoginClick}
@@ -64,7 +66,7 @@ export default function Navbar() {
             </Button>
 
             <Button
-              className={`bg-black text-white hover:text-black ${
+              className={`xsm:text-sm md:text-lg bg-black text-white hover:text-black ${
                 loggedIn ? "" : "hidden"
               }`}
               variant="secondary"
@@ -74,9 +76,11 @@ export default function Navbar() {
             </Button>
 
             <Button
-              className={`bg-black text-white ${loggedIn ? "hidden" : ""}`}
+              className={`xsm:text-sm md:text-lg bg-black xsm:px-2 text-white ${
+                loggedIn ? "hidden" : ""
+              }`}
               onClick={handleSignupClick}
-              variant="outline"
+              variant="default"
             >
               Signup
             </Button>
@@ -85,7 +89,7 @@ export default function Navbar() {
               <img
                 src={Profile}
                 alt=""
-                className={`cursor-pointer invert xl:size-8 ${
+                className={`cursor-pointer invert xsm:size-6 md:size-8 ${
                   loggedIn ? "" : "hidden"
                 }`}
               />
@@ -95,14 +99,13 @@ export default function Navbar() {
               <img
                 src={Create}
                 alt=""
-                className={`cursor-pointer invert xl:size-8 ${
+                className={`cursor-pointer invert xsm:size-6 md:size-8 ${
                   loggedIn ? "" : "hidden"
                 }`}
               />
             </div>
           </div>
         )}
-        {/* Singup section  */}
       </div>
     </div>
   );

@@ -21,16 +21,16 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
 import axios from "axios";
 import AiModal from "@/components/ai";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { geminiData } from "@/store/atoms";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const [value, setValue] = useState("");
+  // const [value, setValue] = useState("");
+  const [aiData, setAiData] = useRecoilState(geminiData);
 
   const { authloading, loggedIn } = useAuth();
-  const aiData = useRecoilValue(geminiData);
 
   useEffect(() => {
     if (authloading) console.log("hi");
@@ -44,7 +44,11 @@ export default function CreateBlog() {
   });
 
   function onSubmit(data: createBlogInput) {
-    data.description = value;
+    data.description = aiData;
+
+    //Resetting the value field to empty
+
+    setAiData("");
     const post = async () => {
       try {
         const res = await axios.post(`${BASE_URL}/api/v1/blog`, data, {
@@ -54,7 +58,6 @@ export default function CreateBlog() {
         });
 
         navigate("/dashboard");
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -103,8 +106,8 @@ export default function CreateBlog() {
                   <FormControl>
                     <ReactQuill
                       theme="snow"
-                      value={value}
-                      onChange={setValue}
+                      value={aiData}
+                      onChange={setAiData}
                     />
                   </FormControl>
                   <FormMessage />

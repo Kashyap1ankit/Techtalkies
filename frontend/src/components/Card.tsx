@@ -35,9 +35,9 @@ export default function CardComp({
 
   return (
     <motion.div whileInView={{ scale: [0.5, 1] }}>
-      <Card className={cn("w-[380px]", className)}>
+      <Card className={className}>
         <CardHeader>
-          <CardTitle>{title}</CardTitle>
+          <CardTitle className="xsm:text-xl md:text-2xl">{title}</CardTitle>
           <CardDescription>{subhead}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -49,7 +49,7 @@ export default function CardComp({
               >
                 <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">
+                  <p className="text-sm font-medium leading-none w-full">
                     {notification}
                   </p>
                 </div>
