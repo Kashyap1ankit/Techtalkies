@@ -67,7 +67,7 @@ export default function AiModal() {
       <Dialog>
         <DialogTrigger asChild>
           <img
-            className="xl:size-14 bg-white p-2 border-2 rounded-full shadow-md"
+            className="xsm:size-10 xl:size-14 bg-white p-2 border-2 rounded-full shadow-md z-50"
             src={Star}
             alt=""
           />

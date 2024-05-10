@@ -86,27 +86,27 @@ export default function Signup() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit xl:min-h-screen bg-white md:flex md:justify-between ">
+        <div className="xsm:h-fit xl:min-h-screen bg-white lg:flex lg:justify-between ">
           <motion.div
-            className="md:w-1/2 my-auto "
+            className="lg:w-1/2 my-auto "
             whileInView={{ scale: [0.7, 1] }}
           >
             <Lottie
-              className="xl:size-96 xl:w-full "
+              className="xsm:size-48 xsm:w-auto md:size-72 md:w-auto xl:size-96 xl:w-full "
               animationData={animation}
             />
           </motion.div>
 
           {/* form section  */}
-          <div className=" md:w-1/2 rounded-md">
+          <div className="lg:w-1/2 rounded-md p-2">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="w-2/3 space-y-2 mx-auto px-8 shadow-lg "
+                className="xsm:mt-12 xsm:w-screen lg:w-full 2xl:w-2/3  lg:my-auto  rounded-md  px-8 shadow-lg "
               >
                 <Title
                   text="Create Account !"
-                  className="xl:text-3xl text-center  font-kanit xl:mt-12 xl:mb-8"
+                  className="xsm:text-xl md:text-2xl xl:text-3xl text-center  font-kanit xl:mt-12 xl:mb-8"
                 />
                 <FormField
                   control={form.control}
@@ -206,7 +206,7 @@ export default function Signup() {
                     </FormItem>
                   )}
                 />
-                <Button className="w-full " type="submit">
+                <Button className="w-full mt-4 " type="submit">
                   Submit
                 </Button>
 
@@ -217,7 +217,7 @@ export default function Signup() {
                 >
                   <Title
                     text="Already Account ? Signin"
-                    className="xl:text-sm text-center text-mixedShadow xl:mb-4 font-title cursor-pointer"
+                    className="mt-4 text-sm text-center text-mixedShadow xl:mb-4 font-title cursor-pointer"
                   />
                 </div>
               </form>

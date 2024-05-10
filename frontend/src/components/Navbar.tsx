@@ -42,7 +42,7 @@ export default function Navbar() {
         <div className="xsm:w-1/2" onClick={() => navigate("/")}>
           <Title
             text="TechTakies"
-            className="xms:text-xl md:text-2xl lg:text-3xl font-title tracking-wider text-white"
+            className="xms:text-xl md:text-2xl lg:text-3xl font-title tracking-wider text-white xsm:px-2"
           />
         </div>
 

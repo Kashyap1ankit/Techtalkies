@@ -17,6 +17,7 @@ import {
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
 import axios from "axios";
@@ -67,57 +68,76 @@ export default function CreateBlog() {
   }
 
   return (
-    <div>
+    <div className="overflow-hidden">
       <Background />
 
       {/* Ai icon  */}
 
-      <div className="fixed bottom-12 right-12">
+      <div className="fixed bottom-12 right-6 z-50 ">
         <AiModal />
       </div>
 
-      <div className="w-full mt-12 ">
+      <div className="w-full mb-12">
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="bg-white drop-shadow-xl  w-2/3 space-y-6 px-8 py-4 mx-auto rounded-md"
-          >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input type="text" placeholder="Enter Title" {...field} />
-                  </FormControl>
-                  <FormDescription>Add Title of Post</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form onSubmit={form.handleSubmit(onSubmit)} className=" mx-auto ">
+            <div className="flex place-items-center ">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem className="bg-white px-4 py-4 rounded-md xsm:w-2/3  md:w-4/5  lg:w-11/12">
+                    {/* <FormLabel>Title</FormLabel> */}
+                    <FormControl>
+                      <Input
+                        className="outline-0 border-t-0 border-l-0 border-r-0 rounded-none border-b-red"
+                        type="text"
+                        placeholder="Enter Title"
+                        {...field}
+                      />
+                    </FormControl>
+                    {/* <FormDescription>Add Title of Post</FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button
+                className="bg-green xsm:w-1/3 md:w-1/5 lg:w-1/12"
+                type="submit"
+              >
+                Publish
+              </Button>
+            </div>
 
             <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description </FormLabel>
+                <FormItem className="bg-white drop-shadow-md h-screen overflow-y-scroll no-scrollbar xsm:w-full  lg:w-2/3 mx-auto px-4 py-4 rounded-md -z-50">
+                  {/* <FormLabel>Description </FormLabel> */}
                   <FormControl>
                     <ReactQuill
+                      className=""
                       theme="snow"
                       value={aiData}
                       onChange={setAiData}
+                      modules={{
+                        toolbar: [
+                          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                          ["bold", "italic", "underline", "strike"],
+                          ["link", "image"],
+                          ["blockquote", "code-block"],
+                          [{ list: "ordered" }, { list: "bullet" }],
+                          [{ script: "sub" }, { script: "super" }],
+                          [{ color: [] }, { background: [] }],
+                        ],
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-            <Button className="bg-green" type="submit">
-              Publish
-            </Button>
           </form>
         </Form>
       </div>

@@ -81,7 +81,7 @@ export default function Landing() {
           text="Our Offerings "
           className="tracking-wider xsm:text-3xl md:text-4xl lg:text-5xl font-kanit"
         />
-        <div className=" flex justify-between mt-20 xsm:p-4 md:p-0 overflow-scroll  no-scrollbar">
+        <div className=" flex justify-between mt-20 xsm:p-4 md:p-0 overflow-scroll no-scrollbar ">
           <CardComp
             title="AI"
             subhead="Ai generated Blogs"
@@ -89,7 +89,7 @@ export default function Landing() {
               "Write your blogs with the help of Ai.",
               "Get recommendation",
             ]}
-            className="xsm:w-full sm:w-max-fit xsm:mr-4 lg:w-fit"
+            className="xsm:w-screen mr-12 sm:w-full"
           />
 
           <CardComp
@@ -99,7 +99,7 @@ export default function Landing() {
               "Summarise Blogs in few Lines",
               "Note Things in Bullet points",
             ]}
-            className="xsm:w-full sm:w-max-fit xsm:mr-4 lg:w-fit"
+            className="xsm:w-screen mr-12 sm:w-full"
           />
 
           <CardComp
@@ -109,7 +109,7 @@ export default function Landing() {
               "Share your blogs with others ",
               "Other's can see and give feedback",
             ]}
-            className="xsm:w-full sm:w-max-fit xsm:mr-4 lg:w-fit"
+            className="xsm:w-screen mr-12 sm:w-full"
           />
         </div>
       </div>

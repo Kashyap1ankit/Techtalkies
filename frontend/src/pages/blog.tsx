@@ -10,6 +10,7 @@ import SkeletonCard from "@/components/skeleton";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
 
 export default function Blog() {
   interface data {
@@ -84,8 +85,9 @@ export default function Blog() {
                 <ReactQuill
                   modules={{ toolbar: false }}
                   readOnly={true}
-                  theme="snow"
+                  theme="bubble"
                   value={e.title}
+                  className="font-title xl:text-7xl"
                 />
 
                 {/* <Title
@@ -96,8 +98,9 @@ export default function Blog() {
                 <ReactQuill
                   modules={{ toolbar: false }}
                   readOnly={true}
-                  theme="snow"
+                  theme="bubble"
                   value={`Author @ ${e.author.username}`}
+                  className="text-52"
                 />
 
                 {/* Apply styles to limit description text size and prevent overflow */}
@@ -108,8 +111,9 @@ export default function Blog() {
                 <ReactQuill
                   modules={{ toolbar: false }}
                   readOnly={true}
-                  theme="snow"
+                  theme="bubble"
                   value={e.description}
+                  className="break-words"
                 />
               </div>
             );

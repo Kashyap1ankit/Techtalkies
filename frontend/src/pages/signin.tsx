@@ -89,26 +89,26 @@ export default function Signin() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit xl:min-h-screen bg-white md:flex md:justify-between">
+        <div className="xsm:h-fit lg:min-h-screen bg-white lg:flex lg:justify-between">
           <motion.div
-            className="md:w-1/2 my-auto "
+            className=" lg:w-1/2 lg:my-auto "
             whileInView={{ scale: [0.7, 1] }}
           >
             <Lottie
-              className="xl:size-96 xl:w-full "
+              className="xsm:size-52 xsm:w-auto md:size-72 md:w-auto lg:size-96 lg:w-full "
               animationData={animation}
             />
           </motion.div>
           {/* form section  */}
-          <div className=" md:w-1/2 my-auto  rounded-md">
+          <div className="xsm:mt-12 xsm:w-screen lg:w-1/2  lg:my-auto  rounded-md">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="w-1/2 space-y-2 mx-auto px-8 border-2 shadow-lg"
+                className=" xl:w-fit 2xl:w-1/2 xl:space-y-2 mx-auto px-8 shadow-lg"
               >
                 <Title
                   text="Login to Account !"
-                  className="xl:text-3xl text-center xl:mb-12 font-kanit xl:mt-6"
+                  className="xsm:text-xl md:text-2xl xl:text-3xl text-center xsm:mb-6 xl:mb-12 font-kanit xl:mt-6"
                 />
 
                 <FormField
@@ -152,7 +152,7 @@ export default function Signin() {
                     </FormItem>
                   )}
                 />
-                <Button className="w-full" type="submit">
+                <Button className="w-full mt-4" type="submit">
                   Submit
                 </Button>
 
@@ -163,7 +163,7 @@ export default function Signin() {
                 >
                   <Title
                     text="New on platform ? Signup"
-                    className="xl:text-sm text-center text-mixedShadow xl:my-6 font-title cursor-pointer"
+                    className="text-sm text-center text-mixedShadow my-6 font-title cursor-pointer"
                   />
                 </div>
               </form>

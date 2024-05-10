@@ -53,10 +53,10 @@ export default function Dashboard() {
   return (
     <div>
       {loading ? (
-        <div className="xl:mt-52 mx-auto">
+        <div className="xsm:mt-36 xl:mt-52 mx-auto">
           <SkeletonCard
             count={allBlogs.length || 3}
-            classname={"p-4 xl:mb-12 xl:h-36"}
+            classname={"p-4 mb-12 h-36"}
           />
         </div>
       ) : (
@@ -65,7 +65,7 @@ export default function Dashboard() {
 
           <Navbar />
 
-          <div className="xl:mt-52 xl:mb-12">
+          <div className="xsm:mt-36 xl:mt-52 mb-12 xsm:px-4 ">
             {allBlogs.map((e: data) => {
               return (
                 <BlogCard
