@@ -47,7 +47,7 @@ export default function Delete() {
     const token = localStorage.getItem("blog-token");
     const call = async () => {
       try {
-        const res = await axios.delete(`${BASE_URL}/api/v1/user/destroy`, {
+        await axios.delete(`${BASE_URL}/api/v1/user/destroy`, {
           headers: {
             Authorization: token,
           },

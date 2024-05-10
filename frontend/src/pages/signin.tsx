@@ -1,6 +1,5 @@
 import Lottie from "lottie-react";
 import animation from "../lottie/signin.json";
-import Verify from "../lottie/verifying.json";
 import Alert from "@/components/Alert";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";

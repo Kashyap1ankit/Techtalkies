@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import Star from "../assets/svg/star.svg";
-import { useState } from "react";
+
 import { z } from "zod";
 import {
   Form,
@@ -22,7 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { geminiData } from "@/store/atoms";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -31,7 +31,7 @@ const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 export default function AiModal() {
-  const [aiData, setAiData] = useRecoilState(geminiData);
+  const setAiData = useSetRecoilState(geminiData);
   const navigate = useNavigate();
   const aiSchema = z.object({
     topic: z.string().min(3),

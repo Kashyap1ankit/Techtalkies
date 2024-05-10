@@ -8,13 +8,11 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
@@ -22,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
 import axios from "axios";
 import AiModal from "@/components/ai";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { geminiData } from "@/store/atoms";
 
 export default function CreateBlog() {
@@ -52,7 +50,7 @@ export default function CreateBlog() {
     setAiData("");
     const post = async () => {
       try {
-        const res = await axios.post(`${BASE_URL}/api/v1/blog`, data, {
+        await axios.post(`${BASE_URL}/api/v1/blog`, data, {
           headers: {
             Authorization: localStorage.getItem("blog-token"),
           },
@@ -112,7 +110,7 @@ export default function CreateBlog() {
             <FormField
               control={form.control}
               name="description"
-              render={({ field }) => (
+              render={() => (
                 <FormItem className="bg-white drop-shadow-md h-screen overflow-y-scroll no-scrollbar xsm:w-full  lg:w-2/3 mx-auto px-4 py-4 rounded-md -z-50">
                   {/* <FormLabel>Description </FormLabel> */}
                   <FormControl>

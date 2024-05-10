@@ -1,6 +1,5 @@
 import Background2 from "@/components/Bg2";
 import Navbar from "@/components/Navbar";
-import Title from "@/components/Title";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";

@@ -39,7 +39,7 @@ export default function Account() {
     const token = localStorage.getItem("blog-token");
     const call = async () => {
       try {
-        const res = await axios.put(`${BASE_URL}/api/v1/user`, data, {
+        await axios.put(`${BASE_URL}/api/v1/user`, data, {
           headers: {
             Authorization: token,
           },

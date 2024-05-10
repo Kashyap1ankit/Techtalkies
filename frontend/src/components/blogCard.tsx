@@ -30,7 +30,7 @@ export default function BlogCard(props: propsType) {
     setLoading(true);
     const call = async () => {
       try {
-        const res = await axios.delete(`${BASE_URL}/api/v1/blog/${props.id}`, {
+        await axios.delete(`${BASE_URL}/api/v1/blog/${props.id}`, {
           headers: {
             Authorization: localStorage.getItem("blog-token"),
           },
