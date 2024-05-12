@@ -8,6 +8,7 @@ import Trash from "../assets/svg/trash.svg";
 import Open from "../assets/svg/open.svg";
 import axios from "axios";
 import Alert from "./Alert";
+import SharePop from "./share-pop";
 type propsType = {
   id: string;
   title: string;
@@ -26,6 +27,7 @@ export default function BlogCard(props: propsType) {
   function handleClick() {
     navigate(`/blog/${props.id}`);
   }
+
   function handleDelete() {
     setLoading(true);
     const call = async () => {
@@ -101,10 +103,15 @@ export default function BlogCard(props: propsType) {
 
           <div className="flex justify-between mt-12 xsm:px-2 ">
             <div className="flex justify-start ">
-              <img
+              {/* <img
                 className="xsm:size-4 md:size-6 lg:size-8 cursor-pointer xsm:mr-4 xl:mr-12"
                 src={Share}
                 alt=""
+                onClick={handleShareClick}
+              /> */}
+
+              <SharePop
+                url={`${import.meta.env.VITE_SHARE_BASE_URL}/${props.id}`}
               />
               <img
                 className={`xsm:size-4 md:size-6 lg:size-8 cursor-pointer`}
