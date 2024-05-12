@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import Profile from "../assets/svg/profile.svg";
 import Create from "../assets/svg/add.svg";
 import useAuth from "@/hooks/auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Loading from "../lottie/loading.json";
 import Lottie from "lottie-react";
+import { useRecoilState } from "recoil";
+import { Navloader } from "@/store/atoms";
 export default function Navbar() {
-  const [loading, setLoading] = useState(false);
+  const [navLoading, setNavLoading] = useRecoilState(Navloader);
   const navigate = useNavigate();
 
   function handleLoginClick() {
@@ -22,9 +24,9 @@ export default function Navbar() {
   const { setLoggedIn, authloading, loggedIn } = useAuth();
 
   useEffect(() => {
-    if (authloading) setLoading(true);
+    if (authloading) setNavLoading(true);
     if (!authloading) {
-      setLoading(false);
+      setNavLoading(false);
     }
   }, [authloading, loggedIn]);
 
@@ -46,7 +48,7 @@ export default function Navbar() {
           />
         </div>
 
-        {loading ? (
+        {navLoading ? (
           <div>
             <Lottie
               className="xsm:size-6 sm:size-8 md:size-10 lg:size-12"

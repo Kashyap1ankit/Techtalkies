@@ -2,7 +2,7 @@ import Background2 from "@/components/Bg2";
 import Navbar from "@/components/Navbar";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useAuth from "@/hooks/auth";
 import axios from "axios";
 import SkeletonCard from "@/components/skeleton";
@@ -10,6 +10,8 @@ import SkeletonCard from "@/components/skeleton";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
+import { useRecoilState } from "recoil";
+import { loader, singleBlog } from "@/store/atoms";
 
 export default function Blog() {
   interface data {
@@ -23,8 +25,8 @@ export default function Blog() {
   }
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useRecoilState(singleBlog);
+  const [loading, setLoading] = useRecoilState(loader);
   const navigate = useNavigate();
   const { authloading, loggedIn } = useAuth();
   let { id } = useParams();

@@ -22,17 +22,16 @@ import {
 } from "@/components/ui/form";
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Rocket from "../lottie/rocket.json";
+import { useRecoilState } from "recoil";
+import { errors, loader } from "@/store/atoms";
 
 export default function Signin() {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const [error, setServerError] = useState({
-    status: false,
-    message: "",
-  });
-  const [loading, setLoading] = useState(false);
+  const [error, setServerError] = useRecoilState(errors);
+  const [loading, setLoading] = useRecoilState(loader);
 
   const { authloading, loggedIn } = useAuth();
 
@@ -55,6 +54,7 @@ export default function Signin() {
     const signinUser = async () => {
       try {
         const res = await axios.post(`${BASE_URL}/api/v1/user/signin`, data);
+        console.log(res);
         localStorage.setItem("blog-token", `Bearer ${res.data.token}`);
         navigate("/dashboard");
       } catch (error: any) {

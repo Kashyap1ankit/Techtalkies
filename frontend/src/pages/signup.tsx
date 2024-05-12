@@ -19,18 +19,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Rocket from "../lottie/rocket.json";
 import useAuth from "@/hooks/auth";
+import { useRecoilState } from "recoil";
+import { errors, loader } from "@/store/atoms";
 
 export default function Signup() {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const [error, setServerError] = useState({
-    status: false,
-    message: "",
-  });
-  const [loading, setLoading] = useState(false);
+  const [error, setServerError] = useRecoilState(errors);
+  const [loading, setLoading] = useRecoilState(loader);
 
   const { authloading, loggedIn } = useAuth();
 

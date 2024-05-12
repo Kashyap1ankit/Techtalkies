@@ -2,16 +2,19 @@ import Background2 from "@/components/Bg2";
 import Navbar from "@/components/Navbar";
 import BlogCard from "@/components/blogCard";
 import useAuth from "@/hooks/auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SkeletonCard from "@/components/skeleton";
+import { useRecoilState } from "recoil";
+import { loader, totalBlogs } from "@/store/atoms";
+
 export default function Dashboard() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const { authloading, loggedIn, currentUser } = useAuth();
-  const [allBlogs, setAllBlogs] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useRecoilState(loader);
+  const [allBlogs, setAllBlogs] = useRecoilState(totalBlogs);
 
   interface data {
     id: string;

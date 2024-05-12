@@ -49,10 +49,12 @@ export default function AiModal() {
     const post = async () => {
       try {
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const prompt = `Write a blog post about ${data.topic} and don't include any formatting and don't use astericks. You can use html tags`;
+        const prompt = `Write a blog post about ${data.topic} & give response in html tags by giving the content inside ther body tag only `;
         const res = await model.generateContent(prompt);
         const response = await res.response;
+
         const text = response.text();
+        console.log(text);
         setAiData(text);
         navigate("/blog/new");
       } catch (error) {

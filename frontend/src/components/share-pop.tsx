@@ -7,11 +7,8 @@ import {
 import Share from "../assets/svg/share.svg";
 
 import {
-  EmailShareButton,
   FacebookShareButton,
   LinkedinShareButton,
-  MailruShareButton,
-  PinterestShareButton,
   RedditShareButton,
   TelegramShareButton,
   TwitterShareButton,
@@ -19,11 +16,8 @@ import {
 } from "react-share";
 
 import {
-  EmailIcon,
   FacebookIcon,
   LinkedinIcon,
-  MailruIcon,
-  PinterestIcon,
   RedditIcon,
   TelegramIcon,
   TwitterIcon,

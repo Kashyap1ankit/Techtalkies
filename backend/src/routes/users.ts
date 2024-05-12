@@ -89,6 +89,8 @@ userRouter.post("/signin", async (c) => {
 
   const body = await c.req.json();
 
+  console.log("body:", body);
+
   try {
     //Zod validation
 
@@ -109,6 +111,10 @@ userRouter.post("/signin", async (c) => {
       },
     });
 
+    console.log(res);
+
+    // const res2 = await prisma.user.findMany({});
+    // console.log("Resposne of all :", res2);
     if (!res) throw new Error("No Such User exist");
     //Token generation
     const payload = {
