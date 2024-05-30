@@ -9,6 +9,8 @@ import Loading from "../lottie/loading.json";
 import Lottie from "lottie-react";
 import { useRecoilState } from "recoil";
 import { Navloader } from "@/store/atoms";
+import { ComboboxPopover } from "./ui/Theme";
+import useChangeTheme from "@/hooks/theme";
 export default function Navbar() {
   const [navLoading, setNavLoading] = useRecoilState(Navloader);
   const navigate = useNavigate();
@@ -17,9 +19,9 @@ export default function Navbar() {
     navigate("/signin");
   }
 
-  function handleSignupClick() {
-    navigate("/signup");
-  }
+  // function handleSignupClick() {
+  //   navigate("/signup");
+  // }
 
   const { setLoggedIn, authloading, loggedIn } = useAuth();
 
@@ -30,28 +32,32 @@ export default function Navbar() {
     }
   }, [authloading, loggedIn]);
 
+  //Theme
+  const { setTheme } = useChangeTheme();
+  useEffect(() => {}, []);
+
   function handleLogoutClick() {
     localStorage.removeItem("blog-token");
     navigate("/signin");
     setLoggedIn(false);
   }
-
+  // fixed top-6 md:left-24 lg:left-1/4 xsm:flex xsm:justify-between xsm:w-full md:w-9/12 lg:w-1/2 items-center border-b-2  xsm:py-1 lg:p-4 rounded-full mx-auto z-50 bg-black dark:bg-white
   return (
     <div>
-      <div className=" fixed top-6 md:left-24 lg:left-1/4 xsm:flex xsm:justify-between xsm:w-full md:w-9/12 lg:w-1/2 items-center border-b-2  xsm:py-1 lg:p-4 rounded-full mx-auto z-50 bg-black">
+      <div className=" fixed top-0 left-0 l xsm:flex xsm:justify-between w-full  items-center border-b-2  lg:py-4 mx-auto z-50  bg-white dark:bg-black border-b-black-50 dark:border-b-zinc-400 ">
         {/* Logo section  */}
 
         <div className="xsm:w-1/2" onClick={() => navigate("/")}>
           <Title
             text="TechTakies"
-            className="xms:text-xl md:text-2xl lg:text-3xl font-title tracking-wider text-white xsm:px-2"
+            className="xms:text-xl md:text-2xl lg:text-3xl font-title tracking-wider dark:text-white text-black xsm:px-2"
           />
         </div>
 
         {navLoading ? (
           <div>
             <Lottie
-              className="xsm:size-6 sm:size-8 md:size-10 lg:size-12"
+              className="dark:text-white text-black xsm:size-6 sm:size-8 md:size-10 lg:size-12"
               animationData={Loading}
             />
           </div>
@@ -77,7 +83,7 @@ export default function Navbar() {
               Logout
             </Button>
 
-            <Button
+            {/* <Button
               className={`xsm:text-sm md:text-lg bg-black xsm:px-2 text-white ${
                 loggedIn ? "hidden" : ""
               }`}
@@ -85,13 +91,13 @@ export default function Navbar() {
               variant="default"
             >
               Signup
-            </Button>
+            </Button> */}
 
             <div onClick={() => navigate("/profile")}>
               <img
                 src={Profile}
                 alt=""
-                className={`cursor-pointer invert xsm:size-6 md:size-8 ${
+                className={`cursor-pointer dark:invert xsm:size-6 md:size-8 ${
                   loggedIn ? "" : "hidden"
                 }`}
               />
@@ -101,10 +107,14 @@ export default function Navbar() {
               <img
                 src={Create}
                 alt=""
-                className={`cursor-pointer invert xsm:size-6 md:size-8 ${
+                className={`cursor-pointer dark:invert xsm:size-6 md:size-8 ${
                   loggedIn ? "" : "hidden"
                 }`}
               />
+            </div>
+
+            <div>
+              <ComboboxPopover />
             </div>
           </div>
         )}

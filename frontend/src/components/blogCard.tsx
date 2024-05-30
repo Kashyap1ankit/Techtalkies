@@ -9,6 +9,7 @@ import Alert from "./Alert";
 import SharePop from "./share-pop";
 import { useRecoilState } from "recoil";
 import { errors, loader } from "@/store/atoms";
+import Book from "../assets/svg/book.svg";
 type propsType = {
   id: string;
   title: string;
@@ -56,7 +57,7 @@ export default function BlogCard(props: propsType) {
     call();
   }
   return (
-    <div className="xsm:w-full xl:w-2/3 mx-auto shadow-md bg-white mb-12 xl:px-4 py-6 rounded-md cursor-pointer  ">
+    <div className=" mx-auto shadow-md bg-white dark:bg-transparent mb-12 xl:px-4 rounded-md cursor-pointer  ">
       {/* error  */}
 
       {error.status ? (
@@ -69,33 +70,51 @@ export default function BlogCard(props: propsType) {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div>
-          {/* --Upper Part--- */}
-          <div className="md:flex md:justify-start break-words xsm:px-2">
-            <div className="md:mr-12 text-center md:w-1/6">
-              <img
-                className="xsm:size-6 xl:size-10 mx-auto"
-                src={Profile}
-                alt=""
-              />
+        <div className="p-4">
+          {/* image */}
+
+          <div>
+            <img
+              src="https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29kaW5nfGVufDB8fDB8fHww"
+              alt=""
+              className="w-full p-0"
+            />
+          </div>
+
+          {/* Heading and topic */}
+          <div className="">
+            <Title
+              text={props.title.slice(0, 19)}
+              className="truncate xl:mb-4 xsm:text-xl md:text-2xl xl:text-3xl font-intro tracking-wide xsm:text-center xsm:mt-4 xsm:mb-4 md:text-start xsm:m-0"
+              upercase={true}
+            />
+
+            <div>
               <Title
-                text={`@ ${props.author}`}
-                className="text-gray mt-4 font-intro"
+                text={`${props.des.slice(0, 120).replace(/<[^>]+>/g, "")}....`}
+                className=" text-sm tracking-wide break-words "
               />
             </div>
+          </div>
 
-            <div className="xl:w-5/6 ">
+          {/* --Upper Part--- */}
+          <div className="md:flex md:justify-start break-words xsm:px-2">
+            <div className="flex justify-between md:mr-12 w-full  ">
+              {/* <img
+                className="xsm:size-6 xl:size-10 mx-auto dark:invert"
+                src={Profile}
+                alt=""
+              /> */}
               <Title
-                text={props.title}
-                className="truncate xl:mb-4 xsm:text-xl md:text-2xl xl:text-3xl font-intro tracking-wide xsm:text-center xsm:mt-4 xsm:mb-4 md:text-start xsm:m-0"
+                text={`@ ${props.author.slice(0, 15)}`}
+                className="text-gray mt-4 font-intro"
               />
 
-              <div>
+              <div className="flex justify-start  aling-center">
+                <img src={Book} alt="" className="dark:invert mt-4 mr-2" />
                 <Title
-                  text={`${props.des
-                    .slice(0, 200)
-                    .replace(/<[^>]+>/g, "")}....`}
-                  className=" text-sm tracking-wide break-words "
+                  text={`${Math.round(props.des.length / 600)} min read`}
+                  className="text-gray mt-4 font-intro"
                 />
               </div>
             </div>
@@ -109,7 +128,7 @@ export default function BlogCard(props: propsType) {
                 url={`${import.meta.env.VITE_SHARE_BASE_URL}/${props.id}`}
               />
               <img
-                className={`xsm:size-4 md:size-6 lg:size-8 cursor-pointer`}
+                className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
                 src={Bookmark}
                 alt=""
               />
@@ -119,7 +138,7 @@ export default function BlogCard(props: propsType) {
               {props.currentUser === props.author ? (
                 <img
                   onClick={handleDelete}
-                  className="xsm:size-4 md:size-6 lg:size-8 cursor-pointer xsm:mr-4 xl:mr-12"
+                  className="xsm:size-4 md:size-6  cursor-pointer xsm:mr-4 xl:mr-12 dark:invert"
                   src={Trash}
                   alt=""
                 />
@@ -128,7 +147,7 @@ export default function BlogCard(props: propsType) {
               )}
 
               <img
-                className={`xsm:size-4 md:size-6 lg:size-8 cursor-pointer`}
+                className={`xsm:size-4 md:size-6  cursor-pointer dark:invert`}
                 src={Open}
                 alt=""
                 onClick={handleClick}

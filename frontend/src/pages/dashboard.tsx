@@ -44,7 +44,7 @@ export default function Dashboard() {
             Authorization: localStorage.getItem("blog-token"),
           },
         });
-        setAllBlogs(res.data.allPosts);
+        setAllBlogs(res.data.allPosts.reverse());
       } catch (error) {
         console.log(error);
       }
@@ -56,7 +56,7 @@ export default function Dashboard() {
   return (
     <div>
       {loading ? (
-        <div className="xsm:mt-36 xl:mt-52 mx-auto">
+        <div className="xsm:mt-36 xl:mt-36 mx-auto">
           <SkeletonCard
             count={allBlogs.length || 3}
             classname={"p-4 mb-12 h-36"}
@@ -68,7 +68,7 @@ export default function Dashboard() {
 
           <Navbar />
 
-          <div className="xsm:mt-36 xl:mt-52 mb-12 xsm:px-4 ">
+          <div className="lg:grid lg:grid-cols-3 lg:gap-8 xsm:mt-36 xl:mt-38 mb-12 xsm:px-4 ">
             {allBlogs.map((e: data) => {
               return (
                 <BlogCard

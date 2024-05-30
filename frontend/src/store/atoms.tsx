@@ -37,3 +37,8 @@ export const geminiData = atom({
   key: "gemini-data",
   default: "",
 });
+
+export const mode = atom({
+  key: "mode",
+  default: "dark",
+});

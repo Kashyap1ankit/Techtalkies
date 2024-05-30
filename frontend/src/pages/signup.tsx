@@ -85,7 +85,7 @@ export default function Signup() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit xl:min-h-screen bg-white lg:flex lg:justify-between ">
+        <div className="xsm:h-fit xl:min-h-screen bg-white dark:bg-black lg:flex lg:justify-between ">
           <motion.div
             className="lg:w-1/2 my-auto "
             whileInView={{ scale: [0.7, 1] }}
@@ -216,7 +216,7 @@ export default function Signup() {
                 >
                   <Title
                     text="Already Account ? Signin"
-                    className="mt-4 text-sm text-center text-mixedShadow xl:mb-4 font-title cursor-pointer"
+                    className="mt-4 text-sm text-center text-mixedShadow font-title cursor-pointer"
                   />
                 </div>
               </form>

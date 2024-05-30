@@ -26,6 +26,7 @@ import { useEffect } from "react";
 import Rocket from "../lottie/rocket.json";
 import { useRecoilState } from "recoil";
 import { errors, loader } from "@/store/atoms";
+import useChangeTheme from "@/hooks/theme";
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export default function Signin() {
   const [error, setServerError] = useRecoilState(errors);
   const [loading, setLoading] = useRecoilState(loader);
 
+  useChangeTheme();
   const { authloading, loggedIn } = useAuth();
 
   useEffect(() => {
@@ -88,7 +90,7 @@ export default function Signin() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit lg:min-h-screen bg-white lg:flex lg:justify-between">
+        <div className="xsm:h-fit lg:min-h-screen bg-white dark:bg-black lg:flex lg:justify-between">
           <motion.div
             className=" lg:w-1/2 lg:my-auto "
             whileInView={{ scale: [0.7, 1] }}
@@ -159,6 +161,7 @@ export default function Signin() {
                   onClick={() => {
                     navigate("/signup");
                   }}
+                  className="mb-4"
                 >
                   <Title
                     text="New on platform ? Signup"

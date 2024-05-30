@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import CardComp from "@/components/Card";
+import useChangeTheme from "@/hooks/theme";
 export default function Landing() {
   const navigate = useNavigate();
+
+  useChangeTheme();
   function handleSignupClick() {
     navigate("/signup");
   }
@@ -14,6 +17,7 @@ export default function Landing() {
   function handleSigninClick() {
     navigate("/signin");
   }
+
   return (
     <div className="xl:p-8 overflow-x-hidden text-center">
       <Background />
@@ -49,7 +53,7 @@ export default function Landing() {
           }}
         >
           <Button
-            className="bg-black text-white hover:bg-slate rounded-full xsm:text-sm md:text-lg xl:mr-14"
+            className="bg-black dark:bg-white text-white dark:text-black hover:bg-slate rounded-full xsm:text-sm md:text-lg xl:mr-14"
             onClick={handleSignupClick}
             variant="outline"
           >

@@ -77,7 +77,7 @@ export default function Blog() {
 
           {data.map((e: data) => {
             return (
-              <div className="mt-48 mx-auto bg-white xl:w-2/3 px-6 py-4">
+              <div className="mt-48 mx-auto bg-white xl:w-2/3">
                 {/* <Title
                   text={e.title}
                   className="text-left font-title xl:text-7xl "
@@ -88,7 +88,7 @@ export default function Blog() {
                   readOnly={true}
                   theme="bubble"
                   value={e.title}
-                  className="font-title xl:text-7xl"
+                  className="font-title xl:text-7xl dark:bg-card"
                 />
 
                 {/* <Title
@@ -101,7 +101,7 @@ export default function Blog() {
                   readOnly={true}
                   theme="bubble"
                   value={`Author @ ${e.author.username}`}
-                  className="text-52"
+                  className="text-52 dark:bg-card"
                 />
 
                 {/* Apply styles to limit description text size and prevent overflow */}
@@ -114,7 +114,7 @@ export default function Blog() {
                   readOnly={true}
                   theme="bubble"
                   value={e.description}
-                  className="break-words"
+                  className="break-words dark:bg-card"
                 />
               </div>
             );

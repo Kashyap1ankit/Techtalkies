@@ -30,7 +30,7 @@ export default function SharePop({ url }: { url: string }) {
       <Popover>
         <PopoverTrigger>
           <img
-            className="xsm:size-4 md:size-6 lg:size-8 cursor-pointer xsm:mr-4 xl:mr-12"
+            className="xsm:size-4 md:size-6 cursor-pointer xsm:mr-4 xl:mr-12 dark:invert"
             src={Share}
             alt=""
             // onClick={handleShareClick}
