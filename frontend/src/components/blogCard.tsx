@@ -1,5 +1,4 @@
 import Title from "./Title";
-import Profile from "../assets/svg/profile.svg";
 import Bookmark from "../assets/svg/bookmark.svg";
 import { useNavigate } from "react-router-dom";
 import Trash from "../assets/svg/trash.svg";
@@ -75,9 +74,9 @@ export default function BlogCard(props: propsType) {
 
           <div>
             <img
-              src="https://plus.unsplash.com/premium_photo-1682140993556-f263e434000b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29kaW5nfGVufDB8fDB8fHww"
+              src="https://media.istockphoto.com/id/1457947131/photo/freedom-concept-with-dice.webp?b=1&s=170667a&w=0&k=20&c=Gke3Ef4m0uIk96dVaYWOwRqYqYzigcJ-qkRdzo9BxXs="
               alt=""
-              className="w-full p-0"
+              className="w-full p-0 rounded-sm"
             />
           </div>
 

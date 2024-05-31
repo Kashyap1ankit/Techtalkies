@@ -4,8 +4,6 @@ import { z } from "zod";
 
 export const signupSchema = z.object({
   username: z.string().min(3),
-  firstName: z.string().min(3),
-  lastName: z.string().optional(),
   email: z.string().email(),
   password: z.string().min(4).max(8),
 });
@@ -35,7 +33,6 @@ export const updateBlogSchema = z.object({
 //Update profile schema
 
 export const updateProfileSchema = z.object({
-  firstName: z.string().optional(),
   oldPassword: z.string().min(4).max(8),
   newPassword: z.string().min(4).max(8),
 });

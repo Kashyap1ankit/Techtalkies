@@ -85,7 +85,7 @@ export default function Signup() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit xl:min-h-screen bg-white dark:bg-black lg:flex lg:justify-between ">
+        <div className="xsm:h-fit xl:min-h-screen bg-white dark:bg-card lg:flex lg:justify-between ">
           <motion.div
             className="lg:w-1/2 my-auto "
             whileInView={{ scale: [0.7, 1] }}
@@ -123,44 +123,6 @@ export default function Signup() {
                       <FormDescription>
                         Add your unique username
                       </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>First Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Enter First name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>Add your firstname</FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Last Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Enter Last name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>Add your surname</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}

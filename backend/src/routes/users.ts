@@ -48,8 +48,6 @@ userRouter.post("/signup", async (c) => {
     const insertUser = await prisma.user.create({
       data: {
         username: body.username,
-        firstName: body.firstName,
-        lastName: body?.lastName,
         email: body.email,
         password: body.password,
       },
@@ -153,14 +151,12 @@ userRouter.put("/", authMiddleware, async (c) => {
         id: userId,
       },
       select: {
-        firstName: true,
         password: true,
       },
     });
 
     const oldPassword = body.oldPassword;
     const newPassword = body.newPassword;
-    const firstName = body.firstName;
 
     if (oldPassword !== getUser?.password) {
       c.status(411);
@@ -172,7 +168,6 @@ userRouter.put("/", authMiddleware, async (c) => {
         id: userId,
       },
       data: {
-        firstName: firstName,
         password: newPassword,
       },
     });

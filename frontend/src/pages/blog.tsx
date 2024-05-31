@@ -12,6 +12,7 @@ import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import { useRecoilState } from "recoil";
 import { loader, singleBlog } from "@/store/atoms";
+import Title from "@/components/Title";
 
 export default function Blog() {
   interface data {
@@ -27,11 +28,12 @@ export default function Blog() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [data, setData] = useRecoilState(singleBlog);
   const [loading, setLoading] = useRecoilState(loader);
-  const navigate = useNavigate();
-  const { authloading, loggedIn } = useAuth();
+  // const navigate = useNavigate();
+  // const { authloading, loggedIn } = useAuth();
   let { id } = useParams();
 
   useEffect(() => {
+    setLoading(true);
     const getData = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/api/v1/blog/${id}`, {
@@ -42,19 +44,21 @@ export default function Blog() {
         setData(res.data.post);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     getData();
   }, []);
 
-  useEffect(() => {
-    if (authloading) setLoading(true);
-    if (!authloading) {
-      setLoading(false);
-      if (!loggedIn) navigate("/signin");
-    }
-  }, [authloading, loggedIn, navigate]);
+  // useEffect(() => {
+  //   if (authloading) setLoading(true);
+  //   if (!authloading) {
+  //     setLoading(false);
+  //     if (!loggedIn) navigate("/signin");
+  //   }
+  // }, [authloading, loggedIn, navigate]);
 
   return (
     <div>
@@ -77,32 +81,32 @@ export default function Blog() {
 
           {data.map((e: data) => {
             return (
-              <div className="mt-48 mx-auto bg-white xl:w-2/3">
-                {/* <Title
+              <div className="mt-48 mx-auto bg-white dark:bg-card xl:w-2/3">
+                <Title
                   text={e.title}
                   className="text-left font-title xl:text-7xl "
-               /> */}
+                />
 
-                <ReactQuill
+                {/* <ReactQuill
                   modules={{ toolbar: false }}
                   readOnly={true}
                   theme="bubble"
                   value={e.title}
-                  className="font-title xl:text-7xl dark:bg-card"
-                />
-
-                {/* <Title
-                  text={`Author @ ${e.author.username}`}
-                  className="mt-4 text-left font-title xl:text-lg text-gray"
+                  className="font-title font-bold text-2xl dark:bg-card"
                 /> */}
 
-                <ReactQuill
+                <Title
+                  text={`Author @ ${e.author.username}`}
+                  className="mt-4 text-left font-title xl:text-lg text-gray"
+                />
+
+                {/* <ReactQuill
                   modules={{ toolbar: false }}
                   readOnly={true}
                   theme="bubble"
                   value={`Author @ ${e.author.username}`}
                   className="text-52 dark:bg-card"
-                />
+                /> */}
 
                 {/* Apply styles to limit description text size and prevent overflow */}
                 {/* <div>

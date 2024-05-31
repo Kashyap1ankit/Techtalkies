@@ -1,22 +1,16 @@
 import { z } from "zod";
 export declare const signupSchema: z.ZodObject<{
     username: z.ZodString;
-    firstName: z.ZodString;
-    lastName: z.ZodOptional<z.ZodString>;
     email: z.ZodString;
     password: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     username: string;
-    firstName: string;
     email: string;
     password: string;
-    lastName?: string | undefined;
 }, {
     username: string;
-    firstName: string;
     email: string;
     password: string;
-    lastName?: string | undefined;
 }>;
 export declare const signinSchema: z.ZodObject<{
     username: z.ZodString;
@@ -52,17 +46,14 @@ export declare const updateBlogSchema: z.ZodObject<{
     published?: boolean | undefined;
 }>;
 export declare const updateProfileSchema: z.ZodObject<{
-    firstName: z.ZodOptional<z.ZodString>;
     oldPassword: z.ZodString;
     newPassword: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     oldPassword: string;
     newPassword: string;
-    firstName?: string | undefined;
 }, {
     oldPassword: string;
     newPassword: string;
-    firstName?: string | undefined;
 }>;
 export declare const authMiddleZodSchema: z.ZodString;
 export type signupInput = z.infer<typeof signupSchema>;

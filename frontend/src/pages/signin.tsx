@@ -90,7 +90,7 @@ export default function Signin() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit lg:min-h-screen bg-white dark:bg-black lg:flex lg:justify-between">
+        <div className="xsm:h-fit lg:min-h-screen bg-white dark:bg-card lg:flex lg:justify-between">
           <motion.div
             className=" lg:w-1/2 lg:my-auto "
             whileInView={{ scale: [0.7, 1] }}

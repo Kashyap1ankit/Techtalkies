@@ -17,7 +17,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { LucideIcon, Moon, Sun } from "lucide-react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { mode } from "@/store/atoms";
 
 type Status = {
@@ -44,7 +44,7 @@ export function ComboboxPopover() {
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
     null
   );
-  const setMode = useSetRecoilState(mode);
+  const [modeValue, setMode] = useRecoilState(mode);
 
   return (
     <div className="flex items-center space-x-4">
@@ -57,9 +57,7 @@ export function ComboboxPopover() {
                 {selectedStatus.label}
               </>
             ) : (
-              <>
-                <Sun />
-              </>
+              <>{modeValue === "light" ? <Sun /> : <Moon />}</>
             )}
           </Button>
         </PopoverTrigger>

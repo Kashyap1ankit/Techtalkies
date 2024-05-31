@@ -40,5 +40,5 @@ export const geminiData = atom({
 
 export const mode = atom({
   key: "mode",
-  default: "dark",
+  default: localStorage.getItem("theme"),
 });

@@ -97,7 +97,7 @@ export default function Delete() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="bg-white p-4"
+              className="bg-white dark:bg-card p-4"
             >
               <Title
                 text="DELETE"

@@ -54,7 +54,7 @@ export default function AiModal() {
         const response = await res.response;
 
         const text = response.text();
-        console.log(text);
+
         setAiData(text);
         navigate("/blog/new");
       } catch (error) {

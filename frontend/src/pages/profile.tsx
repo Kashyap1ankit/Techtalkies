@@ -5,11 +5,14 @@ import { useEffect } from "react";
 import useAuth from "@/hooks/auth";
 import Account from "@/components/Account";
 import Delete from "@/components/Delete";
+import useChangeTheme from "@/hooks/theme";
 
 export default function Profile() {
   const navigate = useNavigate();
 
   const { authloading, loggedIn } = useAuth();
+
+  useChangeTheme();
 
   useEffect(() => {
     if (authloading) {

@@ -12,6 +12,72 @@ const blogRouter = new Hono<{
   };
 }>();
 
+//Get all the blog post
+
+blogRouter.get("/bulk", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const takeNumber = Number(c.req.query("number"));
+
+  try {
+    const allPosts = await prisma.post.findMany({
+      take: takeNumber,
+      orderBy: {
+        createdAt: "desc", //will return the recent posts
+      },
+      select: {
+        title: true,
+        description: true,
+        id: true,
+        published: true,
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    });
+    return c.json({ allPosts });
+  } catch (error) {
+    return c.json({ message: "Not Logged In" });
+  }
+});
+
+//Get  blog post by id
+
+blogRouter.get("/:id", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  let id = c.req.param("id");
+
+  try {
+    const post = await prisma.post.findFirst({
+      where: {
+        id: id,
+      },
+
+      select: {
+        title: true,
+        description: true,
+        id: true,
+        published: true,
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    });
+    return c.json({ post: [post] });
+  } catch (error) {
+    return c.json({ message: "Not Logged In" });
+  }
+});
+
+//To avoid the valiadtion of login in this 2 routes
+
 blogRouter.use(authMiddleware);
 
 // Create blog route
@@ -81,65 +147,6 @@ blogRouter.put("/", async (c) => {
     c.status(406);
     if (error.code === "P2025")
       return c.json({ message: `${error.meta.cause}` });
-    return c.json({ message: "Not Logged In" });
-  }
-});
-
-//Get all the blog post
-
-blogRouter.get("/bulk", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
-
-  try {
-    const allPosts = await prisma.post.findMany({
-      select: {
-        title: true,
-        description: true,
-        id: true,
-        published: true,
-        author: {
-          select: {
-            username: true,
-          },
-        },
-      },
-    });
-    return c.json({ allPosts });
-  } catch (error) {
-    return c.json({ message: "Not Logged In" });
-  }
-});
-
-//Get  blog post by id
-
-blogRouter.get("/:id", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
-  let id = c.req.param("id");
-
-  try {
-    const post = await prisma.post.findFirst({
-      where: {
-        id: id,
-      },
-
-      select: {
-        title: true,
-        description: true,
-        id: true,
-        published: true,
-        author: {
-          select: {
-            username: true,
-          },
-        },
-      },
-    });
-    return c.json({ post: [post] });
-  } catch (error) {
     return c.json({ message: "Not Logged In" });
   }
 });

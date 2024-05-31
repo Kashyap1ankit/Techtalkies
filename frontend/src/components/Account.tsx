@@ -88,30 +88,11 @@ export default function Account() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="bg-white p-4"
+              className="bg-white dark:bg-card  p-4"
             >
               <Title
                 text="Change account details!"
                 className="xl:text-3xl text-center xl:mb-12 font-kanit xl:mt-6"
-              />
-
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>First Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Enter First Name"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription></FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
               />
 
               <FormField
