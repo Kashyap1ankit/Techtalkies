@@ -28,7 +28,6 @@ indexRouter.get("/auth", authMiddleware, async (c) => {
 
       select: {
         id: true,
-        firstName: true,
         username: true,
       },
     });
@@ -37,6 +36,7 @@ indexRouter.get("/auth", authMiddleware, async (c) => {
     c.status(200);
     return c.json({ res });
   } catch (error) {
+    console.log(error);
     c.status(406);
     return c.json({ message: "User doesn't exists" });
   }

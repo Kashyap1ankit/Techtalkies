@@ -1,4 +1,4 @@
-import Background from "@/components/Bg";
+import Background from "@/components/All/Bg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { createBlogInput, createBlogSchema } from "package-medium";
@@ -19,12 +19,12 @@ import "react-quill/dist/quill.bubble.css";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
 import axios from "axios";
-import AiModal from "@/components/ai";
+import AiModal from "@/components/Profile/ai";
 import { useRecoilState } from "recoil";
 import { geminiData, loader, errors } from "@/store/atoms";
 import LoadingAnimation from "../lottie/loading.json";
 import Lottie from "lottie-react";
-import Alert from "@/components/Alert";
+import Alert from "@/components/All/Alert";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
@@ -109,7 +109,7 @@ export default function CreateBlog() {
                     control={form.control}
                     name="title"
                     render={({ field }) => (
-                      <FormItem className="bg-white px-4 py-4 rounded-md xsm:w-2/3  md:w-4/5  lg:w-11/12">
+                      <FormItem className="bg-white dark:bg-card px-4 py-4 rounded-md xsm:w-2/3  md:w-4/5  lg:w-11/12">
                         {/* <FormLabel>Title</FormLabel> */}
                         <FormControl>
                           <Input
@@ -137,7 +137,7 @@ export default function CreateBlog() {
                   control={form.control}
                   name="description"
                   render={() => (
-                    <FormItem className="bg-white drop-shadow-md h-screen overflow-y-scroll no-scrollbar xsm:w-full  lg:w-2/3 mx-auto px-4 py-4 rounded-md -z-50">
+                    <FormItem className="bg-white dark:bg-card drop-shadow-md h-screen overflow-y-scroll no-scrollbar xsm:w-full  lg:w-2/3 mx-auto px-4 py-4 rounded-md -z-50">
                       {/* <FormLabel>Description </FormLabel> */}
                       <FormControl>
                         <ReactQuill

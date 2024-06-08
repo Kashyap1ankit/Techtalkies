@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import Star from "../assets/svg/star.svg";
+import Star from "../../assets/svg/star.svg";
 
 import { z } from "zod";
 import {
@@ -54,7 +54,7 @@ export default function AiModal() {
         const response = await res.response;
 
         const text = response.text();
-        console.log(text);
+
         setAiData(text);
         navigate("/blog/new");
       } catch (error) {

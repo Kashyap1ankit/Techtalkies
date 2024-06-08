@@ -6,9 +6,9 @@ import { useForm } from "react-hook-form";
 import { signupInput, signupSchema } from "package-medium";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import Title from "@/components/Title";
+import Title from "@/components/All/Title";
 import { useNavigate } from "react-router-dom";
-import Alert from "@/components/Alert";
+import Alert from "@/components/All/Alert";
 import {
   Form,
   FormControl,
@@ -85,7 +85,7 @@ export default function Signup() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit xl:min-h-screen bg-white lg:flex lg:justify-between ">
+        <div className="xsm:h-fit xl:min-h-screen bg-white dark:bg-card lg:flex lg:justify-between ">
           <motion.div
             className="lg:w-1/2 my-auto "
             whileInView={{ scale: [0.7, 1] }}
@@ -123,44 +123,6 @@ export default function Signup() {
                       <FormDescription>
                         Add your unique username
                       </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>First Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Enter First name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>Add your firstname</FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Last Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Enter Last name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>Add your surname</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -216,7 +178,7 @@ export default function Signup() {
                 >
                   <Title
                     text="Already Account ? Signin"
-                    className="mt-4 text-sm text-center text-mixedShadow xl:mb-4 font-title cursor-pointer"
+                    className="mt-4 text-sm text-center text-mixedShadow font-title cursor-pointer"
                   />
                 </div>
               </form>

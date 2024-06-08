@@ -5,8 +5,6 @@ const zod_1 = require("zod");
 //Singup schema
 exports.signupSchema = zod_1.z.object({
     username: zod_1.z.string().min(3),
-    firstName: zod_1.z.string().min(3),
-    lastName: zod_1.z.string().optional(),
     email: zod_1.z.string().email(),
     password: zod_1.z.string().min(4).max(8),
 });
@@ -28,7 +26,6 @@ exports.updateBlogSchema = zod_1.z.object({
 });
 //Update profile schema
 exports.updateProfileSchema = zod_1.z.object({
-    firstName: zod_1.z.string().optional(),
     oldPassword: zod_1.z.string().min(4).max(8),
     newPassword: zod_1.z.string().min(4).max(8),
 });

@@ -1,17 +1,16 @@
-import Background2 from "@/components/Bg2";
-import Navbar from "@/components/Navbar";
+import Background2 from "@/components/All/Bg2";
+import Navbar from "@/components/Navbar/Navbar";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import useAuth from "@/hooks/auth";
 import axios from "axios";
-import SkeletonCard from "@/components/skeleton";
-
+import SkeletonCard from "../components/Dashboard/card-skeleton";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import { useRecoilState } from "recoil";
 import { loader, singleBlog } from "@/store/atoms";
+import Title from "@/components/All/Title";
+import Footer from "../components/All/footer";
 
 export default function Blog() {
   interface data {
@@ -27,11 +26,12 @@ export default function Blog() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [data, setData] = useRecoilState(singleBlog);
   const [loading, setLoading] = useRecoilState(loader);
-  const navigate = useNavigate();
-  const { authloading, loggedIn } = useAuth();
+  // const navigate = useNavigate();
+  // const { authloading, loggedIn } = useAuth();
   let { id } = useParams();
 
   useEffect(() => {
+    setLoading(true);
     const getData = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/api/v1/blog/${id}`, {
@@ -42,33 +42,19 @@ export default function Blog() {
         setData(res.data.post);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     getData();
   }, []);
 
-  useEffect(() => {
-    if (authloading) setLoading(true);
-    if (!authloading) {
-      setLoading(false);
-      if (!loggedIn) navigate("/signin");
-    }
-  }, [authloading, loggedIn, navigate]);
-
   return (
     <div>
       {loading ? (
-        <div className="mt-48 mx-auto bg-white xl:w-2/3 px-6 py-4">
-          <SkeletonCard
-            count={1}
-            classname="mx-auto bg-white xl:w-1/3 px-6 py-4"
-          />
-          <SkeletonCard
-            count={1}
-            classname="mt-4 bg-white xl:w-1/8 px-6 py-4"
-          />
-          <SkeletonCard count={1} classname="mt-4 p-4 xl:h-36" />
+        <div className="mt-48 mx-auto bg-white  dark:bg-card xl:w-2/3 px-6 py-4">
+          <SkeletonCard />
         </div>
       ) : (
         <div>
@@ -77,50 +63,38 @@ export default function Blog() {
 
           {data.map((e: data) => {
             return (
-              <div className="mt-48 mx-auto bg-white xl:w-2/3 px-6 py-4">
-                {/* <Title
+              <div
+                className="xsm:px-6 xsm:py-4 xsm:mt-24 md:mt-48 md:mx-auto bg-white dark:bg-card xsm:w-full xl:w-2/3"
+                key={e.id}
+              >
+                <Title
                   text={e.title}
-                  className="text-left font-title xl:text-7xl "
-               /> */}
-
-                <ReactQuill
-                  modules={{ toolbar: false }}
-                  readOnly={true}
-                  theme="bubble"
-                  value={e.title}
-                  className="font-title xl:text-7xl"
+                  className="text-left font-title xsm:text-2xl md:text-5xl xl:text-7xl "
                 />
 
-                {/* <Title
+                <Title
                   text={`Author @ ${e.author.username}`}
                   className="mt-4 text-left font-title xl:text-lg text-gray"
-                /> */}
-
-                <ReactQuill
-                  modules={{ toolbar: false }}
-                  readOnly={true}
-                  theme="bubble"
-                  value={`Author @ ${e.author.username}`}
-                  className="text-52"
                 />
-
-                {/* Apply styles to limit description text size and prevent overflow */}
-                {/* <div>
-                  <Title text={e.description} className="mt-12 break-words" />
-                </div> */}
 
                 <ReactQuill
                   modules={{ toolbar: false }}
                   readOnly={true}
                   theme="bubble"
                   value={e.description}
-                  className="break-words"
+                  className="break-words dark:bg-card xsm:mt-8 md:mt-4 xsm:text-md"
                 />
               </div>
             );
           })}
         </div>
       )}
+
+      {/* Footer  */}
+
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }

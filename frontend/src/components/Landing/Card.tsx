@@ -11,8 +11,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-// type CardProps = React.ComponentProps<typeof Card>;
-
 type CardProps = {
   className: string;
   notifications: string[];

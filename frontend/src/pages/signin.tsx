@@ -1,13 +1,13 @@
 import Lottie from "lottie-react";
 import animation from "../lottie/signin.json";
-import Alert from "@/components/Alert";
+import Alert from "@/components/All/Alert";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signinInput, signinSchema } from "package-medium";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import Title from "@/components/Title";
+import Title from "@/components/All/Title";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
 
@@ -88,7 +88,7 @@ export default function Signin() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit lg:min-h-screen bg-white lg:flex lg:justify-between">
+        <div className="xsm:h-fit lg:min-h-screen bg-white dark:bg-card lg:flex lg:justify-between">
           <motion.div
             className=" lg:w-1/2 lg:my-auto "
             whileInView={{ scale: [0.7, 1] }}
@@ -159,6 +159,7 @@ export default function Signin() {
                   onClick={() => {
                     navigate("/signup");
                   }}
+                  className="mb-4"
                 >
                   <Title
                     text="New on platform ? Signup"

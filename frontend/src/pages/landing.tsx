@@ -1,12 +1,14 @@
-import Navbar from "@/components/Navbar";
-import Title from "@/components/Title";
-import Background from "@/components/Bg";
+import Navbar from "@/components/Navbar/Navbar";
+import Title from "@/components/All/Title";
+import Background from "@/components/All/Bg";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import CardComp from "@/components/Card";
+import CardComp from "@/components/Landing/Card";
+import Footer from "../components/All/footer";
 export default function Landing() {
   const navigate = useNavigate();
+
   function handleSignupClick() {
     navigate("/signup");
   }
@@ -14,8 +16,9 @@ export default function Landing() {
   function handleSigninClick() {
     navigate("/signin");
   }
+
   return (
-    <div className="xl:p-8 overflow-x-hidden text-center">
+    <div className=" overflow-x-hidden text-center">
       <Background />
       <Navbar />
 
@@ -49,7 +52,7 @@ export default function Landing() {
           }}
         >
           <Button
-            className="bg-black text-white hover:bg-slate rounded-full xsm:text-sm md:text-lg xl:mr-14"
+            className="bg-black dark:bg-white text-white dark:text-black hover:bg-slate rounded-full xsm:text-sm md:text-lg xl:mr-14"
             onClick={handleSignupClick}
             variant="outline"
           >
@@ -76,7 +79,7 @@ export default function Landing() {
       </div>
 
       {/* Features section  */}
-      <div className="xsm:mt-20 xl:mt-24 text-center ">
+      <div className="xl:p-8 xsm:mt-20 xl:mt-24 text-center ">
         <Title
           text="Our Offerings "
           className="tracking-wider xsm:text-3xl md:text-4xl lg:text-5xl font-kanit"
@@ -112,6 +115,10 @@ export default function Landing() {
             className="xsm:w-screen mr-12 sm:w-full"
           />
         </div>
+      </div>
+
+      <div>
+        <Footer />
       </div>
     </div>
   );
