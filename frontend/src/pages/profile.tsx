@@ -1,18 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Background from "@/components/Bg";
+import Background from "@/components/All/Bg";
 import { useEffect } from "react";
 import useAuth from "@/hooks/auth";
-import Account from "@/components/Account";
-import Delete from "@/components/Delete";
-import useChangeTheme from "@/hooks/theme";
+import Account from "@/components/Profile/Account";
+import Delete from "@/components/Profile/Delete";
 
 export default function Profile() {
   const navigate = useNavigate();
 
   const { authloading, loggedIn } = useAuth();
-
-  useChangeTheme();
 
   useEffect(() => {
     if (authloading) {

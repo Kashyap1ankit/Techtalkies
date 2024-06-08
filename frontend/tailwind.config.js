@@ -28,6 +28,7 @@ module.exports = {
       intro: ["Patua One", "serif"],
       introSub: ["Rubik Scribble", "system-ui"],
       kanit: ["Kanit", "sans-serif"],
+      noto: ["Josefin Sans", "sans-serif"],
     },
     extend: {
       colors: {
@@ -36,6 +37,7 @@ module.exports = {
         white: "white",
         mixedShadow: "#828fb1",
         gray: "#94a3b8",
+        zinc: "#e5e7eb",
         slate: "#e5e7eb",
         login: "#2563eb",
         black: "#1e293b",
@@ -43,6 +45,7 @@ module.exports = {
         yellow: "yellow",
         green: "green",
         red: "red",
+        blue: "#2563eb",
         ///
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

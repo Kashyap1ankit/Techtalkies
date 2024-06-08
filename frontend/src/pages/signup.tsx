@@ -6,9 +6,9 @@ import { useForm } from "react-hook-form";
 import { signupInput, signupSchema } from "package-medium";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import Title from "@/components/Title";
+import Title from "@/components/All/Title";
 import { useNavigate } from "react-router-dom";
-import Alert from "@/components/Alert";
+import Alert from "@/components/All/Alert";
 import {
   Form,
   FormControl,

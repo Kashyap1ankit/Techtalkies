@@ -1,13 +1,13 @@
 import Lottie from "lottie-react";
 import animation from "../lottie/signin.json";
-import Alert from "@/components/Alert";
+import Alert from "@/components/All/Alert";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signinInput, signinSchema } from "package-medium";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import Title from "@/components/Title";
+import Title from "@/components/All/Title";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
 
@@ -26,7 +26,6 @@ import { useEffect } from "react";
 import Rocket from "../lottie/rocket.json";
 import { useRecoilState } from "recoil";
 import { errors, loader } from "@/store/atoms";
-import useChangeTheme from "@/hooks/theme";
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -34,7 +33,6 @@ export default function Signin() {
   const [error, setServerError] = useRecoilState(errors);
   const [loading, setLoading] = useRecoilState(loader);
 
-  useChangeTheme();
   const { authloading, loggedIn } = useAuth();
 
   useEffect(() => {

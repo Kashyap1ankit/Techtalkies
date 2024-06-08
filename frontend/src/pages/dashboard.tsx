@@ -1,14 +1,14 @@
-import Background2 from "@/components/Bg2";
-import Navbar from "@/components/Navbar";
-import BlogCard from "@/components/blogCard";
+import Background2 from "@/components/All/Bg2";
+import Navbar from "@/components/Navbar/Navbar";
+import BlogCard from "@/components/Dashboard/blogCard";
 import useAuth from "@/hooks/auth";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SkeletonCard from "@/components/skeleton";
+import SkeletonCard from "../components/Dashboard/card-skeleton";
 import { useRecoilState } from "recoil";
 import { loader, totalBlogs } from "@/store/atoms";
-import useChangeTheme from "@/hooks/theme";
 import { Button } from "@/components/ui/button";
+import Footer from "../components/All/footer";
 
 export default function Dashboard() {
   const BASE_URL: string = import.meta.env.VITE_BASE_URL;
@@ -27,8 +27,6 @@ export default function Dashboard() {
       username: string;
     };
   }
-
-  useChangeTheme();
 
   // useEffect(() => {
   //   if (authloading) {
@@ -66,12 +64,17 @@ export default function Dashboard() {
   function handleMoreButton() {
     setStartIndex((prev) => prev + 1);
   }
-
+  // grid md:grid-cols-2 xl:grid-cols-3 md:gap-8
   return (
     <div>
       {loading ? (
-        <div className="xsm:mt-36 xl:mt-36 mx-auto">
-          <SkeletonCard classname="xsm:w-full md:w-3/4 lg:w-2/3" />
+        <div className="flex justify-between  flex-wrap  xsm:mt-36 xl:mt-36 xsm:px-4  ">
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
         </div>
       ) : (
         <div>
@@ -79,7 +82,7 @@ export default function Dashboard() {
 
           <Navbar />
 
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 md:gap-8 xsm:mt-36 xl:mt-38 mb-12 xsm:px-4 ">
+          <div className="grid md:grid-cols-2  xl:grid-cols-3 md:gap-8 xsm:mt-36 xl:mt-38 mb-12 xsm:px-4 ">
             {allBlogs.map((e: data) => {
               return (
                 <BlogCard
@@ -101,6 +104,11 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Foooter  */}
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }

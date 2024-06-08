@@ -4,7 +4,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import Share from "../assets/svg/share.svg";
+import Share from "../../assets/svg/share.svg";
 
 import {
   FacebookShareButton,

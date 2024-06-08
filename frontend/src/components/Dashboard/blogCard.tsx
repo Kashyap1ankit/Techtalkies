@@ -1,14 +1,14 @@
-import Title from "./Title";
-import Bookmark from "../assets/svg/bookmark.svg";
+import Title from "../All/Title";
+import Bookmark from "../../assets/svg/bookmark.svg";
 import { useNavigate } from "react-router-dom";
-import Trash from "../assets/svg/trash.svg";
-import Open from "../assets/svg/open.svg";
+import Trash from "../../assets/svg/trash.svg";
+import Open from "../../assets/svg/open.svg";
 import axios from "axios";
-import Alert from "./Alert";
+import Alert from "../All/Alert";
 import SharePop from "./share-pop";
 import { useRecoilState } from "recoil";
 import { errors, loader } from "@/store/atoms";
-import Book from "../assets/svg/book.svg";
+import Book from "../../assets/svg/book.svg";
 type propsType = {
   id: string;
   title: string;

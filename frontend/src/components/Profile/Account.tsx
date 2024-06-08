@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import Title from "@/components/All/Title";
 import {
   Form,
   FormControl,
@@ -7,37 +9,26 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import Title from "@/components/Title";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { updateInput, updateProfileSchema } from "package-medium";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import Alert from "@/components/Alert";
+import Alert from "@/components/All/Alert";
 import { useNavigate } from "react-router-dom";
-
-import { ToastDemo } from "./Toast";
-import { z } from "zod";
+import { ToastDemo } from "../All/Toast";
 import { useRecoilState } from "recoil";
 import { errors, loader, successCondition } from "@/store/atoms";
-import LoadingAnimation from "../lottie/loading.json";
+import LoadingAnimation from "../../lottie/loading.json";
 import Lottie from "lottie-react";
 
-export default function Delete() {
-  const deleteSchema = z.object({
-    password: z.string().min(4).max(8),
-  });
-
+export default function Account() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const navigate = useNavigate();
 
-  type typeData = {
-    password: string;
-  };
-
-  const form = useForm<typeData>({
-    resolver: zodResolver(deleteSchema),
+  const form = useForm<updateInput>({
+    resolver: zodResolver(updateProfileSchema),
   });
 
   const [loading, setLoading] = useRecoilState(loader);
@@ -45,24 +36,22 @@ export default function Delete() {
 
   const [success, setSuccess] = useRecoilState(successCondition);
 
-  function onSubmit(data: typeData) {
-    setLoading(true);
+  function onSubmit(data: updateInput) {
     const token = localStorage.getItem("blog-token");
+    setLoading(true);
     const call = async () => {
       try {
-        await axios.delete(`${BASE_URL}/api/v1/user/destroy`, {
+        await axios.put(`${BASE_URL}/api/v1/user`, data, {
           headers: {
             Authorization: token,
           },
-          data: data,
         });
 
         setSuccess(true),
           setTimeout(() => {
             setSuccess(false);
-            localStorage.removeItem("blog-token");
-            navigate("/signin");
-          }, 1500);
+            navigate("/dashboard");
+          }, 1700);
       } catch (error: any) {
         setError({
           status: true,
@@ -84,6 +73,8 @@ export default function Delete() {
 
   return (
     <div>
+      {/* loading part .. */}
+
       {loading ? (
         <div className="xsm:size-28 md:size-36 lg:size-52 mx-auto">
           <Lottie animationData={LoadingAnimation} />
@@ -97,24 +88,19 @@ export default function Delete() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="bg-white dark:bg-card p-4"
+              className="bg-white dark:bg-card  p-4"
             >
               <Title
-                text="DELETE"
-                className="xl:text-3xl text-red text-center font-kanit xl:mt-6"
-              />
-
-              <Title
-                text="Are you sure ? Once you delete your account , all your related posts get deleted!"
-                className="xl:text-sm text-gray  text-center xl:mb-12 font-kanit mt-2"
+                text="Change account details!"
+                className="xl:text-3xl text-center xl:mb-12 font-kanit xl:mt-6"
               />
 
               <FormField
                 control={form.control}
-                name="password"
+                name="oldPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
+                    <FormLabel>Current Password</FormLabel>
                     <FormControl>
                       <Input
                         type="text"
@@ -128,12 +114,28 @@ export default function Delete() {
                 )}
               />
 
-              <Button
-                className="w-full mt-4"
-                type="submit"
-                variant="destructive"
-              >
-                Delete Account
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Enter New Password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Enter password between 4-8 characters
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className="w-full mt-4" type="submit">
+                Submit
               </Button>
 
               <div
@@ -153,8 +155,8 @@ export default function Delete() {
 
           {success ? (
             <ToastDemo
-              title="Deleted Successfully"
-              description="Your account & related posts are deleted successfully"
+              title="Updated Successfully"
+              description="Your account details are updated successfully"
             />
           ) : (
             ""

@@ -42,3 +42,13 @@ export const mode = atom({
   key: "mode",
   default: localStorage.getItem("theme"),
 });
+
+export const mobNavCross = atom({
+  key: "mobNavigation",
+  default: false,
+});
+
+export const authLoggedIn = atom({
+  key: "authLoggedIn",
+  default: false,
+});

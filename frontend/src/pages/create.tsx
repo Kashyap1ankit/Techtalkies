@@ -1,4 +1,4 @@
-import Background from "@/components/Bg";
+import Background from "@/components/All/Bg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { createBlogInput, createBlogSchema } from "package-medium";
@@ -19,12 +19,12 @@ import "react-quill/dist/quill.bubble.css";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
 import axios from "axios";
-import AiModal from "@/components/ai";
+import AiModal from "@/components/Profile/ai";
 import { useRecoilState } from "recoil";
 import { geminiData, loader, errors } from "@/store/atoms";
 import LoadingAnimation from "../lottie/loading.json";
 import Lottie from "lottie-react";
-import Alert from "@/components/Alert";
+import Alert from "@/components/All/Alert";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
