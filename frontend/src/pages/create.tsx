@@ -46,6 +46,8 @@ export default function CreateBlog() {
   });
 
   function onSubmit(data: createBlogInput) {
+    console.log(data);
+
     data.description = aiData;
 
     setLoading(true);
@@ -137,7 +139,7 @@ export default function CreateBlog() {
                   control={form.control}
                   name="description"
                   render={() => (
-                    <FormItem className="bg-white dark:bg-card drop-shadow-md h-screen overflow-y-scroll no-scrollbar xsm:w-full  lg:w-2/3 mx-auto px-4 py-4 rounded-md -z-50">
+                    <FormItem className="bg-white dark:bg-card drop-shadow-md h-screen overflow-y-scroll no-scrollbar w-full mx-auto px-4 py-4 rounded-md -z-50">
                       {/* <FormLabel>Description </FormLabel> */}
                       <FormControl>
                         <ReactQuill
