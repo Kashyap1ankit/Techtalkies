@@ -9,12 +9,14 @@ import SharePop from "./share-pop";
 import { useRecoilState } from "recoil";
 import { errors, loader } from "@/store/atoms";
 import Book from "../../assets/svg/book.svg";
+import Image from "../All/images";
 type propsType = {
   id: string;
   title: string;
   des: string;
   author: string;
   currentUser: string;
+  thumbnail: string;
 };
 
 export default function BlogCard(props: propsType) {
@@ -56,7 +58,7 @@ export default function BlogCard(props: propsType) {
     call();
   }
   return (
-    <div className=" mx-auto shadow-md bg-white dark:bg-transparent mb-12 xl:px-4 rounded-md cursor-pointer  ">
+    <div className=" mx-auto shadow-md bg-white dark:bg-transparent mb-12 rounded-md cursor-pointer   ">
       {/* error  */}
 
       {error.status ? (
@@ -69,29 +71,32 @@ export default function BlogCard(props: propsType) {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div className="p-4">
+        <div className="px-4 max-w-96 md:max-w-3/4 xl:max-w-full">
           {/* image */}
 
           <div>
-            <img
-              src="https://media.istockphoto.com/id/1457947131/photo/freedom-concept-with-dice.webp?b=1&s=170667a&w=0&k=20&c=Gke3Ef4m0uIk96dVaYWOwRqYqYzigcJ-qkRdzo9BxXs="
-              alt=""
-              className="w-full p-0 rounded-sm"
+            <Image
+              src={
+                props.thumbnail
+                  ? props.thumbnail
+                  : "https://res.cloudinary.com/ddnkrlfjn/image/upload/v1700826546/cld-sample-4.jpg"
+              }
+              className="rounded-md object-cover border-2 md:max-w-96 md:min-h-96"
             />
           </div>
 
           {/* Heading and topic */}
-          <div className="">
+          <div className="w-fit ">
             <Title
               text={props.title.slice(0, 19)}
               className="truncate xl:mb-4 xsm:text-xl md:text-2xl xl:text-3xl font-intro tracking-wide xsm:text-center xsm:mt-4 xsm:mb-4 md:text-start xsm:m-0"
               upercase={true}
             />
 
-            <div>
+            <div className="xsm:w-64  sm:w-80">
               <Title
-                text={`${props.des.slice(0, 120).replace(/<[^>]+>/g, "")}....`}
-                className=" text-sm tracking-wide break-words "
+                text={`${props.des.slice(0, 150).replace(/<[^>]+>/g, "")}...`}
+                className=" text-sm tracking-wide break-words w-full "
               />
             </div>
           </div>

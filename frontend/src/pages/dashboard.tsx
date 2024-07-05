@@ -22,6 +22,7 @@ export default function Dashboard() {
     id: string;
     title: string;
     description: string;
+    thumbnail: string;
     published: boolean;
     author: {
       username: string;
@@ -50,6 +51,7 @@ export default function Dashboard() {
             },
           }
         );
+        console.log(res.data);
         setAllBlogs(res.data.allPosts);
       } catch (error) {
         console.log(error);
@@ -82,11 +84,12 @@ export default function Dashboard() {
 
           <Navbar />
 
-          <div className="grid md:grid-cols-2  xl:grid-cols-3 md:gap-8 xsm:mt-36 xl:mt-38 mb-12 xsm:px-4 ">
+          <div className="grid xsm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xsm:gap-4 lg:gap-8 px-4 xsm:mt-36 xl:mt-38 mb-12 ">
             {allBlogs.map((e: data) => {
               return (
                 <BlogCard
                   id={e.id}
+                  thumbnail={e.thumbnail}
                   key={e.id}
                   title={e.title}
                   author={e.author.username}

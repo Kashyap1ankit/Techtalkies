@@ -18,7 +18,7 @@ module.exports = {
       xsm: "300px",
       sm: "400px",
       md: "520px",
-      lg: "800px",
+      lg: "750px",
       xl: "1024px",
       "2xl": "1400px",
     },
@@ -46,6 +46,7 @@ module.exports = {
         green: "green",
         red: "red",
         blue: "#2563eb",
+        upload: "#f2f2f0",
         ///
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
