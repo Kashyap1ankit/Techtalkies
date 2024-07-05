@@ -16,6 +16,7 @@ type propsType = {
   des: string;
   author: string;
   currentUser: string;
+  thumbnail: string;
 };
 
 export default function BlogCard(props: propsType) {
@@ -75,8 +76,12 @@ export default function BlogCard(props: propsType) {
 
           <div>
             <Image
-              src="https://media.istockphoto.com/id/1457947131/photo/freedom-concept-with-dice.webp?b=1&s=170667a&w=0&k=20&c=Gke3Ef4m0uIk96dVaYWOwRqYqYzigcJ-qkRdzo9BxXs="
-              className="rounded-md"
+              src={
+                props.thumbnail
+                  ? props.thumbnail
+                  : "https://res.cloudinary.com/ddnkrlfjn/image/upload/v1700826546/cld-sample-4.jpg"
+              }
+              className="rounded-md object-cover border-2 md:max-w-96 md:min-h-96"
             />
           </div>
 

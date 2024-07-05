@@ -22,6 +22,7 @@ export default function Dashboard() {
     id: string;
     title: string;
     description: string;
+    thumbnail: string;
     published: boolean;
     author: {
       username: string;
@@ -50,6 +51,7 @@ export default function Dashboard() {
             },
           }
         );
+        console.log(res.data);
         setAllBlogs(res.data.allPosts);
       } catch (error) {
         console.log(error);
@@ -87,6 +89,7 @@ export default function Dashboard() {
               return (
                 <BlogCard
                   id={e.id}
+                  thumbnail={e.thumbnail}
                   key={e.id}
                   title={e.title}
                   author={e.author.username}

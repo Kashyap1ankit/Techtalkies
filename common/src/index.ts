@@ -20,6 +20,7 @@ export const signinSchema = z.object({
 export const createBlogSchema = z.object({
   title: z.string().min(3),
   description: z.string().optional(),
+  thumbnail: z.string().url(),
 });
 
 //Update new Blog schema

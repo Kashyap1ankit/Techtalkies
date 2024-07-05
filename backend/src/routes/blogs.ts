@@ -29,6 +29,7 @@ blogRouter.get("/bulk", async (c) => {
       select: {
         title: true,
         description: true,
+        thumbnail: true,
         id: true,
         published: true,
         author: {
@@ -61,6 +62,7 @@ blogRouter.get("/:id", async (c) => {
       select: {
         title: true,
         description: true,
+
         id: true,
         published: true,
         author: {
@@ -89,6 +91,7 @@ blogRouter.post("/", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   try {
+    console.log(body);
     //zod validation
     const { success } = createBlogSchema.safeParse(body);
     c.status;
@@ -100,6 +103,7 @@ blogRouter.post("/", async (c) => {
       data: {
         title: body.title,
         description: body.description,
+        thumbnail: body.thumbnail,
         published: body.published || true,
         authorId: authorId,
       },

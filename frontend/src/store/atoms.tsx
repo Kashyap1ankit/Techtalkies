@@ -52,3 +52,18 @@ export const authLoggedIn = atom({
   key: "authLoggedIn",
   default: false,
 });
+
+export const imageUploadLoader = atom<boolean>({
+  key: "imageupload",
+  default: false,
+});
+
+export const imageFile = atom<string | Blob>({
+  key: "imagefile",
+  default: "",
+});
+
+export const imageUrl = atom({
+  key: "imageurl",
+  default: "",
+});

@@ -1,4 +1,3 @@
-import { Upload } from "lucide-react";
 import "./App.css";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -12,7 +11,6 @@ const Blog = lazy(() => import("./pages/blog"));
 const CreateBlog = lazy(() => import("./pages/create"));
 const Profile = lazy(() => import("./pages/profile"));
 import { RecoilRoot } from "recoil";
-import ImageUpload from "./components/upload";
 
 function App() {
   return (
@@ -28,7 +26,6 @@ function App() {
               <Route path="/blog/:id" element={<Blog />} />
               <Route path="/blog/new" element={<CreateBlog />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/upload" element={<ImageUpload />} />
             </Routes>
           </BrowserRouter>
         </Suspense>

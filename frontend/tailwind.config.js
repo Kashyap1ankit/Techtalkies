@@ -46,6 +46,7 @@ module.exports = {
         green: "green",
         red: "red",
         blue: "#2563eb",
+        upload: "#f2f2f0",
         ///
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

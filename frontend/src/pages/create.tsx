@@ -1,4 +1,3 @@
-import Background from "@/components/All/Bg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { createBlogInput, createBlogSchema } from "package-medium";
@@ -21,10 +20,13 @@ import useAuth from "@/hooks/auth";
 import axios from "axios";
 import AiModal from "@/components/Profile/ai";
 import { useRecoilState } from "recoil";
-import { geminiData, loader, errors } from "@/store/atoms";
+import { geminiData, loader, errors, imageUrl } from "@/store/atoms";
 import LoadingAnimation from "../lottie/loading.json";
 import Lottie from "lottie-react";
 import Alert from "@/components/All/Alert";
+import ImageUpload from "@/components/Create/upload";
+import BackIcon from "../assets/svg/back.svg";
+import Image from "@/components/All/images";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
@@ -34,6 +36,7 @@ export default function CreateBlog() {
   const [error, setError] = useRecoilState(errors);
   const { authloading, loggedIn } = useAuth();
 
+  const [thumbnailUrl, setThumbnailUrl] = useRecoilState(imageUrl);
   useEffect(() => {
     if (authloading) console.log("hi");
     if (!authloading) {
@@ -46,14 +49,14 @@ export default function CreateBlog() {
   });
 
   function onSubmit(data: createBlogInput) {
-    console.log(data);
-
     data.description = aiData;
+    data.thumbnail = thumbnailUrl;
 
     setLoading(true);
     //Resetting the value field to empty
 
     setAiData("");
+    setThumbnailUrl("");
     const post = async () => {
       try {
         await axios.post(`${BASE_URL}/api/v1/blog`, data, {
@@ -84,7 +87,7 @@ export default function CreateBlog() {
 
   return (
     <div className="overflow-hidden">
-      <Background />
+      {/* <Background /> */}
 
       {loading ? (
         <div className="xsm:size-28 md:size-36 lg:size-52 mx-auto">
@@ -100,7 +103,13 @@ export default function CreateBlog() {
             <AiModal />
           </div>
 
-          <div className="w-full mb-12">
+          <div className="w-fit" onClick={() => navigate("/dashboard")}>
+            <Image src={BackIcon} className="size-6 m-4 dark:invert" />
+          </div>
+
+          <ImageUpload />
+
+          <div className="px-4 md:px-8 w-full mt-12 mb-12">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -139,11 +148,10 @@ export default function CreateBlog() {
                   control={form.control}
                   name="description"
                   render={() => (
-                    <FormItem className="bg-white dark:bg-card drop-shadow-md h-screen overflow-y-scroll no-scrollbar w-full mx-auto px-4 py-4 rounded-md -z-50">
+                    <FormItem className=" dark:bg-card drop-shadow-md h-screen overflow-y-scroll no-scrollbar w-full mx-auto px-4 py-4 rounded-md -z-50">
                       {/* <FormLabel>Description </FormLabel> */}
                       <FormControl>
                         <ReactQuill
-                          className=""
                           theme="snow"
                           value={aiData}
                           onChange={setAiData}

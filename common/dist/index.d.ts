@@ -25,11 +25,14 @@ export declare const signinSchema: z.ZodObject<{
 export declare const createBlogSchema: z.ZodObject<{
     title: z.ZodString;
     description: z.ZodOptional<z.ZodString>;
+    thumbnail: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     title: string;
+    thumbnail: string;
     description?: string | undefined;
 }, {
     title: string;
+    thumbnail: string;
     description?: string | undefined;
 }>;
 export declare const updateBlogSchema: z.ZodObject<{
