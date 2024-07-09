@@ -67,3 +67,13 @@ export const imageUrl = atom({
   key: "imageurl",
   default: "",
 });
+
+export const imageUploadToast = atom({
+  key: "imageUploadToast",
+  default: false,
+});
+
+export const imageUploadFailError = atom({
+  key: "imageUploadFailError",
+  default: false,
+});

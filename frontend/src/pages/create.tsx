@@ -49,6 +49,7 @@ export default function CreateBlog() {
   });
 
   function onSubmit(data: createBlogInput) {
+    console.log("sdn");
     data.description = aiData;
     data.thumbnail = thumbnailUrl;
 
@@ -146,10 +147,28 @@ export default function CreateBlog() {
 
                 <FormField
                   control={form.control}
+                  name="thumbnail"
+                  render={({ field }) => (
+                    <FormItem className="bg-white dark:bg-card px-4 py-4 rounded-md xsm:w-2/3  md:w-4/5  lg:w-11/12">
+                      <FormControl>
+                        <Input
+                          className="outline-0 border-t-0 border-l-0 border-r-0 rounded-none border-b-red  "
+                          type="text"
+                          {...field}
+                          value={thumbnailUrl}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
                   name="description"
                   render={() => (
                     <FormItem className=" dark:bg-card drop-shadow-md h-screen overflow-y-scroll no-scrollbar w-full mx-auto px-4 py-4 rounded-md -z-50">
-                      {/* <FormLabel>Description </FormLabel> */}
                       <FormControl>
                         <ReactQuill
                           theme="snow"

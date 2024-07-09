@@ -11,7 +11,13 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { imageFile, imageUploadLoader, imageUrl } from "@/store/atoms";
+import {
+  imageFile,
+  imageUploadFailError,
+  imageUploadLoader,
+  imageUploadToast,
+  imageUrl,
+} from "@/store/atoms";
 import Lottie from "lottie-react";
 import Loader2 from "../../lottie/loading-2.json";
 
@@ -24,7 +30,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import { ToastDemo } from "../All/Toast";
+
 export default function ImageUpload() {
+  const [toastState, setToastState] = useRecoilState(imageUploadToast);
+  const [error, setFileError] = useRecoilState(imageUploadFailError);
   const form = useForm({});
 
   const [imagefile, setImageFile] = useRecoilState<string | Blob>(imageFile);
@@ -42,7 +52,26 @@ export default function ImageUpload() {
     );
   }
 
-  async function onSubmit() {
+  if (toastState) {
+    return (
+      <div>
+        <ToastDemo
+          title="Success !"
+          description="Image Uploaded Successfully"
+        />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <ToastDemo title="Error !" description="Image Upload Failed " />
+      </div>
+    );
+  }
+
+  async function onSubmit2() {
     setLoader(true);
     try {
       const formData = new FormData();
@@ -53,8 +82,15 @@ export default function ImageUpload() {
         formData
       );
       setUrl(res.data.secure_url);
+      setToastState(true);
+      setTimeout(() => {
+        setToastState(false);
+      }, 2000);
     } catch (error) {
-      console.error(error);
+      setFileError(true);
+      setTimeout(() => {
+        setFileError(false);
+      }, 2000);
     } finally {
       setImageFile("");
       setLoader(false);
@@ -72,7 +108,7 @@ export default function ImageUpload() {
             <DialogDescription></DialogDescription>
             <Form {...form}>
               <form
-                onSubmit={form.handleSubmit(onSubmit)}
+                onSubmit={form.handleSubmit(onSubmit2)}
                 className="mt-6 flex  flex-wrap gap-4 justify-center items-center  "
               >
                 <FormField
