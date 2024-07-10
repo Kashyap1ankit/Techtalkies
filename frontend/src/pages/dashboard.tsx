@@ -51,7 +51,6 @@ export default function Dashboard() {
             },
           }
         );
-        console.log(res.data);
         setAllBlogs(res.data.allPosts);
       } catch (error) {
         console.log(error);
@@ -66,6 +65,7 @@ export default function Dashboard() {
   function handleMoreButton() {
     setStartIndex((prev) => prev + 1);
   }
+
   // grid md:grid-cols-2 xl:grid-cols-3 md:gap-8
   return (
     <div>
