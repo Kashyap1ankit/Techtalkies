@@ -1,7 +1,6 @@
 import Title from "../All/Title";
 import Bookmark from "../../assets/svg/bookmark.svg";
 import { useNavigate } from "react-router-dom";
-import Trash from "../../assets/svg/trash.svg";
 import Open from "../../assets/svg/open.svg";
 import axios from "axios";
 import Alert from "../All/Alert";
@@ -10,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { errors, loader } from "@/store/atoms";
 import Book from "../../assets/svg/book.svg";
 import Image from "../All/images";
+import DeleteAlert from "./delete-alert";
 type propsType = {
   id: string;
   title: string;
@@ -140,12 +140,7 @@ export default function BlogCard(props: propsType) {
 
             <div className="flex justify-between">
               {props.currentUser === props.author ? (
-                <img
-                  onClick={handleDelete}
-                  className="xsm:size-4 md:size-6  cursor-pointer xsm:mr-4 xl:mr-12 dark:invert"
-                  src={Trash}
-                  alt=""
-                />
+                <DeleteAlert handleDelete={handleDelete} />
               ) : (
                 ""
               )}

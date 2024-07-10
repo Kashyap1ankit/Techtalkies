@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { createBlogInput, createBlogSchema } from "package-medium";
+// import { createBlogInput, createBlogSchema } from "package-medium";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -27,6 +27,7 @@ import Alert from "@/components/All/Alert";
 import ImageUpload from "@/components/Create/upload";
 import BackIcon from "../assets/svg/back.svg";
 import Image from "@/components/All/images";
+import { z } from "zod";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
@@ -44,11 +45,24 @@ export default function CreateBlog() {
     }
   }, [authloading, loggedIn, navigate]);
 
-  const form = useForm<createBlogInput>({
-    resolver: zodResolver(createBlogSchema),
+  const createBlogSchemaModified = z.object({
+    title: z.string(),
+    thumbnail: z.string().optional(),
+    description: z.string().optional(),
   });
 
-  function onSubmit(data: createBlogInput) {
+  type createBlogInputModified = {
+    title: string;
+    thumbnail?: string;
+    description?: string;
+  };
+
+  const form = useForm<createBlogInputModified>({
+    resolver: zodResolver(createBlogSchemaModified),
+  });
+
+  function onSubmit(data: createBlogInputModified) {
+    console.log("sdn");
     data.description = aiData;
     data.thumbnail = thumbnailUrl;
 
@@ -121,7 +135,6 @@ export default function CreateBlog() {
                     name="title"
                     render={({ field }) => (
                       <FormItem className="bg-white dark:bg-card px-4 py-4 rounded-md xsm:w-2/3  md:w-4/5  lg:w-11/12">
-                        {/* <FormLabel>Title</FormLabel> */}
                         <FormControl>
                           <Input
                             className="outline-0 border-t-0 border-l-0 border-r-0 rounded-none border-b-red"
@@ -130,7 +143,6 @@ export default function CreateBlog() {
                             {...field}
                           />
                         </FormControl>
-                        {/* <FormDescription>Add Title of Post</FormDescription> */}
                         <FormMessage />
                       </FormItem>
                     )}
@@ -149,7 +161,6 @@ export default function CreateBlog() {
                   name="description"
                   render={() => (
                     <FormItem className=" dark:bg-card drop-shadow-md h-screen overflow-y-scroll no-scrollbar w-full mx-auto px-4 py-4 rounded-md -z-50">
-                      {/* <FormLabel>Description </FormLabel> */}
                       <FormControl>
                         <ReactQuill
                           theme="snow"
