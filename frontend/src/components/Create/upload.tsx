@@ -125,6 +125,13 @@ export default function ImageUpload() {
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
                             if (e.target.files) {
+                              if (e.target.files[0].size >= 2097152) {
+                                setFileError(true);
+                                setTimeout(() => {
+                                  setFileError(false);
+                                }, 2000);
+                                return;
+                              }
                               setImageFile(e.target.files[0]);
                             }
                           }}
