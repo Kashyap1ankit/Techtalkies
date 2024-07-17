@@ -48,7 +48,7 @@ export default function AiModal() {
   function onSubmit(data: aiInput) {
     const post = async () => {
       try {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const prompt = `Write a blog post about ${data.topic} & give response in html tags by giving the content inside ther body tag only `;
         const res = await model.generateContent(prompt);
         const response = await res.response;
