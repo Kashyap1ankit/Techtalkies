@@ -1,5 +1,6 @@
 import Title from "../All/Title";
 import Bookmark from "../../assets/svg/bookmark.svg";
+import Bookmarked from "../../assets/svg/bookmarked.svg";
 import { useNavigate } from "react-router-dom";
 import Open from "../../assets/svg/open.svg";
 import axios from "axios";
@@ -10,6 +11,8 @@ import { errors, loader } from "@/store/atoms";
 import Book from "../../assets/svg/book.svg";
 import Image from "../All/images";
 import DeleteAlert from "./delete-alert";
+import { useState } from "react";
+import { ToastDemo } from "../All/Toast";
 type propsType = {
   id: string;
   title: string;
@@ -20,10 +23,34 @@ type propsType = {
 };
 
 export default function BlogCard(props: propsType) {
+  const [bookmarkLoader, setBookmarkLoader] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
   const [loading, setLoading] = useRecoilState(loader);
   const [error, setError] = useRecoilState(errors);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  async function handleBookmarkClick() {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/api/v1/blog/bookmark/${props.id}`,
+        {},
+        {
+          headers: {
+            Authorization: localStorage.getItem("blog-token"),
+          },
+        }
+      );
+      console.log(res);
+      setBookmarkLoader(true);
+      setTimeout(() => {
+        setBookmarkLoader(false);
+      }, 2000);
+      setBookmarked(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   function handleClick() {
     navigate(`/blog/${props.id}`);
@@ -57,8 +84,20 @@ export default function BlogCard(props: propsType) {
     };
     call();
   }
+
   return (
     <div className=" mx-auto shadow-md bg-white dark:bg-transparent mb-12 rounded-md cursor-pointer   ">
+      {/* Bookmark  */}
+
+      {bookmarkLoader ? (
+        <ToastDemo
+          title="Bookmark Added successfully"
+          description="Bookmark added successfully . Now you check your bookmarks in your profile "
+        />
+      ) : (
+        ""
+      )}
+
       {/* error  */}
 
       {error.status ? (
@@ -131,11 +170,21 @@ export default function BlogCard(props: propsType) {
               <SharePop
                 url={`${import.meta.env.VITE_SHARE_BASE_URL}/${props.id}`}
               />
-              <img
-                className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
-                src={Bookmark}
-                alt=""
-              />
+              {bookmarked ? (
+                <img
+                  className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
+                  src={Bookmarked}
+                  alt=""
+                  onClick={handleBookmarkClick}
+                />
+              ) : (
+                <img
+                  className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
+                  src={Bookmark}
+                  alt=""
+                  onClick={handleBookmarkClick}
+                />
+              )}
             </div>
 
             <div className="flex justify-between">

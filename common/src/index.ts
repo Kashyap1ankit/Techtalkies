@@ -42,8 +42,18 @@ export const updateProfileSchema = z.object({
 
 export const authMiddleZodSchema = z.string().startsWith("Bearer ");
 
+//Bookmark Schema
+
+export const bookmarkSchema = z
+  .object({
+    postId: z.string(),
+    userId: z.string(),
+  })
+  .required();
+
 export type signupInput = z.infer<typeof signupSchema>;
 export type signinInput = z.infer<typeof signinSchema>;
 export type updateInput = z.infer<typeof updateProfileSchema>;
 export type createBlogInput = z.infer<typeof createBlogSchema>;
 export type updateBlogInput = z.infer<typeof updateBlogSchema>;
+export type bookmarkSchemaInput = z.infer<typeof bookmarkSchema>;

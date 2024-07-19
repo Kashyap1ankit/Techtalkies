@@ -2,7 +2,11 @@ import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { authMiddleware } from "../middleware";
-import { createBlogSchema, updateBlogSchema } from "package-medium";
+import {
+  createBlogSchema,
+  updateBlogSchema,
+  bookmarkSchema,
+} from "package-medium";
 const blogRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
@@ -152,6 +156,41 @@ blogRouter.put("/", async (c) => {
     if (error.code === "P2025")
       return c.json({ message: `${error.meta.cause}` });
     return c.json({ message: "Not Logged In" });
+  }
+});
+
+//bookmark
+
+blogRouter.post("/bookmark/:blogId", async (c) => {
+  const userId = c.get("userId");
+  const blogId = c.req.param("blogId");
+
+  const { success } = bookmarkSchema.safeParse({
+    postId: blogId,
+    userId: userId,
+  });
+  console.log(success);
+
+  if (!success) {
+    c.status(411);
+    return c.json({ message: "Schema vliadation failed" });
+  }
+
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const response = await prisma.bookMark.create({
+      data: {
+        postId: blogId,
+        userId: userId,
+      },
+    });
+
+    return c.json({ bookmark: true, bookmarkdata: response });
+  } catch (error) {
+    console.log(error);
   }
 });
 
