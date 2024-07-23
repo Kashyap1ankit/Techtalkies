@@ -181,16 +181,43 @@ blogRouter.post("/bookmark/:blogId", async (c) => {
   }).$extends(withAccelerate());
 
   try {
+    //checking for existing bookmark
+
+    const checkForBookMark = await prisma.bookMark.findFirst({
+      where: {
+        postId: blogId,
+        userId: userId,
+      },
+    });
+
+    if (checkForBookMark) {
+      console.log("already exits");
+      const removed = await prisma.bookMark.delete({
+        where: {
+          bookMarkId: {
+            postId: blogId,
+            userId: userId,
+          },
+        },
+      });
+
+      c.status(202);
+      return c.json({
+        message: "Bookmark deleted",
+      });
+    }
+
     const response = await prisma.bookMark.create({
       data: {
         postId: blogId,
         userId: userId,
       },
     });
-
+    c.status(200);
     return c.json({ bookmark: true, bookmarkdata: response });
   } catch (error) {
-    console.log(error);
+    c.status(404);
+    return c.json({ message: "Some error occured" });
   }
 });
 

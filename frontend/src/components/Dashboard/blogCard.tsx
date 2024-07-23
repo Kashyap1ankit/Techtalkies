@@ -41,14 +41,16 @@ export default function BlogCard(props: propsType) {
           },
         }
       );
-      console.log(res);
+      if (res.status === 202) {
+        return setBookmarked(false);
+      }
       setBookmarkLoader(true);
       setTimeout(() => {
         setBookmarkLoader(false);
       }, 2000);
       setBookmarked(true);
     } catch (error) {
-      console.log(error);
+      setBookmarked(false);
     }
   }
 
