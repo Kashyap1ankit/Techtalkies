@@ -7,12 +7,14 @@ import axios from "axios";
 import Alert from "../All/Alert";
 import SharePop from "./share-pop";
 import { useRecoilState } from "recoil";
-import { errors, loader } from "@/store/atoms";
+import { errors, loader, bookmarkToast, isBookmarked } from "@/store/atoms";
 import Book from "../../assets/svg/book.svg";
 import Image from "../All/images";
 import DeleteAlert from "./delete-alert";
 import { useState } from "react";
 import { ToastDemo } from "../All/Toast";
+import { Medal, UserCircle, UserIcon } from "lucide-react";
+import { Button } from "../ui/button";
 type propsType = {
   id: string;
   title: string;
@@ -23,8 +25,8 @@ type propsType = {
 };
 
 export default function BlogCard(props: propsType) {
-  const [bookmarkLoader, setBookmarkLoader] = useState(false);
-  const [bookmarked, setBookmarked] = useState(false);
+  const [bookmarkToaster, setBookmarkToast] = useRecoilState(bookmarkToast);
+  const [bookmarked, setBookmarked] = useRecoilState(isBookmarked);
   const [loading, setLoading] = useRecoilState(loader);
   const [error, setError] = useRecoilState(errors);
   const navigate = useNavigate();
@@ -41,12 +43,34 @@ export default function BlogCard(props: propsType) {
           },
         }
       );
+
+      //Handling the remove of bookmark
+
       if (res.status === 202) {
+        setBookmarkToast({
+          status: true,
+          message: "Bookmark Removed",
+        });
+        setTimeout(() => {
+          setBookmarkToast({
+            status: false,
+            message: "",
+          });
+        }, 2000);
         return setBookmarked(false);
       }
-      setBookmarkLoader(true);
+
+      //Handling the add of bookmark
+
+      setBookmarkToast({
+        status: true,
+        message: "Bookmark Added",
+      });
       setTimeout(() => {
-        setBookmarkLoader(false);
+        setBookmarkToast({
+          status: false,
+          message: "",
+        });
       }, 2000);
       setBookmarked(true);
     } catch (error) {
@@ -88,14 +112,11 @@ export default function BlogCard(props: propsType) {
   }
 
   return (
-    <div className=" mx-auto shadow-md bg-white dark:bg-transparent mb-12 rounded-md cursor-pointer   ">
+    <div className="bg-white dark:bg-transparent mb-12    ">
       {/* Bookmark  */}
 
-      {bookmarkLoader ? (
-        <ToastDemo
-          title="Bookmark Added successfully"
-          description="Bookmark added successfully . Now you check your bookmarks in your profile "
-        />
+      {bookmarkToaster.status ? (
+        <ToastDemo title={bookmarkToaster.message} description="" />
       ) : (
         ""
       )}
@@ -112,90 +133,94 @@ export default function BlogCard(props: propsType) {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div className="px-4 max-w-96 md:max-w-3/4 xl:max-w-full">
-          {/* image */}
+        <div className="border-2 border-zinc100 p-2 lg:p-8  w-full lg:w-3/4  rounded-2xl cursor-pointer mx-auto">
+          {/* first part  */}
+          <div className="flex items-center justify-between">
+            <div className="flex gap-2">
+              <UserCircle className="w-8 h-8" />
+              <div>
+                <Title
+                  text={` ${props.author.slice(0, 15)}`}
+                  className="text-black font-intro"
+                />
+                <Title text="Jul 22 ,2024" className="text-gray text-sm" />
+              </div>
+            </div>
 
-          <div>
-            <Image
-              src={
-                props.thumbnail
-                  ? props.thumbnail
-                  : "https://res.cloudinary.com/ddnkrlfjn/image/upload/v1700826546/cld-sample-4.jpg"
-              }
-              className="rounded-md object-cover border-2 md:max-w-96 md:min-h-96"
-            />
+            <div className="flex gap-2 bg-lime200 p-2 rounded-full">
+              <Medal className="size-4" />
+              <Title text="Featured" className="font-bold text-xs" />
+            </div>
           </div>
 
-          {/* Heading and topic */}
-          <div className="w-fit ">
-            <Title
-              text={props.title.slice(0, 19)}
-              className="truncate xl:mb-4 xsm:text-xl md:text-2xl xl:text-3xl font-intro tracking-wide xsm:text-center xsm:mt-4 xsm:mb-4 md:text-start xsm:m-0"
-              upercase={true}
-            />
-
-            <div className="xsm:w-64  sm:w-80">
+          {/* second part  */}
+          <div className="flex items-start gap-4 mt-2">
+            <div className="w-3/4">
               <Title
-                text={`${props.des.slice(0, 150).replace(/<[^>]+>/g, "")}...`}
-                className=" text-sm tracking-wide break-words w-full "
+                text={props.title}
+                className="truncate xl:mb-4 xsm:text-xl md:text-2xl xl:text-3xl font-intro tracking-wide xsm:text-center xsm:mt-4 xsm:mb-4 md:text-start xsm:m-0"
+                upercase={true}
+              />
+
+              <div className="w-fit">
+                <Title
+                  text={`${props.des.slice(0, 240).replace(/<[^>]+>/g, "")}...`}
+                  className=" text-sm tracking-wide  text-gray font-bold break-words w-full "
+                />
+              </div>
+            </div>
+
+            <div className="w-1/4">
+              <Image
+                src={
+                  props.thumbnail
+                    ? props.thumbnail
+                    : "https://res.cloudinary.com/ddnkrlfjn/image/upload/v1700826546/cld-sample-4.jpg"
+                }
+                className=" rounded-md aspect-video "
               />
             </div>
           </div>
 
-          {/* --Upper Part--- */}
-          <div className="md:flex md:justify-start break-words xsm:px-2">
-            <div className="flex justify-between md:mr-12 w-full  ">
-              {/* <img
-                className="xsm:size-6 xl:size-10 mx-auto dark:invert"
-                src={Profile}
-                alt=""
-              /> */}
-              <Title
-                text={`@ ${props.author.slice(0, 15)}`}
-                className="text-gray mt-4 font-intro"
+          {/* third part  */}
+          <div className="mt-8 flex justify-between items-center w-full">
+            <div></div>
+            <div className="flex gap-4  ">
+              <SharePop
+                url={`${import.meta.env.VITE_SHARE_BASE_URL}/${props.id}`}
               />
 
-              <div className="flex justify-start  aling-center">
-                <img src={Book} alt="" className="dark:invert mt-4 mr-2" />
-                <Title
-                  text={`${Math.round(props.des.length / 600)} min read`}
-                  className="text-gray mt-4 font-intro"
-                />
+              <div>
+                {bookmarked ? (
+                  <img
+                    className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
+                    src={Bookmarked}
+                    alt=""
+                    onClick={handleBookmarkClick}
+                  />
+                ) : (
+                  <img
+                    className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
+                    src={Bookmark}
+                    alt=""
+                    onClick={handleBookmarkClick}
+                  />
+                )}
+              </div>
+
+              <div>
+                {props.currentUser === props.author ? (
+                  <DeleteAlert handleDelete={handleDelete} />
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
 
-          {/* --Bottom Part--- */}
-
-          <div className="flex justify-between mt-6 xsm:px-2 ">
-            <div className="flex justify-start ">
-              <SharePop
-                url={`${import.meta.env.VITE_SHARE_BASE_URL}/${props.id}`}
-              />
-              {bookmarked ? (
-                <img
-                  className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
-                  src={Bookmarked}
-                  alt=""
-                  onClick={handleBookmarkClick}
-                />
-              ) : (
-                <img
-                  className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
-                  src={Bookmark}
-                  alt=""
-                  onClick={handleBookmarkClick}
-                />
-              )}
-            </div>
-
-            <div className="flex justify-between">
-              {props.currentUser === props.author ? (
-                <DeleteAlert handleDelete={handleDelete} />
-              ) : (
-                ""
-              )}
-
+          {/* <div className="flex justify-between mt-6 xsm:px-2 ">
+            
+        
               <img
                 className={`xsm:size-4 md:size-6  cursor-pointer dark:invert`}
                 src={Open}
@@ -203,7 +228,7 @@ export default function BlogCard(props: propsType) {
                 onClick={handleClick}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

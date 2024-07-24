@@ -11,12 +11,12 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useEffect } from "react";
+
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import { useNavigate } from "react-router-dom";
-import useAuth from "@/hooks/auth";
+
 import axios from "axios";
 import AiModal from "@/components/Profile/ai";
 import { useRecoilState } from "recoil";
@@ -35,15 +35,8 @@ export default function CreateBlog() {
   const [aiData, setAiData] = useRecoilState(geminiData);
   const [loading, setLoading] = useRecoilState(loader);
   const [error, setError] = useRecoilState(errors);
-  const { authloading, loggedIn } = useAuth();
 
   const [thumbnailUrl, setThumbnailUrl] = useRecoilState(imageUrl);
-  useEffect(() => {
-    if (authloading) console.log("hi");
-    if (!authloading) {
-      if (!loggedIn) navigate("/signin");
-    }
-  }, [authloading, loggedIn, navigate]);
 
   const createBlogSchemaModified = z.object({
     title: z.string(),
