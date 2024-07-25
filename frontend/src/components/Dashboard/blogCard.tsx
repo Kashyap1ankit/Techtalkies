@@ -11,7 +11,6 @@ import { errors, loader, bookmarkToast, isBookmarked } from "@/store/atoms";
 import Book from "../../assets/svg/book.svg";
 import Image from "../All/images";
 import DeleteAlert from "./delete-alert";
-import { useState } from "react";
 import { ToastDemo } from "../All/Toast";
 import { Medal, UserCircle, UserIcon } from "lucide-react";
 import { Button } from "../ui/button";
@@ -26,7 +25,7 @@ type propsType = {
 
 export default function BlogCard(props: propsType) {
   const [bookmarkToaster, setBookmarkToast] = useRecoilState(bookmarkToast);
-  const [bookmarked, setBookmarked] = useRecoilState(isBookmarked);
+  const [bookmarked, setBookmarked] = useRecoilState(isBookmarked(props.id));
   const [loading, setLoading] = useRecoilState(loader);
   const [error, setError] = useRecoilState(errors);
   const navigate = useNavigate();
@@ -133,7 +132,10 @@ export default function BlogCard(props: propsType) {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div className="border-2 border-zinc100 p-2 lg:p-8  w-full lg:w-3/4  rounded-2xl cursor-pointer mx-auto">
+        <div
+          className="border-2 border-zinc100 p-2 lg:p-8  w-full lg:w-3/4  rounded-2xl cursor-pointer mx-auto"
+          onClick={handleClick}
+        >
           {/* first part  */}
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
@@ -183,7 +185,12 @@ export default function BlogCard(props: propsType) {
           </div>
 
           {/* third part  */}
-          <div className="mt-8 flex justify-between items-center w-full">
+          <div
+            className="mt-8 flex justify-between items-center w-full"
+            onClick={(e: any) => {
+              e.stopPropagation();
+            }}
+          >
             <div></div>
             <div className="flex gap-4  ">
               <SharePop

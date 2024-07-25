@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, atomFamily } from "recoil";
 
 export const loader = atom({
   key: "loading",
@@ -90,7 +90,7 @@ export const bookmarkToast = atom({
   },
 });
 
-export const isBookmarked = atom({
+export const isBookmarked = atomFamily({
   key: "isBookmarked",
   default: false,
 });
