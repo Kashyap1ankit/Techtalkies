@@ -78,6 +78,7 @@ export default function Navbar() {
                 loggedIn ? "md:flex" : "hidden"
               }`}
             />
+
             <div>
               <ThemeButton />
             </div>

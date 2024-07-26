@@ -6,9 +6,8 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import CardComp from "@/components/Landing/Card";
 import Footer from "../components/All/footer";
-import { useAuth0 } from "@auth0/auth0-react";
+
 export default function Landing() {
-  const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
 
   function handleSignupClick() {
@@ -72,8 +71,7 @@ export default function Landing() {
         >
           <Button
             className="bg-login text-white hover:bg-slate rounded-full xsm:text-md md:text-lg"
-            // onClick={handleSigninClick}
-            onClick={() => loginWithRedirect()}
+            onClick={handleSigninClick}
             variant="outline"
           >
             Login
