@@ -2,18 +2,15 @@ import Title from "../All/Title";
 import Bookmark from "../../assets/svg/bookmark.svg";
 import Bookmarked from "../../assets/svg/bookmarked.svg";
 import { useNavigate } from "react-router-dom";
-import Open from "../../assets/svg/open.svg";
 import axios from "axios";
 import Alert from "../All/Alert";
 import SharePop from "./share-pop";
 import { useRecoilState } from "recoil";
 import { errors, loader, bookmarkToast, isBookmarked } from "@/store/atoms";
-import Book from "../../assets/svg/book.svg";
 import Image from "../All/images";
 import DeleteAlert from "./delete-alert";
 import { ToastDemo } from "../All/Toast";
-import { Medal, UserCircle, UserIcon } from "lucide-react";
-import { Button } from "../ui/button";
+import { Medal, UserCircle } from "lucide-react";
 type propsType = {
   id: string;
   title: string;
@@ -133,46 +130,49 @@ export default function BlogCard(props: propsType) {
         <div>Loading...</div>
       ) : (
         <div
-          className="border-2 border-zinc100 p-2 lg:p-8  w-full lg:w-3/4  rounded-2xl cursor-pointer mx-auto"
+          className="border-2 border-zinc100  p-2 lg:p-8  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto "
           onClick={handleClick}
         >
           {/* first part  */}
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
-              <UserCircle className="w-8 h-8" />
+              <UserCircle className="w-6 md:w-8 h-8" />
               <div>
                 <Title
                   text={` ${props.author.slice(0, 15)}`}
-                  className="text-black font-intro"
+                  className="text-black font-intro dark:text-gray"
                 />
                 <Title text="Jul 22 ,2024" className="text-gray text-sm" />
               </div>
             </div>
 
             <div className="flex gap-2 bg-lime200 p-2 rounded-full">
-              <Medal className="size-4" />
-              <Title text="Featured" className="font-bold text-xs" />
+              <Medal className="size-4 dark:text-black" />
+              <Title
+                text="Featured"
+                className="font-bold text-xs dark:text-black"
+              />
             </div>
           </div>
 
           {/* second part  */}
-          <div className="flex items-start gap-4 mt-2">
-            <div className="w-3/4">
+          <div className="block md:flex items-start gap-4 mt-2">
+            <div className="w-full md:w-3/4">
               <Title
                 text={props.title}
-                className="truncate xl:mb-4 xsm:text-xl md:text-2xl xl:text-3xl font-intro tracking-wide xsm:text-center xsm:mt-4 xsm:mb-4 md:text-start xsm:m-0"
+                className="truncate xl:mb-4 xsm:text-lg md:text-2xl xl:text-3xl font-intro tracking-wide xsm:text-center xsm:mt-4 xsm:mb-4 md:text-start xsm:m-0"
                 upercase={true}
               />
 
               <div className="w-fit">
                 <Title
                   text={`${props.des.slice(0, 240).replace(/<[^>]+>/g, "")}...`}
-                  className=" text-sm tracking-wide  text-gray font-bold break-words w-full "
+                  className=" text-xs md:text-sm tracking-wide  text-gray font-bold break-words w-full "
                 />
               </div>
             </div>
 
-            <div className="w-1/4">
+            <div className="w-full mt-4  md:w-1/4">
               <Image
                 src={
                   props.thumbnail

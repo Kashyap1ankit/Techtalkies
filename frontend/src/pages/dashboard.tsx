@@ -83,7 +83,7 @@ export default function Dashboard() {
 
           <Navbar />
           <div className="flex gap-4  mt-12">
-            <div className="w-full lg:w-3/4 mx-auto mb-12 ">
+            <div className="w-full lg:w-3/4 mx-auto mb-12 px-4 xl:px-0 ">
               {allBlogs.map((e: data) => {
                 return (
                   <BlogCard
@@ -99,7 +99,7 @@ export default function Dashboard() {
               })}
             </div>
 
-            <div className="w-1/4 hidden lg:block">hello world</div>
+            <div className="w-1/4 hidden lg:block">something coming...</div>
           </div>
           {/* See More Button  */}
 
