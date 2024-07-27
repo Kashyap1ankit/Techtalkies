@@ -38,7 +38,7 @@ export default function Navbar() {
     <div>
       {/* Mobile Navigation  */}
       {clicked ? <MobNav /> : ""}
-      <div className=" fixed top-0 left-0  xsm:flex xsm:justify-between w-full  items-center border-b-2  py-4 mx-auto z-50  bg-white dark:bg-black border-b-black-50 dark:border-b-zinc-400 ">
+      <div className="xsm:flex xsm:justify-between w-full  items-center border-b-2  py-4 mx-auto z-50  bg-white dark:bg-black border-b-black-50 dark:border-b-zinc-400 ">
         {/* Logo section  */}
 
         <div className="" onClick={() => navigate("/")}>
@@ -78,6 +78,7 @@ export default function Navbar() {
                 loggedIn ? "md:flex" : "hidden"
               }`}
             />
+
             <div>
               <ThemeButton />
             </div>

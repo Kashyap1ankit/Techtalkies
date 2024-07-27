@@ -38,7 +38,9 @@ model Post{
 model BookMark{
   id String @id @default(uuid())
   postId String
-  post Post @relation(fields: [postId], references: [id])
+  post Post @relation(fields: [postId], references: [id],onDelete: Cascade)
   userId String
-  user User @relation(fields: [userId],references: [id])
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade) //as soon as this delets the reference in the user's table should also delete
+
+@@unique(name:"bookMarkId",[postId,userId])
 }

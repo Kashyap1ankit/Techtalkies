@@ -12,7 +12,7 @@ import Footer from "../components/All/footer";
 
 export default function Dashboard() {
   const BASE_URL: string = import.meta.env.VITE_BASE_URL;
-  const { currentUser } = useAuth();
+  const { authloading, currentUser } = useAuth();
   const [loading, setLoading] = useRecoilState(loader);
   const [allBlogs, setAllBlogs] = useRecoilState(totalBlogs);
   const [startIndex, setStartIndex] = useState<number>(1);
@@ -29,15 +29,14 @@ export default function Dashboard() {
     };
   }
 
-  // useEffect(() => {
-  //   if (authloading) {
-  //     return setLoading(true);
-  //   }
-  //   if (!authloading) {
-  //     setLoading(false);
-  //     if (!loggedIn) navigate("/signin");
-  //   }
-  // }, [authloading, loggedIn, navigate]);
+  useEffect(() => {
+    if (authloading) {
+      return setLoading(true);
+    }
+    if (!authloading) {
+      setLoading(false);
+    }
+  }, [authloading]);
 
   useEffect(() => {
     setLoading(true);
@@ -83,23 +82,25 @@ export default function Dashboard() {
           <Background2 />
 
           <Navbar />
+          <div className="flex gap-4  mt-12">
+            <div className="w-full lg:w-3/4 mx-auto mb-12 px-4 xl:px-0 ">
+              {allBlogs.map((e: data) => {
+                return (
+                  <BlogCard
+                    id={e.id}
+                    thumbnail={e.thumbnail}
+                    key={e.id}
+                    title={e.title}
+                    author={e.author.username}
+                    des={e.description}
+                    currentUser={currentUser}
+                  />
+                );
+              })}
+            </div>
 
-          <div className="grid xsm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xsm:gap-4 lg:gap-8 px-4 xsm:mt-36 xl:mt-38 mb-12 ">
-            {allBlogs.map((e: data) => {
-              return (
-                <BlogCard
-                  id={e.id}
-                  thumbnail={e.thumbnail}
-                  key={e.id}
-                  title={e.title}
-                  author={e.author.username}
-                  des={e.description}
-                  currentUser={currentUser}
-                />
-              );
-            })}
+            <div className="w-1/4 hidden lg:block">something coming...</div>
           </div>
-
           {/* See More Button  */}
 
           <div className="flex justify-center mb-6 w-full">

@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, atomFamily } from "recoil";
 
 export const loader = atom({
   key: "loading",
@@ -53,6 +53,8 @@ export const authLoggedIn = atom({
   default: false,
 });
 
+//Image upload state
+
 export const imageUploadLoader = atom<boolean>({
   key: "imageupload",
   default: false,
@@ -75,5 +77,20 @@ export const imageUploadToast = atom({
 
 export const imageUploadFailError = atom({
   key: "imageUploadFailError",
+  default: false,
+});
+
+//Bookmark
+
+export const bookmarkToast = atom({
+  key: "bookmarkToast",
+  default: {
+    status: false,
+    message: "",
+  },
+});
+
+export const isBookmarked = atomFamily({
+  key: "isBookmarked",
   default: false,
 });

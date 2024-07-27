@@ -59,8 +59,19 @@ export declare const updateProfileSchema: z.ZodObject<{
     newPassword: string;
 }>;
 export declare const authMiddleZodSchema: z.ZodString;
+export declare const bookmarkSchema: z.ZodObject<{
+    postId: z.ZodString;
+    userId: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    postId: string;
+    userId: string;
+}, {
+    postId: string;
+    userId: string;
+}>;
 export type signupInput = z.infer<typeof signupSchema>;
 export type signinInput = z.infer<typeof signinSchema>;
 export type updateInput = z.infer<typeof updateProfileSchema>;
 export type createBlogInput = z.infer<typeof createBlogSchema>;
 export type updateBlogInput = z.infer<typeof updateBlogSchema>;
+export type bookmarkSchemaInput = z.infer<typeof bookmarkSchema>;

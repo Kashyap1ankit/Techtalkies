@@ -11,6 +11,7 @@ const Blog = lazy(() => import("./pages/blog"));
 const CreateBlog = lazy(() => import("./pages/create"));
 const Profile = lazy(() => import("./pages/profile"));
 import { RecoilRoot } from "recoil";
+import ProtectedRoute from "./components/All/Protected";
 
 function App() {
   return (
@@ -24,8 +25,10 @@ function App() {
               <Route path="/signin" element={<Signin />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/blog/:id" element={<Blog />} />
-              <Route path="/blog/new" element={<CreateBlog />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/blog/new" element={<CreateBlog />} />
+                <Route path="/profile" element={<Profile />} />
+              </Route>
             </Routes>
           </BrowserRouter>
         </Suspense>

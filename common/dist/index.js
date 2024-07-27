@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authMiddleZodSchema = exports.updateProfileSchema = exports.updateBlogSchema = exports.createBlogSchema = exports.signinSchema = exports.signupSchema = void 0;
+exports.bookmarkSchema = exports.authMiddleZodSchema = exports.updateProfileSchema = exports.updateBlogSchema = exports.createBlogSchema = exports.signinSchema = exports.signupSchema = void 0;
 const zod_1 = require("zod");
 //Singup schema
 exports.signupSchema = zod_1.z.object({
@@ -32,3 +32,10 @@ exports.updateProfileSchema = zod_1.z.object({
 });
 //Auth middleware
 exports.authMiddleZodSchema = zod_1.z.string().startsWith("Bearer ");
+//Bookmark Schema
+exports.bookmarkSchema = zod_1.z
+    .object({
+    postId: zod_1.z.string(),
+    userId: zod_1.z.string(),
+})
+    .required();

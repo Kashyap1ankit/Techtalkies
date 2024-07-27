@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import CardComp from "@/components/Landing/Card";
 import Footer from "../components/All/footer";
+
 export default function Landing() {
   const navigate = useNavigate();
 
