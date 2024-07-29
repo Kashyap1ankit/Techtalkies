@@ -10,6 +10,9 @@ const Dashboard = lazy(() => import("./pages/dashboard"));
 const Blog = lazy(() => import("./pages/blog"));
 const CreateBlog = lazy(() => import("./pages/create"));
 const Profile = lazy(() => import("./pages/profile"));
+const Delete = lazy(() => import("./components/Profile/Delete"));
+const BookMark = lazy(() => import("./components/Profile/Bookmark"));
+const Posts = lazy(() => import("./components/Profile/Posts"));
 import { RecoilRoot } from "recoil";
 import ProtectedRoute from "./components/All/Protected";
 
@@ -27,8 +30,14 @@ function App() {
               <Route path="/blog/:id" element={<Blog />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/blog/new" element={<CreateBlog />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile />}>
+                  <Route path="account" element={"Account"} />
+                  <Route path="bookmarks" element={<BookMark />} />
+                  <Route path="posts" element={<Posts />} />
+                  <Route path="settings" element={<Delete />} />
+                </Route>
               </Route>
+              <Route path="*" element={"No Page Found"} />
             </Routes>
           </BrowserRouter>
         </Suspense>

@@ -159,7 +159,7 @@ blogRouter.put("/", async (c) => {
   }
 });
 
-//bookmark
+//bookmark route for creating new blog
 
 blogRouter.post("/bookmark/:blogId", async (c) => {
   const userId = c.get("userId");

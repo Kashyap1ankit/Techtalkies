@@ -22,6 +22,7 @@ import { useRecoilState } from "recoil";
 import { errors, loader, successCondition } from "@/store/atoms";
 import LoadingAnimation from "../../lottie/loading.json";
 import Lottie from "lottie-react";
+import Account from "./Account";
 
 export default function Delete() {
   const deleteSchema = z.object({
@@ -94,60 +95,66 @@ export default function Delete() {
 
           {error.status ? <Alert message={error.message} /> : ""}
 
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="bg-white dark:bg-card p-4"
-            >
-              <Title
-                text="DELETE"
-                className="xl:text-3xl text-red text-center font-kanit xl:mt-6"
-              />
+          <div>
+            <Account />
 
-              <Title
-                text="Are you sure ? Once you delete your account , all your related posts get deleted!"
-                className="xl:text-sm text-gray  text-center xl:mb-12 font-kanit mt-2"
-              />
+            <div>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="bg-white dark:bg-card p-4"
+                >
+                  <Title
+                    text="DELETE"
+                    className="xl:text-3xl text-red text-center font-kanit xl:mt-6"
+                  />
 
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Enter Current Password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription></FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <Title
+                    text="Are you sure ? Once you delete your account , all your related posts get deleted!"
+                    className="xl:text-sm text-gray  text-center xl:mb-12 font-kanit mt-2"
+                  />
 
-              <Button
-                className="w-full mt-4"
-                type="submit"
-                variant="destructive"
-              >
-                Delete Account
-              </Button>
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Confirm Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="Enter Current Password"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription></FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-              <div
-                onClick={() => {
-                  navigate("/dashboard");
-                }}
-              >
-                <Title
-                  text="Go Back"
-                  className="xl:text-sm text-center text-mixedShadow xl:my-6 font-title cursor-pointer"
-                />
-              </div>
-            </form>
-          </Form>
+                  <Button
+                    className="w-full mt-4"
+                    type="submit"
+                    variant="destructive"
+                  >
+                    Delete Account
+                  </Button>
+
+                  <div
+                    onClick={() => {
+                      navigate("/dashboard");
+                    }}
+                  >
+                    <Title
+                      text="Go Back"
+                      className="xl:text-sm text-center text-mixedShadow xl:my-6 font-title cursor-pointer"
+                    />
+                  </div>
+                </form>
+              </Form>
+            </div>
+          </div>
 
           {/* Success Part  */}
 
