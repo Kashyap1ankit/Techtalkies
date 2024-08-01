@@ -59,6 +59,7 @@ indexRouter.get("/bookmark", authMiddleware, async (c) => {
           select: {
             post: {
               select: {
+                id: true,
                 title: true,
                 description: true,
                 thumbnail: true,

@@ -41,3 +41,16 @@ export type createBlogInputModified = {
   thumbnail?: string;
   description?: string;
 };
+
+export type bookmarkResponseType = {
+  post: {
+    id: string;
+    title: string;
+    description: string;
+    thumbnail: string;
+    author: {
+      email: string;
+      username: string;
+    };
+  };
+};

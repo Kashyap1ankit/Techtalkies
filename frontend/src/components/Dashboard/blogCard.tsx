@@ -21,6 +21,8 @@ export default function BlogCard(props: blogCardPropsType) {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+  //Bookmark custom hook
+
   const { handleBookmarkClick, bookmarkToaster, bookmarked }: bookmarkType =
     useBookmarkClick(props.id);
 
