@@ -23,6 +23,7 @@ import { errors, loader, successCondition } from "@/store/atoms";
 import LoadingAnimation from "../../lottie/loading.json";
 import Lottie from "lottie-react";
 import Account from "./Account";
+import { deleteAccountType } from "@/types/types";
 
 export default function Delete() {
   const deleteSchema = z.object({
@@ -33,11 +34,7 @@ export default function Delete() {
 
   const navigate = useNavigate();
 
-  type typeData = {
-    password: string;
-  };
-
-  const form = useForm<typeData>({
+  const form = useForm<deleteAccountType>({
     resolver: zodResolver(deleteSchema),
   });
 
@@ -46,7 +43,7 @@ export default function Delete() {
 
   const [success, setSuccess] = useRecoilState(successCondition);
 
-  function onSubmit(data: typeData) {
+  function onSubmit(data: deleteAccountType) {
     setLoading(true);
     const token = localStorage.getItem("blog-token");
     const call = async () => {

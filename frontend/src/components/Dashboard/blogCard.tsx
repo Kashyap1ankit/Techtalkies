@@ -6,73 +6,23 @@ import axios from "axios";
 import Alert from "../All/Alert";
 import SharePop from "./share-pop";
 import { useRecoilState } from "recoil";
-import { errors, loader, bookmarkToast, isBookmarked } from "@/store/atoms";
+import { errors, loader } from "@/store/atoms";
 import Image from "../All/images";
 import DeleteAlert from "./delete-alert";
 import { ToastDemo } from "../All/Toast";
-import { Medal, UserCircle } from "lucide-react";
-type propsType = {
-  id: string;
-  title: string;
-  des: string;
-  author: string;
-  currentUser: string;
-  thumbnail: string;
-};
 
-export default function BlogCard(props: propsType) {
-  const [bookmarkToaster, setBookmarkToast] = useRecoilState(bookmarkToast);
-  const [bookmarked, setBookmarked] = useRecoilState(isBookmarked(props.id));
+import { Medal, UserCircle } from "lucide-react";
+import { useBookmarkClick } from "@/hooks/useBookmark";
+import { blogCardPropsType, bookmarkType } from "@/types/types";
+
+export default function BlogCard(props: blogCardPropsType) {
   const [loading, setLoading] = useRecoilState(loader);
   const [error, setError] = useRecoilState(errors);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  async function handleBookmarkClick() {
-    try {
-      const res = await axios.post(
-        `${BASE_URL}/api/v1/blog/bookmark/${props.id}`,
-        {},
-        {
-          headers: {
-            Authorization: localStorage.getItem("blog-token"),
-          },
-        }
-      );
-
-      //Handling the remove of bookmark
-
-      if (res.status === 202) {
-        setBookmarkToast({
-          status: true,
-          message: "Bookmark Removed",
-        });
-        setTimeout(() => {
-          setBookmarkToast({
-            status: false,
-            message: "",
-          });
-        }, 2000);
-        return setBookmarked(false);
-      }
-
-      //Handling the add of bookmark
-
-      setBookmarkToast({
-        status: true,
-        message: "Bookmark Added",
-      });
-      setTimeout(() => {
-        setBookmarkToast({
-          status: false,
-          message: "",
-        });
-      }, 2000);
-      setBookmarked(true);
-    } catch (error) {
-      setBookmarked(false);
-    }
-  }
+  const { handleBookmarkClick, bookmarkToaster, bookmarked }: bookmarkType =
+    useBookmarkClick(props.id);
 
   function handleClick() {
     navigate(`/blog/${props.id}`);
@@ -224,18 +174,6 @@ export default function BlogCard(props: propsType) {
               </div>
             </div>
           </div>
-
-          {/* <div className="flex justify-between mt-6 xsm:px-2 ">
-            
-        
-              <img
-                className={`xsm:size-4 md:size-6  cursor-pointer dark:invert`}
-                src={Open}
-                alt=""
-                onClick={handleClick}
-              />
-            </div>
-          </div> */}
         </div>
       )}
     </div>

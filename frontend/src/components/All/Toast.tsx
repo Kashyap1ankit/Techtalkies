@@ -1,12 +1,9 @@
 import { useToast } from "@/components/ui/use-toast";
+import { toastPropsType } from "@/types/types";
 
 import { useEffect } from "react";
 
-interface propsType {
-  title: string;
-  description: string;
-}
-export const ToastDemo = ({ title, description }: propsType) => {
+export const ToastDemo = ({ title, description }: toastPropsType) => {
   const { toast } = useToast();
 
   function call() {

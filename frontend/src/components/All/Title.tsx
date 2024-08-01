@@ -1,11 +1,6 @@
-type title = {
-  text: string;
-  className: string;
-  upercase?: boolean;
-  onClick?: () => void;
-};
+import { titleComponentType } from "@/types/types";
 
-export default function Title(props: title) {
+export default function Title(props: titleComponentType) {
   return (
     <div>
       {props.upercase ? (

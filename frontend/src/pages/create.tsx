@@ -28,6 +28,7 @@ import ImageUpload from "@/components/Create/upload";
 import BackIcon from "../assets/svg/back.svg";
 import Image from "@/components/All/images";
 import { z } from "zod";
+import { createBlogInputModified } from "@/types/types";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
@@ -43,12 +44,6 @@ export default function CreateBlog() {
     thumbnail: z.string().optional(),
     description: z.string().optional(),
   });
-
-  type createBlogInputModified = {
-    title: string;
-    thumbnail?: string;
-    description?: string;
-  };
 
   const form = useForm<createBlogInputModified>({
     resolver: zodResolver(createBlogSchemaModified),

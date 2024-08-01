@@ -66,7 +66,7 @@ export default function Profile() {
           </Link>
         </div>
       </div>
-      <div className="w-full lg:w-5/6">
+      <div className="w-full lg:w-5/6 mt-12">
         <Outlet />
       </div>
     </div>

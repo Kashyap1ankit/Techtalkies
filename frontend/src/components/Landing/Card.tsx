@@ -10,20 +10,14 @@ import {
 } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-
-type CardProps = {
-  className: string;
-  notifications: string[];
-  title: string;
-  subhead: string;
-};
+import { landingPageCardTypes } from "@/types/types";
 
 export default function CardComp({
   className,
   notifications,
   title,
   subhead,
-}: CardProps) {
+}: landingPageCardTypes) {
   const navigate = useNavigate();
   function handleClick() {
     navigate("/signup");

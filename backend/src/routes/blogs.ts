@@ -191,7 +191,6 @@ blogRouter.post("/bookmark/:blogId", async (c) => {
     });
 
     if (checkForBookMark) {
-      console.log("already exits");
       const removed = await prisma.bookMark.delete({
         where: {
           bookMarkId: {
