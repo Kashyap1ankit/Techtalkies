@@ -216,4 +216,42 @@ userRouter.delete("/destroy", authMiddleware, async (c) => {
   }
 });
 
+// -------------------------------Get users Post Route ----------------------------
+
+userRouter.get("/posts", async (c) => {
+  const userId = c.get("userId");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  });
+
+  try {
+    const res = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+
+      select: {
+        posts: {
+          select: {
+            id: true,
+            title: true,
+            createdAt: true,
+            description: true,
+            thumbnail: true,
+            author: true,
+          },
+        },
+      },
+    });
+
+    if (!res) throw new Error("No Post with this user exits");
+
+    c.status(200);
+    return c.json({ response: res });
+  } catch (error) {
+    c.status(404);
+    return c.json({ message: "Some Error Occured" });
+  }
+});
+
 export default userRouter;

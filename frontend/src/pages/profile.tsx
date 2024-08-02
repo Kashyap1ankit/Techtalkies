@@ -14,7 +14,7 @@ export default function Profile() {
 
   return (
     <div className="flex gap-8 ">
-      <div className="hidden lg:block lg:w-1/6 border-r-2  min-h-screen ">
+      <div className="hidden lg:block lg:w-1/6 border-r-2  min-h-screen fixed left-0 bg-white">
         <div>
           <Link to={"/dashboard"}>
             <ArrowLeft className="m-4 text-gray100 hover:rounded-full hover:border-2 border-black" />
@@ -66,7 +66,7 @@ export default function Profile() {
           </Link>
         </div>
       </div>
-      <div className="w-full lg:w-5/6 mt-12">
+      <div className="w-full lg:w-5/6 mt-12 md:ml-[16.6%]">
         <Outlet />
       </div>
     </div>

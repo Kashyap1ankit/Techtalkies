@@ -42,6 +42,8 @@ indexRouter.get("/auth", authMiddleware, async (c) => {
   }
 });
 
+//To get all the bookmarks of the user
+
 indexRouter.get("/bookmark", authMiddleware, async (c) => {
   const userId = c.get("userId");
   const prisma = new PrismaClient({
@@ -61,6 +63,7 @@ indexRouter.get("/bookmark", authMiddleware, async (c) => {
               select: {
                 id: true,
                 title: true,
+                createdAt: true,
                 description: true,
                 thumbnail: true,
                 author: {

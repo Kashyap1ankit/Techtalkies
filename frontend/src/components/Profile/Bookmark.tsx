@@ -1,16 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Medal, UserCircle } from "lucide-react";
-import Title from "../All/Title";
-import Image from "../All/images";
-import SharePop from "../Dashboard/share-pop";
-import { useBookmarkClick } from "@/hooks/useBookmark";
 import BlogCard from "../Dashboard/blogCard";
 import { bookmarkResponseType } from "@/types/types";
 import useAuth from "@/hooks/auth";
 
 export default function Bookmark() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [bookmarkData, setBookmarkData] = useState<
     bookmarkResponseType[] | null
   >([]);
@@ -29,7 +24,7 @@ export default function Bookmark() {
             },
           }
         );
-        console.log(bookmarkData);
+        console.log(res.data);
         setBookmarkData(res.data.bookmarks);
       } catch (error) {
         console.log(error);
@@ -43,7 +38,7 @@ export default function Bookmark() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center w-screen h-screen">
+      <div className="flex justify-center items-center  h-screen">
         Loading Bookmarks...
       </div>
     );
@@ -63,6 +58,7 @@ export default function Bookmark() {
               des={post.description}
               author={post.author.username}
               thumbnail={post.thumbnail}
+              createdAt={post.createdAt}
             />
           );
         })}

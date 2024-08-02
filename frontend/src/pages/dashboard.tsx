@@ -21,6 +21,7 @@ export default function Dashboard() {
   interface data {
     id: string;
     title: string;
+    createdAt: string;
     description: string;
     thumbnail: string;
     published: boolean;
@@ -94,6 +95,7 @@ export default function Dashboard() {
                     author={e.author.username}
                     des={e.description}
                     currentUser={currentUser}
+                    createdAt={e.createdAt}
                   />
                 );
               })}

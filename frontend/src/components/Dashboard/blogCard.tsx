@@ -21,6 +21,15 @@ export default function BlogCard(props: blogCardPropsType) {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+  //Converting the date
+
+  const date = new Date(props.createdAt);
+
+  const day = String(date.getDay()).padStart(2, "0");
+  const month = String(date.getMonth()).padStart(2, "0");
+  const year = String(date.getFullYear()).padStart(2, "0");
+  const formattedDay = `${day}-${month}-${year}`;
+
   //Bookmark custom hook
 
   const { handleBookmarkClick, bookmarkToaster, bookmarked }: bookmarkType =
@@ -94,7 +103,7 @@ export default function BlogCard(props: blogCardPropsType) {
                   text={` ${props.author.slice(0, 15)}`}
                   className="text-black font-intro dark:text-gray"
                 />
-                <Title text="Jul 22 ,2024" className="text-gray text-sm" />
+                <Title text={formattedDay} className="text-gray text-sm" />
               </div>
             </div>
 

@@ -11,6 +11,7 @@ export type blogCardPropsType = {
   author: string;
   currentUser: string;
   thumbnail: string;
+  createdAt: string;
 };
 
 export type titleComponentType = {
@@ -47,6 +48,7 @@ export type bookmarkResponseType = {
     id: string;
     title: string;
     description: string;
+    createdAt: string;
     thumbnail: string;
     author: {
       email: string;
