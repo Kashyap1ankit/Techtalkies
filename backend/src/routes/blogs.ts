@@ -16,7 +16,7 @@ const blogRouter = new Hono<{
   };
 }>();
 
-//Get all the blog post
+//-------------------------------Get all Blog Route ----------------------------
 
 blogRouter.get("/bulk", async (c) => {
   const prisma = new PrismaClient({
@@ -50,7 +50,7 @@ blogRouter.get("/bulk", async (c) => {
   }
 });
 
-//Get  blog post by id
+//-------------------------------Get Blog by id ----------------------------
 
 blogRouter.get("/:id", async (c) => {
   const prisma = new PrismaClient({
@@ -87,7 +87,7 @@ blogRouter.get("/:id", async (c) => {
 
 blogRouter.use(authMiddleware);
 
-// Create blog route
+// -------------------------------Create blog Route  ----------------------------
 
 blogRouter.post("/", async (c) => {
   const authorId = c.get("userId");
@@ -121,7 +121,7 @@ blogRouter.post("/", async (c) => {
   }
 });
 
-//Update blog route
+// -------------------------------Update blog Route  ----------------------------
 
 blogRouter.put("/", async (c) => {
   const authorId = c.get("userId");
@@ -160,7 +160,7 @@ blogRouter.put("/", async (c) => {
   }
 });
 
-//bookmark route for creating new blog
+// -------------------------------Bookmark a blog Route  ----------------------------
 
 blogRouter.post("/bookmark/:blogId", async (c) => {
   const userId = c.get("userId");
@@ -182,8 +182,6 @@ blogRouter.post("/bookmark/:blogId", async (c) => {
   }).$extends(withAccelerate());
 
   try {
-    //checking for existing bookmark
-
     const checkForBookMark = await prisma.bookMark.findFirst({
       where: {
         postId: blogId,
@@ -192,7 +190,7 @@ blogRouter.post("/bookmark/:blogId", async (c) => {
     });
 
     if (checkForBookMark) {
-      const removed = await prisma.bookMark.delete({
+      await prisma.bookMark.delete({
         where: {
           bookMarkId: {
             postId: blogId,
@@ -221,7 +219,50 @@ blogRouter.post("/bookmark/:blogId", async (c) => {
   }
 });
 
-//Destroy Blog route
+// -------------------------------Check for a post is Bookmark or not  ----------------------------
+
+blogRouter.get("/bookmark/:blogId", async (c) => {
+  const userId = c.get("userId");
+  const blogId = c.req.param("blogId");
+
+  const { success } = bookmarkSchema.safeParse({
+    postId: blogId,
+    userId: userId,
+  });
+  console.log(success);
+
+  if (!success) {
+    c.status(411);
+    return c.json({ message: "Schema vliadation failed" });
+  }
+
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const checkForBookMark = await prisma.bookMark.findFirst({
+      where: {
+        postId: blogId,
+        userId: userId,
+      },
+    });
+
+    if (checkForBookMark) {
+      c.status(200);
+      return c.json({
+        message: "Post is bookmarked",
+      });
+    }
+    c.status(404);
+    return c.json({ message: "Not bookmarked" });
+  } catch (error) {
+    c.status(404);
+    return c.json({ message: "Some error occured" });
+  }
+});
+
+// -------------------------------Destroy blog Route  ----------------------------
 
 blogRouter.delete("/:id", async (c) => {
   const id = c.req.param("id");

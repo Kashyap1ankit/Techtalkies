@@ -2,6 +2,7 @@ export type bookmarkType = {
   handleBookmarkClick: () => Promise<void>;
   bookmarkToaster: { status: boolean; message: string };
   bookmarked: boolean;
+  setBookmarked: any;
 };
 
 export type blogCardPropsType = {
@@ -9,7 +10,6 @@ export type blogCardPropsType = {
   title: string;
   des: string;
   author: string;
-  currentUser: string;
   thumbnail: string;
   createdAt: string;
 };
@@ -54,5 +54,17 @@ export type bookmarkResponseType = {
       email: string;
       username: string;
     };
+  };
+};
+
+export type postResponseType = {
+  id: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  thumbnail: string;
+  author: {
+    email: string;
+    username: string;
   };
 };

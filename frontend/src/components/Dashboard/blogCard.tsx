@@ -10,12 +10,15 @@ import { errors, loader } from "@/store/atoms";
 import Image from "../All/images";
 import DeleteAlert from "./delete-alert";
 import { ToastDemo } from "../All/Toast";
-
 import { Medal, UserCircle } from "lucide-react";
 import { useBookmarkClick } from "@/hooks/useBookmark";
 import { blogCardPropsType, bookmarkType } from "@/types/types";
+import useAuth from "@/hooks/auth";
+import { useEffect } from "react";
 
 export default function BlogCard(props: blogCardPropsType) {
+  const { currentUser } = useAuth();
+
   const [loading, setLoading] = useRecoilState(loader);
   const [error, setError] = useRecoilState(errors);
   const navigate = useNavigate();
@@ -32,8 +35,12 @@ export default function BlogCard(props: blogCardPropsType) {
 
   //Bookmark custom hook
 
-  const { handleBookmarkClick, bookmarkToaster, bookmarked }: bookmarkType =
-    useBookmarkClick(props.id);
+  const {
+    handleBookmarkClick,
+    bookmarkToaster,
+    bookmarked,
+    setBookmarked,
+  }: bookmarkType = useBookmarkClick(props.id);
 
   function handleClick() {
     navigate(`/blog/${props.id}`);
@@ -68,17 +75,36 @@ export default function BlogCard(props: blogCardPropsType) {
     call();
   }
 
+  useEffect(() => {
+    async function checkForBookmark() {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/api/v1/blog/bookmark/${props.id}`,
+          {
+            headers: {
+              Authorization: localStorage.getItem("blog-token"),
+            },
+          }
+        );
+        if (response.status !== 200) {
+          return setBookmarked(false);
+        }
+        setBookmarked(true);
+      } catch (error) {
+        return setBookmarked(false);
+      }
+    }
+
+    checkForBookmark();
+  }, []);
+
   return (
     <div className="bg-white dark:bg-transparent mb-12    ">
-      {/* Bookmark  */}
-
       {bookmarkToaster.status ? (
         <ToastDemo title={bookmarkToaster.message} description="" />
       ) : (
         ""
       )}
-
-      {/* error  */}
 
       {error.status ? (
         <div>
@@ -177,7 +203,7 @@ export default function BlogCard(props: blogCardPropsType) {
               </div>
 
               <div>
-                {props.currentUser === props.author ? (
+                {currentUser === props.author ? (
                   <DeleteAlert handleDelete={handleDelete} />
                 ) : (
                   ""

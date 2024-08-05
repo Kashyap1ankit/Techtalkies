@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import BlogCard from "../Dashboard/blogCard";
 import { bookmarkResponseType } from "@/types/types";
-import useAuth from "@/hooks/auth";
 
 export default function Bookmark() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -10,14 +9,12 @@ export default function Bookmark() {
     bookmarkResponseType[] | null
   >([]);
 
-  const { currentUser } = useAuth();
-
   useEffect(() => {
     async function getBookmarks() {
       setLoading(true);
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/v1/bookmark`,
+          `${import.meta.env.VITE_BASE_URL}/api/v1/user/bookmark`,
           {
             headers: {
               Authorization: localStorage.getItem("blog-token"),
@@ -53,7 +50,6 @@ export default function Bookmark() {
             <BlogCard
               key={post.id}
               id={post.id}
-              currentUser={currentUser}
               title={post.title}
               des={post.description}
               author={post.author.username}

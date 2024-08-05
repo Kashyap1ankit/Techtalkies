@@ -53,5 +53,5 @@ export function useBookmarkClick(id: string): bookmarkType {
       setBookmarked(false);
     }
   }
-  return { handleBookmarkClick, bookmarkToaster, bookmarked };
+  return { handleBookmarkClick, bookmarkToaster, bookmarked, setBookmarked };
 }
