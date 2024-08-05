@@ -16,13 +16,12 @@ import axios from "axios";
 import Alert from "@/components/All/Alert";
 import { useNavigate } from "react-router-dom";
 
-import { ToastDemo } from "../All/Toast";
+import { ToastDemo } from "../../All/Toast";
 import { z } from "zod";
 import { useRecoilState } from "recoil";
 import { errors, loader, successCondition } from "@/store/atoms";
-import LoadingAnimation from "../../lottie/loading.json";
+import LoadingAnimation from "../../../lottie/loading.json";
 import Lottie from "lottie-react";
-import Account from "./Account";
 import { deleteAccountType } from "@/types/types";
 
 export default function Delete() {
@@ -93,64 +92,60 @@ export default function Delete() {
           {error.status ? <Alert message={error.message} /> : ""}
 
           <div>
-            <Account />
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="bg-white dark:bg-card p-4 w-1/2 mx-auto"
+              >
+                <Title
+                  text="DELETE"
+                  className="xl:text-3xl text-red text-center font-kanit xl:mt-6"
+                />
 
-            <div>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="bg-white dark:bg-card p-4"
+                <Title
+                  text="Are you sure ? Once you delete your account , all your related posts get deleted!"
+                  className="xl:text-sm text-gray  text-center xl:mb-12 font-kanit mt-2"
+                />
+
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Confirm Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Enter Current Password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription></FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  className="w-full mt-4"
+                  type="submit"
+                  variant="destructive"
+                >
+                  Delete Account
+                </Button>
+
+                <div
+                  onClick={() => {
+                    navigate("/dashboard");
+                  }}
                 >
                   <Title
-                    text="DELETE"
-                    className="xl:text-3xl text-red text-center font-kanit xl:mt-6"
+                    text="Go Back"
+                    className="xl:text-sm text-center text-mixedShadow xl:my-6 font-title cursor-pointer"
                   />
-
-                  <Title
-                    text="Are you sure ? Once you delete your account , all your related posts get deleted!"
-                    className="xl:text-sm text-gray  text-center xl:mb-12 font-kanit mt-2"
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Confirm Password</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="text"
-                            placeholder="Enter Current Password"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription></FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button
-                    className="w-full mt-4"
-                    type="submit"
-                    variant="destructive"
-                  >
-                    Delete Account
-                  </Button>
-
-                  <div
-                    onClick={() => {
-                      navigate("/dashboard");
-                    }}
-                  >
-                    <Title
-                      text="Go Back"
-                      className="xl:text-sm text-center text-mixedShadow xl:my-6 font-title cursor-pointer"
-                    />
-                  </div>
-                </form>
-              </Form>
-            </div>
+                </div>
+              </form>
+            </Form>
           </div>
 
           {/* Success Part  */}

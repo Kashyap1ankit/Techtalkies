@@ -13,19 +13,15 @@ import { ToastDemo } from "../All/Toast";
 import { Medal, UserCircle } from "lucide-react";
 import { useBookmarkClick } from "@/hooks/useBookmark";
 import { blogCardPropsType, bookmarkType } from "@/types/types";
-import useAuth from "@/hooks/auth";
-import { useEffect } from "react";
+import useCheckBookmark from "@/hooks/useCheckBookmark";
 
 export default function BlogCard(props: blogCardPropsType) {
-  const { currentUser } = useAuth();
-
   const [loading, setLoading] = useRecoilState(loader);
   const [error, setError] = useRecoilState(errors);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   //Converting the date
-
   const date = new Date(props.createdAt);
 
   const day = String(date.getDay()).padStart(2, "0");
@@ -35,12 +31,8 @@ export default function BlogCard(props: blogCardPropsType) {
 
   //Bookmark custom hook
 
-  const {
-    handleBookmarkClick,
-    bookmarkToaster,
-    bookmarked,
-    setBookmarked,
-  }: bookmarkType = useBookmarkClick(props.id);
+  const { handleBookmarkClick, bookmarkToaster, bookmarked }: bookmarkType =
+    useBookmarkClick(props.id);
 
   function handleClick() {
     navigate(`/blog/${props.id}`);
@@ -75,28 +67,7 @@ export default function BlogCard(props: blogCardPropsType) {
     call();
   }
 
-  useEffect(() => {
-    async function checkForBookmark() {
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/api/v1/blog/bookmark/${props.id}`,
-          {
-            headers: {
-              Authorization: localStorage.getItem("blog-token"),
-            },
-          }
-        );
-        if (response.status !== 200) {
-          return setBookmarked(false);
-        }
-        setBookmarked(true);
-      } catch (error) {
-        return setBookmarked(false);
-      }
-    }
-
-    checkForBookmark();
-  }, []);
+  useCheckBookmark(props.id);
 
   return (
     <div className="bg-white dark:bg-transparent mb-12    ">
@@ -114,7 +85,9 @@ export default function BlogCard(props: blogCardPropsType) {
         ""
       )}
       {loading ? (
-        <div>Loading...</div>
+        <div className="flex justify-center items-center  h-screen">
+          Checking For Bookmarks...
+        </div>
       ) : (
         <div
           className="border-2 border-zinc100  p-2 lg:p-8  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto "
@@ -203,7 +176,7 @@ export default function BlogCard(props: blogCardPropsType) {
               </div>
 
               <div>
-                {currentUser === props.author ? (
+                {props.currentUser.username === props.author ? (
                   <DeleteAlert handleDelete={handleDelete} />
                 ) : (
                   ""

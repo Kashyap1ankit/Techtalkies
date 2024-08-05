@@ -1,3 +1,15 @@
+export type currentUser = {
+  id: string;
+  username: string;
+  email: string;
+  bookmarks: {
+    id: string;
+  }[];
+  posts: {
+    id: string;
+  }[];
+};
+
 export type bookmarkType = {
   handleBookmarkClick: () => Promise<void>;
   bookmarkToaster: { status: boolean; message: string };
@@ -10,6 +22,7 @@ export type blogCardPropsType = {
   title: string;
   des: string;
   author: string;
+  currentUser: currentUser;
   thumbnail: string;
   createdAt: string;
 };

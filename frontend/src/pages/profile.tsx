@@ -14,7 +14,7 @@ export default function Profile() {
 
   return (
     <div className="flex gap-8 ">
-      <div className="hidden lg:block lg:w-1/6 border-r-2  min-h-screen fixed left-0 bg-white">
+      <div className="hidden lg:block lg:w-1/6 border-r-2  min-h-screen fixed left-0 bg-white dark:bg-black">
         <div>
           <Link to={"/dashboard"}>
             <ArrowLeft className="m-4 text-gray100 hover:rounded-full hover:border-2 border-black" />
@@ -25,7 +25,7 @@ export default function Profile() {
             to={"/profile/account"}
             className={`${
               location.pathname === "/profile/account"
-                ? "bg-sky-200 p-4 rounded-md"
+                ? "bg-sky-200 dark:bg-card p-4 rounded-md"
                 : ""
             }  duration-200`}
           >
@@ -36,7 +36,7 @@ export default function Profile() {
             to="/profile/bookmarks"
             className={`${
               location.pathname === "/profile/bookmarks"
-                ? "bg-sky-200 p-4 rounded-md"
+                ? "bg-sky-200 dark:bg-card p-4 rounded-md"
                 : ""
             } duration-200`}
           >
@@ -47,7 +47,7 @@ export default function Profile() {
             to={"/profile/posts"}
             className={`${
               location.pathname === "/profile/posts"
-                ? "bg-sky-200 p-4 rounded-md"
+                ? "bg-sky-200 dark:bg-card p-4 rounded-md"
                 : ""
             } duration-200`}
           >
@@ -58,7 +58,7 @@ export default function Profile() {
             to={"/profile/settings"}
             className={`${
               location.pathname === "/profile/settings"
-                ? "bg-sky-200 p-4 rounded-md"
+                ? "bg-sky-200 dark:bg-card p-4 rounded-md"
                 : ""
             } duration-200`}
           >

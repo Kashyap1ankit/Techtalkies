@@ -9,6 +9,8 @@ import { useRecoilState } from "recoil";
 import { loader, totalBlogs } from "@/store/atoms";
 import { Button } from "@/components/ui/button";
 import Footer from "../components/All/footer";
+import SideBarCard from "@/components/Dashboard/side-bar";
+import Title from "@/components/All/Title";
 
 export default function Dashboard() {
   const BASE_URL: string = import.meta.env.VITE_BASE_URL;
@@ -101,7 +103,20 @@ export default function Dashboard() {
               })}
             </div>
 
-            <div className="w-1/4 hidden lg:block">something coming...</div>
+            <div className="w-1/4 px-4 hidden lg:block">
+              <div className="shadow-lg rounded-md p-4">
+                <Title text="Recently Posted" className="font-kanit text-xl" />
+                {allBlogs.map((e: any) => {
+                  return (
+                    <SideBarCard
+                      title={e.title}
+                      author={e.author}
+                      createdAt={e.createdAt}
+                    />
+                  );
+                })}
+              </div>
+            </div>
           </div>
           {/* See More Button  */}
 

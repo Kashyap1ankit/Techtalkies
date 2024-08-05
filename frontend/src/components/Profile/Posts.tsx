@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import BlogCard from "../Dashboard/blogCard";
 import { postResponseType } from "@/types/types";
+import useAuth from "@/hooks/auth";
 
 export default function Post() {
+  const { currentUser } = useAuth();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const [loading, setLoading] = useState(false);
@@ -44,9 +46,11 @@ export default function Post() {
           return (
             <BlogCard
               id={e.id}
+              key={e.id}
               title={e.title}
               des={e.description}
               createdAt={e.createdAt}
+              currentUser={currentUser}
               thumbnail={e.thumbnail}
               author={e.author.username}
             />
