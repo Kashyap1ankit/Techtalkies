@@ -3,7 +3,16 @@ import Title from "../All/Title";
 import { BookmarkCheck, Notebook } from "lucide-react";
 
 export default function Account() {
-  const { currentUser } = useAuth();
+  const { authloading, currentUser } = useAuth();
+
+  if (authloading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading....
+      </div>
+    );
+  }
+
   return (
     <div className="mt-12 px-[10%]">
       <Title text="Public Profile" className="font-kanit text-2xl" />

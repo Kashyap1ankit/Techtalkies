@@ -1,20 +1,54 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import SideBarCard from "./side-bar-card";
 import Title from "../All/Title";
 
-export default function SideBarCard(props: any) {
-  //Converting the date
-  const date = new Date(props.createdAt);
+export default function SideBar() {
+  const [recentBlogs, setRecentBlog] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  useEffect(() => {
+    setLoading(true);
+    const getAllBlogs = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/api/v1/blog/bulk?number=4`, {
+          headers: {
+            Authorization: localStorage.getItem("blog-token"),
+          },
+        });
+        setRecentBlog(res.data.allPosts);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const day = String(date.getDay()).padStart(2, "0");
-  const month = String(date.getMonth()).padStart(2, "0");
-  const year = String(date.getFullYear()).padStart(2, "0");
-  const formattedDay = `${day}-${month}-${year}`;
+    getAllBlogs();
+  }, []);
+
+  if (loading) {
+    return <div>Loading Recent Posts...</div>;
+  }
+
   return (
-    <div className="mt-6">
-      <Title text={props.title} className="text-lg " />
-      <div className="flex justify-between">
-        <Title text={props.author.username} className="text-gray font-bold" />
-        <Title text={formattedDay} className="text-gray font-bold" />
-      </div>
+    <div className="border-2 border-zinc100 rounded-lg p-4 w-full">
+      <Title
+        text="Recently Posted"
+        className="font-kanit text-2xl text-blue950"
+      />
+
+      {recentBlogs.map((e: any) => {
+        return (
+          <SideBarCard
+            key={e.id}
+            id={e.id}
+            title={e.title}
+            createdAt={e.createdAt}
+            author={e.author}
+          />
+        );
+      })}
     </div>
   );
 }

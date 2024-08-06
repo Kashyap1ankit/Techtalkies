@@ -49,6 +49,7 @@ module.exports = {
         upload: "#f2f2f0",
         zinc100: "#f4f4f5",
         lime200: "#d9f99d",
+        blue950: "#172554",
         ///
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

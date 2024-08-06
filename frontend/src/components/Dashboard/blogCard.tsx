@@ -90,7 +90,7 @@ export default function BlogCard(props: blogCardPropsType) {
         </div>
       ) : (
         <div
-          className="border-2 border-zinc100  p-2 lg:p-8  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto "
+          className="border-2 border-zinc100  p-2 lg:p-4  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto "
           onClick={handleClick}
         >
           {/* first part  */}
@@ -139,7 +139,7 @@ export default function BlogCard(props: blogCardPropsType) {
                     ? props.thumbnail
                     : "https://res.cloudinary.com/ddnkrlfjn/image/upload/v1700826546/cld-sample-4.jpg"
                 }
-                className=" rounded-md aspect-video "
+                className=" rounded-md aspect-video w-full md:w-fit "
               />
             </div>
           </div>
