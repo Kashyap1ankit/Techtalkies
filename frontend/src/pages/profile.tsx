@@ -1,25 +1,26 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Background from "@/components/All/Bg";
-import Account from "@/components/Profile/Account";
-import Delete from "@/components/Profile/Delete";
+import DesktopSideBar from "@/components/Profile/Sidebar/Desk-side-Bar";
+import MobSideBar from "@/components/Profile/Sidebar/Mob-side-Bar";
+import { useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  return (
-    <div className="h-screen flex justify-center items-center">
-      <Background />
+  const navigate = useNavigate();
+  const location = useLocation();
 
-      <Tabs defaultValue="account" className="xl:w-1/3  shadow-md">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Settings</TabsTrigger>
-        </TabsList>
-        <TabsContent value="account">
-          <Account />
-        </TabsContent>
-        <TabsContent value="password">
-          <Delete />
-        </TabsContent>
-      </Tabs>
+  useEffect(() => {
+    if (location.pathname === "/profile") {
+      navigate("/profile/account");
+    }
+  }, []);
+
+  return (
+    <div className="block lg:flex gap-8 ">
+      <DesktopSideBar />
+      <MobSideBar />
+
+      <div className="w-full lg:w-5/6 mt-12 lg:ml-[16.6%]">
+        <Outlet />
+      </div>
     </div>
   );
 }

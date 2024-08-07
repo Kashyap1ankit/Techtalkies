@@ -1,168 +1,68 @@
-import { Button } from "@/components/ui/button";
-import Title from "@/components/All/Title";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { updateInput, updateProfileSchema } from "package-medium";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import Alert from "@/components/All/Alert";
-import { useNavigate } from "react-router-dom";
-import { ToastDemo } from "../All/Toast";
-import { useRecoilState } from "recoil";
-import { errors, loader, successCondition } from "@/store/atoms";
-import LoadingAnimation from "../../lottie/loading.json";
-import Lottie from "lottie-react";
+import useAuth from "@/hooks/auth";
+import Title from "../All/Title";
+import { BookmarkCheck, Notebook } from "lucide-react";
 
 export default function Account() {
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const { authloading, currentUser } = useAuth();
 
-  const navigate = useNavigate();
-
-  const form = useForm<updateInput>({
-    resolver: zodResolver(updateProfileSchema),
-  });
-
-  const [loading, setLoading] = useRecoilState(loader);
-  const [error, setError] = useRecoilState(errors);
-
-  const [success, setSuccess] = useRecoilState(successCondition);
-
-  function onSubmit(data: updateInput) {
-    const token = localStorage.getItem("blog-token");
-    setLoading(true);
-    const call = async () => {
-      try {
-        await axios.put(`${BASE_URL}/api/v1/user`, data, {
-          headers: {
-            Authorization: token,
-          },
-        });
-
-        setSuccess(true),
-          setTimeout(() => {
-            setSuccess(false);
-            navigate("/dashboard");
-          }, 1700);
-      } catch (error: any) {
-        setError({
-          status: true,
-          message: error.response.data.message,
-        });
-        setTimeout(() => {
-          setError({
-            status: false,
-            message: "",
-          });
-        }, 1500);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    call();
+  if (authloading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading....
+      </div>
+    );
   }
 
   return (
-    <div>
-      {/* loading part .. */}
+    <div className="mt-12 px-[5%] lg:px-[10%]">
+      <Title text="Public Profile" className="font-kanit text-2xl" />
+      <hr />
 
-      {loading ? (
-        <div className="xsm:size-28 md:size-36 lg:size-52 mx-auto">
-          <Lottie animationData={LoadingAnimation} />
+      <div className="block lg:flex lg:flex-row-reverse gap-8 justify-between ">
+        {/*left side  */}
+
+        <div className="w-full lg:w-1/4 mt-12">
+          <img
+            src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1722816000&semt=sph"
+            alt=""
+            className="w-36 mx-auto lg:w-52 rounded-full shadow-md"
+          />
         </div>
-      ) : (
-        <div>
-          {/* Error part  */}
+        {/* right side  */}
+        <div className="w-full lg:w-3/4 mb-6">
+          <div className="mt-12">
+            <p className="font-noto text-lg">Username Name</p>
+            <p className="mt-4 w-full lg:w-3/4 xl:w-1/2  bg-slate py-2 px-4 rounded-md  ">
+              {currentUser.username}
+            </p>
+          </div>
 
-          {error.status ? <Alert message={error.message} /> : ""}
+          <div className="mt-12">
+            <p className="font-noto text-lg">Public Email</p>
+            <p className="mt-4 w-full lg:w-3/4 xl:w-1/2  bg-slate py-2 px-4 rounded-md  ">
+              {currentUser.email}
+            </p>
+          </div>
 
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="bg-white dark:bg-card  p-4"
-            >
-              <Title
-                text="Change account details!"
-                className="xl:text-3xl text-center xl:mb-12 font-kanit xl:mt-6"
-              />
+          <div className="mt-12">
+            <p className="flex  gap-2 font-noto text-lg">
+              <BookmarkCheck /> <span>Bookmarks</span>
+            </p>
+            <p className="mt-4 w-full lg:w-3/4 xl:w-1/2  bg-slate py-2 px-4 rounded-md  ">
+              {currentUser.bookmarks.length}
+            </p>
+          </div>
 
-              <FormField
-                control={form.control}
-                name="oldPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Current Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Enter Current Password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription></FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="newPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>New Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Enter New Password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Enter password between 4-8 characters
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button className="w-full mt-4" type="submit">
-                Submit
-              </Button>
-
-              <div
-                onClick={() => {
-                  navigate("/dashboard");
-                }}
-              >
-                <Title
-                  text="Go Back"
-                  className="xl:text-sm text-center text-mixedShadow xl:my-6 font-title cursor-pointer"
-                />
-              </div>
-            </form>
-          </Form>
-
-          {/* Success Part  */}
-
-          {success ? (
-            <ToastDemo
-              title="Updated Successfully"
-              description="Your account details are updated successfully"
-            />
-          ) : (
-            ""
-          )}
+          <div className="mt-12">
+            <p className="flex  gap-2 font-noto text-lg">
+              <Notebook /> <span>Posts</span>
+            </p>
+            <p className="mt-4 w-full lg:w-3/4 xl:w-1/2  bg-slate py-2 px-4 rounded-md  ">
+              {currentUser.posts.length}
+            </p>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

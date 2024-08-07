@@ -6,73 +6,33 @@ import axios from "axios";
 import Alert from "../All/Alert";
 import SharePop from "./share-pop";
 import { useRecoilState } from "recoil";
-import { errors, loader, bookmarkToast, isBookmarked } from "@/store/atoms";
+import { errors, loader } from "@/store/atoms";
 import Image from "../All/images";
 import DeleteAlert from "./delete-alert";
 import { ToastDemo } from "../All/Toast";
 import { Medal, UserCircle } from "lucide-react";
-type propsType = {
-  id: string;
-  title: string;
-  des: string;
-  author: string;
-  currentUser: string;
-  thumbnail: string;
-};
+import { useBookmarkClick } from "@/hooks/useBookmark";
+import { blogCardPropsType, bookmarkType } from "@/types/types";
+import useCheckBookmark from "@/hooks/useCheckBookmark";
 
-export default function BlogCard(props: propsType) {
-  const [bookmarkToaster, setBookmarkToast] = useRecoilState(bookmarkToast);
-  const [bookmarked, setBookmarked] = useRecoilState(isBookmarked(props.id));
+export default function BlogCard(props: blogCardPropsType) {
   const [loading, setLoading] = useRecoilState(loader);
   const [error, setError] = useRecoilState(errors);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  async function handleBookmarkClick() {
-    try {
-      const res = await axios.post(
-        `${BASE_URL}/api/v1/blog/bookmark/${props.id}`,
-        {},
-        {
-          headers: {
-            Authorization: localStorage.getItem("blog-token"),
-          },
-        }
-      );
+  //Converting the date
+  const date = new Date(props.createdAt);
 
-      //Handling the remove of bookmark
+  const day = String(date.getDay()).padStart(2, "0");
+  const month = String(date.getMonth()).padStart(2, "0");
+  const year = String(date.getFullYear()).padStart(2, "0");
+  const formattedDay = `${day}-${month}-${year}`;
 
-      if (res.status === 202) {
-        setBookmarkToast({
-          status: true,
-          message: "Bookmark Removed",
-        });
-        setTimeout(() => {
-          setBookmarkToast({
-            status: false,
-            message: "",
-          });
-        }, 2000);
-        return setBookmarked(false);
-      }
+  //Bookmark custom hook
 
-      //Handling the add of bookmark
-
-      setBookmarkToast({
-        status: true,
-        message: "Bookmark Added",
-      });
-      setTimeout(() => {
-        setBookmarkToast({
-          status: false,
-          message: "",
-        });
-      }, 2000);
-      setBookmarked(true);
-    } catch (error) {
-      setBookmarked(false);
-    }
-  }
+  const { handleBookmarkClick, bookmarkToaster, bookmarked }: bookmarkType =
+    useBookmarkClick(props.id);
 
   function handleClick() {
     navigate(`/blog/${props.id}`);
@@ -107,17 +67,15 @@ export default function BlogCard(props: propsType) {
     call();
   }
 
+  useCheckBookmark(props.id);
+
   return (
     <div className="bg-white dark:bg-transparent mb-12    ">
-      {/* Bookmark  */}
-
       {bookmarkToaster.status ? (
         <ToastDemo title={bookmarkToaster.message} description="" />
       ) : (
         ""
       )}
-
-      {/* error  */}
 
       {error.status ? (
         <div>
@@ -127,10 +85,12 @@ export default function BlogCard(props: propsType) {
         ""
       )}
       {loading ? (
-        <div>Loading...</div>
+        <div className="flex justify-center items-center  h-screen">
+          Checking For Bookmarks...
+        </div>
       ) : (
         <div
-          className="border-2 border-zinc100  p-2 lg:p-8  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto "
+          className="border-2 border-zinc100  p-2 lg:p-4  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto "
           onClick={handleClick}
         >
           {/* first part  */}
@@ -142,7 +102,7 @@ export default function BlogCard(props: propsType) {
                   text={` ${props.author.slice(0, 15)}`}
                   className="text-black font-intro dark:text-gray"
                 />
-                <Title text="Jul 22 ,2024" className="text-gray text-sm" />
+                <Title text={formattedDay} className="text-gray text-sm" />
               </div>
             </div>
 
@@ -179,7 +139,7 @@ export default function BlogCard(props: propsType) {
                     ? props.thumbnail
                     : "https://res.cloudinary.com/ddnkrlfjn/image/upload/v1700826546/cld-sample-4.jpg"
                 }
-                className=" rounded-md aspect-video "
+                className=" rounded-md aspect-video w-full md:w-fit "
               />
             </div>
           </div>
@@ -216,7 +176,7 @@ export default function BlogCard(props: propsType) {
               </div>
 
               <div>
-                {props.currentUser === props.author ? (
+                {props.currentUser.username === props.author ? (
                   <DeleteAlert handleDelete={handleDelete} />
                 ) : (
                   ""
@@ -224,18 +184,6 @@ export default function BlogCard(props: propsType) {
               </div>
             </div>
           </div>
-
-          {/* <div className="flex justify-between mt-6 xsm:px-2 ">
-            
-        
-              <img
-                className={`xsm:size-4 md:size-6  cursor-pointer dark:invert`}
-                src={Open}
-                alt=""
-                onClick={handleClick}
-              />
-            </div>
-          </div> */}
         </div>
       )}
     </div>

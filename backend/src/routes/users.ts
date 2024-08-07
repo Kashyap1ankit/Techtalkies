@@ -216,4 +216,96 @@ userRouter.delete("/destroy", authMiddleware, async (c) => {
   }
 });
 
+// -------------------------------Get users Post Route ----------------------------
+
+userRouter.get("/posts", async (c) => {
+  const userId = c.get("userId");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  });
+
+  try {
+    const res = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+
+      select: {
+        posts: {
+          select: {
+            id: true,
+            title: true,
+            createdAt: true,
+            description: true,
+            thumbnail: true,
+            author: {
+              select: {
+                email: true,
+                username: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!res) throw new Error("No Post with this user exits");
+
+    c.status(200);
+    return c.json({ response: res });
+  } catch (error) {
+    c.status(404);
+    return c.json({ message: "Some Error Occured" });
+  }
+});
+
+// -------------------------------Get users all bookmarked posts Route ----------------------------
+
+userRouter.get("/bookmark", authMiddleware, async (c) => {
+  const userId = c.get("userId");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const res = await prisma.user.findFirst({
+      relationLoadStrategy: "join",
+      where: {
+        id: userId,
+      },
+      select: {
+        bookmarks: {
+          select: {
+            post: {
+              select: {
+                id: true,
+                title: true,
+                createdAt: true,
+                description: true,
+                thumbnail: true,
+                author: {
+                  select: {
+                    email: true,
+                    username: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!res) throw new Error("Error While fetching the data");
+    c.status(200);
+    return c.json({
+      bookmarks: res?.bookmarks,
+    });
+  } catch (error) {
+    c.status(404);
+    return c.json({
+      message: "Error While Fetching the Data",
+    });
+  }
+});
+
 export default userRouter;

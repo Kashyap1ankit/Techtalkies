@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { loader, totalBlogs } from "@/store/atoms";
 import { Button } from "@/components/ui/button";
 import Footer from "../components/All/footer";
+import SideBar from "@/components/Dashboard/side-bar";
 
 export default function Dashboard() {
   const BASE_URL: string = import.meta.env.VITE_BASE_URL;
@@ -21,6 +22,7 @@ export default function Dashboard() {
   interface data {
     id: string;
     title: string;
+    createdAt: string;
     description: string;
     thumbnail: string;
     published: boolean;
@@ -82,8 +84,11 @@ export default function Dashboard() {
           <Background2 />
 
           <Navbar />
+
+          {/* left side  */}
+
           <div className="flex gap-4  mt-12">
-            <div className="w-full lg:w-3/4 mx-auto mb-12 px-4 xl:px-0 ">
+            <div className="w-full lg:w-3/4 mx-auto mb-12 px-4 xl:px-0">
               {allBlogs.map((e: data) => {
                 return (
                   <BlogCard
@@ -94,12 +99,15 @@ export default function Dashboard() {
                     author={e.author.username}
                     des={e.description}
                     currentUser={currentUser}
+                    createdAt={e.createdAt}
                   />
                 );
               })}
             </div>
-
-            <div className="w-1/4 hidden lg:block">something coming...</div>
+            {/* right side  */}
+            <div className="w-1/4 px-4 hidden 2xl:block">
+              <SideBar />
+            </div>
           </div>
           {/* See More Button  */}
 

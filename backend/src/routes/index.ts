@@ -29,6 +29,17 @@ indexRouter.get("/auth", authMiddleware, async (c) => {
       select: {
         id: true,
         username: true,
+        email: true,
+        posts: {
+          select: {
+            id: true,
+          },
+        },
+        bookmarks: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
 
