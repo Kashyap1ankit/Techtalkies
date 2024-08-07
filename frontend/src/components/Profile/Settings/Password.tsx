@@ -88,18 +88,18 @@ export default function Password() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="bg-white dark:bg-card p-4 w-1/2 mx-auto"
+              className="bg-white dark:bg-card p-4 w-full xl:w-1/2 mx-auto"
             >
               <Title
                 text="Change account details!"
-                className="xl:text-3xl text-center xl:mb-12 font-kanit xl:mt-6"
+                className="text-2xl xl:text-3xl text-center mb-6 xl:mb-12 font-kanit xl:mt-6"
               />
 
               <FormField
                 control={form.control}
                 name="oldPassword"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="mb-6">
                     <FormLabel>Current Password</FormLabel>
                     <FormControl>
                       <Input
@@ -118,7 +118,7 @@ export default function Password() {
                 control={form.control}
                 name="newPassword"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="mb-6">
                     <FormLabel>New Password</FormLabel>
                     <FormControl>
                       <Input
@@ -134,7 +134,7 @@ export default function Password() {
                   </FormItem>
                 )}
               />
-              <Button className="w-full mt-4" type="submit">
+              <Button className="w-full mt-4 mb-4" type="submit">
                 Submit
               </Button>
 

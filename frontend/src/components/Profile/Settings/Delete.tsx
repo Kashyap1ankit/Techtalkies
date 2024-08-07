@@ -95,16 +95,16 @@ export default function Delete() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="bg-white dark:bg-card p-4 w-1/2 mx-auto"
+                className="mt-8 bg-white dark:bg-card p-4 w-full xl:w-1/2 mx-auto"
               >
                 <Title
                   text="DELETE"
-                  className="xl:text-3xl text-red text-center font-kanit xl:mt-6"
+                  className="text-2xl xl:text-3xl text-red text-center font-kanit xl:mt-6"
                 />
 
                 <Title
                   text="Are you sure ? Once you delete your account , all your related posts get deleted!"
-                  className="xl:text-sm text-gray  text-center xl:mb-12 font-kanit mt-2"
+                  className="xl:text-sm text-gray  text-center xl:mb-12 font-kanit mt-2 mb-4"
                 />
 
                 <FormField
@@ -127,7 +127,7 @@ export default function Delete() {
                 />
 
                 <Button
-                  className="w-full mt-4"
+                  className="w-full mt-6 mb-6"
                   type="submit"
                   variant="destructive"
                 >

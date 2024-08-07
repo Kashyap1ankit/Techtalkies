@@ -40,7 +40,7 @@ export default function Post() {
     );
   }
   return (
-    <div>
+    <div className="px-4 xl:px-0">
       {posts &&
         posts.map((e: postResponseType) => {
           return (

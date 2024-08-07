@@ -55,7 +55,7 @@ export default function Bookmark() {
   }
 
   return (
-    <div>
+    <div className="px-4 xl:px-0">
       {bookmarkData &&
         bookmarkData.map(({ post }) => {
           if (!post) return;
