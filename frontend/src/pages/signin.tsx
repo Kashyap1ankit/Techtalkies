@@ -8,7 +8,7 @@ import { signinInput, signinSchema } from "package-medium";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Title from "@/components/All/Title";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/auth";
 
 import {
@@ -57,8 +57,8 @@ export default function Signin() {
         console.log(res);
         localStorage.setItem("blog-token", `Bearer ${res.data.token}`);
         navigate("/dashboard");
+        //eslint-disable-next-line
       } catch (error: any) {
-        console.log(error);
         setServerError({
           status: true,
           message: error.response.data.message,
@@ -88,26 +88,31 @@ export default function Signin() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit lg:min-h-screen bg-white dark:bg-card lg:flex lg:justify-between">
+        <div className="flex flex-col lg:flex-row gap-8 items-center justify-center  bg-white dark:bg-card  xsm:h-fit xl:min-h-screen ">
           <motion.div
-            className=" lg:w-1/2 lg:my-auto "
+            className=" w-full xl:w-1/2 my-auto "
             whileInView={{ scale: [0.7, 1] }}
           >
             <Lottie
-              className="xsm:size-52 xsm:w-auto md:size-72 md:w-auto lg:size-96 lg:w-full "
+              className="xsm:size-48 xsm:w-auto md:size-72 md:w-auto xl:size-96 xl:w-full"
               animationData={animation}
             />
           </motion.div>
           {/* form section  */}
-          <div className="xsm:mt-12 xsm:w-screen lg:w-1/2  lg:my-auto  rounded-md">
+          <div className="w-full xl:w-1/2 rounded-md  p-4 ">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className=" xl:w-fit 2xl:w-1/2 xl:space-y-2 mx-auto px-8 shadow-lg"
+                className="flex flex-col gap-4 p-4 md:p-8  border  rounded-lg dark:border-neutral200 shadow-md w-full xl:w-3/4 mx-auto"
               >
                 <Title
                   text="Login to Account !"
-                  className="xsm:text-xl md:text-2xl xl:text-3xl text-center xsm:mb-6 xl:mb-12 font-kanit xl:mt-6"
+                  className="xsm:text-xl md:text-2xl xl:text-4xl text-center  font-kanit"
+                />
+
+                <Title
+                  text="Welcome Back !! Continue your journey"
+                  className="text-sm text-gray text-center  font-kanit "
                 />
 
                 <FormField
@@ -151,20 +156,18 @@ export default function Signin() {
                     </FormItem>
                   )}
                 />
-                <Button className="w-full mt-4" type="submit">
+                <Button className="w-full" type="submit">
                   Submit
                 </Button>
 
-                <div
-                  onClick={() => {
-                    navigate("/signup");
-                  }}
-                  className="mb-4"
-                >
-                  <Title
-                    text="New on platform ? Signup"
-                    className="text-sm text-center text-mixedShadow my-6 font-title cursor-pointer"
-                  />
+                <div className="flex gap-2 justify-center text-sm text-center text-mixedShadow font-title">
+                  <p>New to Website ? </p>
+                  <Link
+                    to={"/signup"}
+                    className="text-[#2563eb] hover:text-[#1e40af]  cursor-pointer"
+                  >
+                    Signup
+                  </Link>
                 </div>
               </form>
             </Form>

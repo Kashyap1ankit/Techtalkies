@@ -79,7 +79,7 @@ export default function ImageUpload() {
       formData.append("upload_preset", CloudinaryConfig.uploadPreset);
       const res = await axios.post(
         `https://api.cloudinary.com/v1_1/${CloudinaryConfig.cloud_name}/image/upload`,
-        formData
+        formData,
       );
       setUrl(res.data.secure_url);
       setToastState(true);
@@ -122,7 +122,7 @@ export default function ImageUpload() {
                           type="file"
                           {...field}
                           onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
+                            e: React.ChangeEvent<HTMLInputElement>,
                           ) => {
                             if (e.target.files) {
                               if (e.target.files[0].size >= 2097152) {

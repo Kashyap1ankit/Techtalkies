@@ -22,7 +22,7 @@ export default function Bookmark() {
             headers: {
               Authorization: localStorage.getItem("blog-token"),
             },
-          }
+          },
         );
         setBookmarkData(res.data.bookmarks);
       } catch (error) {

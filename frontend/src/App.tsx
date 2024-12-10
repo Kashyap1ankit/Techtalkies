@@ -14,36 +14,43 @@ const Account = lazy(() => import("@/components/Profile/Account"));
 const BookMark = lazy(() => import("@/components/Profile/Bookmark"));
 const Posts = lazy(() => import("@/components/Profile/Posts"));
 const Settings = lazy(() => import("@/components/Profile/Settings/Settings"));
-
-import { RecoilRoot } from "recoil";
+import useAuth from "@/hooks/auth";
+import { PacmanLoader } from "react-spinners";
 import ProtectedRoute from "./components/All/Protected";
 
 function App() {
+  const { authloading } = useAuth();
+
+  if (authloading) {
+    return (
+      <div className="flex justify-center items-center h-screen w-screen">
+        <PacmanLoader color="#059818" />;
+      </div>
+    );
+  }
   return (
     <div>
-      <RecoilRoot>
-        <Suspense fallback="Loading">
-          <BrowserRouter>
-            <Routes>
-              <Route index element={<Landing />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/signin" element={<Signin />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/blog/:id" element={<Blog />} />
-              <Route element={<ProtectedRoute />}>
-                <Route path="/blog/new" element={<CreateBlog />} />
-                <Route path="/profile" element={<Profile />}>
-                  <Route path="account" element={<Account />} />
-                  <Route path="bookmarks" element={<BookMark />} />
-                  <Route path="posts" element={<Posts />} />
-                  <Route path="settings" element={<Settings />} />
-                </Route>
+      <Suspense fallback="Loading">
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Landing />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/blog/:id" element={<Blog />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/blog/new" element={<CreateBlog />} />
+              <Route path="/profile" element={<Profile />}>
+                <Route path="account" element={<Account />} />
+                <Route path="bookmarks" element={<BookMark />} />
+                <Route path="posts" element={<Posts />} />
+                <Route path="settings" element={<Settings />} />
               </Route>
-              <Route path="*" element={"No Page Found"} />
-            </Routes>
-          </BrowserRouter>
-        </Suspense>
-      </RecoilRoot>
+            </Route>
+            <Route path="*" element={"No Page Found"} />
+          </Routes>
+        </BrowserRouter>
+      </Suspense>
     </div>
   );
 }

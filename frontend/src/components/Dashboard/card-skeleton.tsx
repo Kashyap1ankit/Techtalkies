@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 export default function SkeletonCard() {
   const modeValue = useRecoilValue(mode);
   return (
-    <div className="xsm:w-full md:w-1/2 xl:w-1/3 p-2  ">
+    <div className=" p-2 lg:p-4  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto ">
       {/* image part  */}
 
       <SkeletonTheme

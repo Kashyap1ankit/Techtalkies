@@ -3,6 +3,20 @@ import axios from "axios";
 import SideBarCard from "./side-bar-card";
 import Title from "../All/Title";
 
+import SideSkeletonCard from "./sidebar-card-skeleton";
+
+interface ResponseDataType {
+  title: string;
+  description: string;
+  thumbnail: string;
+  id: string;
+  published: string;
+  createdAt: string;
+  author: {
+    username: string;
+  };
+}
+
 export default function SideBar() {
   const [recentBlogs, setRecentBlog] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,17 +42,17 @@ export default function SideBar() {
   }, []);
 
   if (loading) {
-    return <div>Loading Recent Posts...</div>;
+    return <SideSkeletonCard />;
   }
 
   return (
-    <div className="border-2 border-zinc100 rounded-lg p-4 w-full">
+    <div className="border-2 border-zinc100 dark:border-neutral200 rounded-lg p-4 w-full">
       <Title
         text="Recently Posted"
-        className="font-kanit text-2xl text-blue950"
+        className="font-kanit text-2xl text-blue950 dark:text-white"
       />
 
-      {recentBlogs.map((e: any) => {
+      {recentBlogs.map((e: ResponseDataType) => {
         return (
           <SideBarCard
             key={e.id}

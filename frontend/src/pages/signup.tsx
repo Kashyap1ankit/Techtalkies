@@ -7,7 +7,7 @@ import { signupInput, signupSchema } from "package-medium";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Title from "@/components/All/Title";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Alert from "@/components/All/Alert";
 import {
   Form,
@@ -54,6 +54,7 @@ export default function Signup() {
         const res = await axios.post(`${BASE_URL}/api/v1/user/signup`, data);
         localStorage.setItem("blog-token", `Bearer ${res.data.token}`);
         navigate("/dashboard");
+        //eslint-disable-next-line
       } catch (error: any) {
         console.log(error);
         setServerError({
@@ -85,9 +86,9 @@ export default function Signup() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit xl:min-h-screen bg-white dark:bg-card lg:flex lg:justify-between ">
+        <div className="flex flex-col lg:flex-row gap-8 items-center justify-center  bg-white dark:bg-card  xsm:h-fit xl:min-h-screen ">
           <motion.div
-            className="lg:w-1/2 my-auto "
+            className="w-full xl:w-1/2 my-auto "
             whileInView={{ scale: [0.7, 1] }}
           >
             <Lottie
@@ -97,15 +98,19 @@ export default function Signup() {
           </motion.div>
 
           {/* form section  */}
-          <div className="lg:w-1/2 rounded-md p-2">
+          <div className="w-full xl:w-1/2 rounded-md  p-4  ">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="xsm:mt-12 xsm:w-screen lg:w-full 2xl:w-2/3  lg:my-auto  rounded-md  px-8 shadow-lg "
+                className="flex flex-col gap-4 p-4 md:p-8  border  rounded-lg dark:border-neutral200 shadow-md w-full xl:w-3/4 mx-auto"
               >
                 <Title
                   text="Create Account !"
-                  className="xsm:text-xl md:text-2xl xl:text-3xl text-center  font-kanit xl:mt-12 xl:mb-8"
+                  className="xsm:text-xl md:text-2xl xl:text-4xl text-center  font-kanit "
+                />
+                <Title
+                  text="Start Your Journey with TechTalkies !!"
+                  className="text-sm text-gray text-center  font-kanit "
                 />
                 <FormField
                   control={form.control}
@@ -167,19 +172,18 @@ export default function Signup() {
                     </FormItem>
                   )}
                 />
-                <Button className="w-full mt-4 " type="submit">
+                <Button className="w-full" type="submit">
                   Submit
                 </Button>
 
-                <div
-                  onClick={() => {
-                    navigate("/signin");
-                  }}
-                >
-                  <Title
-                    text="Already Account ? Signin"
-                    className="mt-4 text-sm text-center text-mixedShadow font-title cursor-pointer"
-                  />
+                <div className="flex gap-2 justify-center text-sm text-center text-mixedShadow font-title">
+                  <p>Already Account ? </p>
+                  <Link
+                    to={"/signin"}
+                    className="text-[#2563eb] hover:text-[#1e40af]  cursor-pointer"
+                  >
+                    Signin
+                  </Link>
                 </div>
               </form>
             </Form>

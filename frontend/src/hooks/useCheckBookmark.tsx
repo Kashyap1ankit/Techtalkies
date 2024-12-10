@@ -15,7 +15,7 @@ export default function useCheckBookmark(id: string) {
             headers: {
               Authorization: localStorage.getItem("blog-token"),
             },
-          }
+          },
         );
         if (response.status !== 200) {
           return setBookmarked(false);
