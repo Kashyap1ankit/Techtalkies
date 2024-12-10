@@ -10,15 +10,16 @@ import { loader, totalBlogs } from "@/store/atoms";
 import { Button } from "@/components/ui/button";
 import Footer from "../components/All/footer";
 import SideBar from "@/components/Dashboard/side-bar";
+import SideSkeletonCard from "@/components/Dashboard/sidebar-card-skeleton";
 
 export default function Dashboard() {
   const BASE_URL: string = import.meta.env.VITE_BASE_URL;
-  const { authloading, currentUser } = useAuth();
+  const { currentUser } = useAuth();
   const [loading, setLoading] = useRecoilState(loader);
   const [allBlogs, setAllBlogs] = useRecoilState(totalBlogs);
   const [startIndex, setStartIndex] = useState<number>(1);
-  let numberOfBlogsPerPage: number = 5;
-  let lastIndex: number = startIndex * numberOfBlogsPerPage;
+  const numberOfBlogsPerPage: number = 5;
+  const lastIndex: number = startIndex * numberOfBlogsPerPage;
   interface data {
     id: string;
     title: string;
@@ -30,15 +31,6 @@ export default function Dashboard() {
       username: string;
     };
   }
-
-  useEffect(() => {
-    if (authloading) {
-      return setLoading(true);
-    }
-    if (!authloading) {
-      setLoading(false);
-    }
-  }, [authloading]);
 
   useEffect(() => {
     setLoading(true);
@@ -71,13 +63,16 @@ export default function Dashboard() {
   return (
     <div>
       {loading ? (
-        <div className="flex justify-between  flex-wrap  xsm:mt-36 xl:mt-36 xsm:px-4  ">
-          <SkeletonCard />
-          <SkeletonCard />
-          <SkeletonCard />
-          <SkeletonCard />
-          <SkeletonCard />
-          <SkeletonCard />
+        <div className="flex gap-4  pt-24">
+          <div className="w-full lg:w-3/4 mx-auto mb-12 px-4 xl:px-0">
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </div>
+          {/* right side  */}
+          <div className="w-1/4 px-4 hidden 2xl:block">
+            <SideSkeletonCard />
+          </div>
         </div>
       ) : (
         <div>
@@ -87,7 +82,7 @@ export default function Dashboard() {
 
           {/* left side  */}
 
-          <div className="flex gap-4  mt-12">
+          <div className="flex gap-4  pt-24">
             <div className="w-full lg:w-3/4 mx-auto mb-12 px-4 xl:px-0">
               {allBlogs.map((e: data) => {
                 return (

@@ -54,6 +54,7 @@ export default function Signup() {
         const res = await axios.post(`${BASE_URL}/api/v1/user/signup`, data);
         localStorage.setItem("blog-token", `Bearer ${res.data.token}`);
         navigate("/dashboard");
+        //eslint-disable-next-line
       } catch (error: any) {
         console.log(error);
         setServerError({
@@ -85,7 +86,7 @@ export default function Signup() {
           <Lottie animationData={Rocket} />
         </div>
       ) : (
-        <div className="xsm:h-fit xl:min-h-screen bg-white dark:bg-card lg:flex lg:justify-between ">
+        <div className="xsm:h-fit xl:min-h-screen bg-white dark:bg-card flex flex-col md:flex-row items-center justify-center ">
           <motion.div
             className="lg:w-1/2 my-auto "
             whileInView={{ scale: [0.7, 1] }}
@@ -97,15 +98,15 @@ export default function Signup() {
           </motion.div>
 
           {/* form section  */}
-          <div className="lg:w-1/2 rounded-md p-2">
+          <div className="lg:w-1/2 rounded-md ">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="xsm:mt-12 xsm:w-screen lg:w-full 2xl:w-2/3  lg:my-auto  rounded-md  px-8 shadow-lg "
+                className="p-4 md:p-8  border  rounded-lg dark:border-neutral200"
               >
                 <Title
                   text="Create Account !"
-                  className="xsm:text-xl md:text-2xl xl:text-3xl text-center  font-kanit xl:mt-12 xl:mb-8"
+                  className="xsm:text-xl md:text-2xl xl:text-3xl text-center  font-kanit "
                 />
                 <FormField
                   control={form.control}

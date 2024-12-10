@@ -90,7 +90,7 @@ export default function BlogCard(props: blogCardPropsType) {
         </div>
       ) : (
         <div
-          className="border-2 border-zinc100  p-2 lg:p-4  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto "
+          className="border-2 border-zinc100 dark:border-neutral200  p-2 lg:p-4  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto "
           onClick={handleClick}
         >
           {/* first part  */}
@@ -147,7 +147,7 @@ export default function BlogCard(props: blogCardPropsType) {
           {/* third part  */}
           <div
             className="mt-8 flex justify-between items-center w-full"
-            onClick={(e: any) => {
+            onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
               e.stopPropagation();
             }}
           >

@@ -57,8 +57,8 @@ export default function Signin() {
         console.log(res);
         localStorage.setItem("blog-token", `Bearer ${res.data.token}`);
         navigate("/dashboard");
+        //eslint-disable-next-line
       } catch (error: any) {
-        console.log(error);
         setServerError({
           status: true,
           message: error.response.data.message,
@@ -99,11 +99,11 @@ export default function Signin() {
             />
           </motion.div>
           {/* form section  */}
-          <div className="xsm:mt-12 xsm:w-screen lg:w-1/2  lg:my-auto  rounded-md">
+          <div className="xsm:mt-12 xsm:w-screen lg:w-1/2  lg:my-auto  rounded-md ">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className=" xl:w-fit 2xl:w-1/2 xl:space-y-2 mx-auto px-8 shadow-lg"
+                className=" xl:w-fit 2xl:w-1/2 xl:space-y-2 mx-auto px-8 shadow-lg border  rounded-lg dark:border-neutral200"
               >
                 <Title
                   text="Login to Account !"

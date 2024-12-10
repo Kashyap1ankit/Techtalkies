@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+//eslint-disable-next-line
 module.exports = {
-  darkMode: "class",
+  darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -13,7 +14,6 @@ module.exports = {
       center: true,
       padding: "2rem",
     },
-
     screens: {
       xsm: "300px",
       sm: "400px",
@@ -22,7 +22,6 @@ module.exports = {
       xl: "1024px",
       "2xl": "1400px",
     },
-
     fontFamily: {
       title: ["Kanit", "serif"],
       intro: ["Patua One", "serif"],
@@ -32,7 +31,6 @@ module.exports = {
     },
     extend: {
       colors: {
-        //Custom color
         nav: "#475569",
         white: "white",
         mixedShadow: "#828fb1",
@@ -41,7 +39,11 @@ module.exports = {
         slate: "#e5e7eb",
         login: "#2563eb",
         black: "#1e293b",
-        card: "#24406e",
+        neutral200: "#172554",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
         yellow: "yellow",
         green: "green",
         red: "red",
@@ -50,7 +52,6 @@ module.exports = {
         zinc100: "#f4f4f5",
         lime200: "#d9f99d",
         blue950: "#172554",
-        ///
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -80,10 +81,6 @@ module.exports = {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
         },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -92,12 +89,20 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {
@@ -105,6 +110,6 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
-  },
+  }, //eslint-disable-next-line
   plugins: [require("tailwindcss-animate")],
 };

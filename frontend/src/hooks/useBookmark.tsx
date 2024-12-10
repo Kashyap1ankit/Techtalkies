@@ -17,7 +17,7 @@ export function useBookmarkClick(id: string): bookmarkType {
           headers: {
             Authorization: localStorage.getItem("blog-token"),
           },
-        }
+        },
       );
 
       //Handling the remove of bookmark
