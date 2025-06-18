@@ -1,52 +1,29 @@
-import Balancer from "react-wrap-balancer";
+export default function TrustedBy() {
+  const arr = [
+    "https://bookface-images.s3.amazonaws.com/small_logos/d13287c52acc96909f32342e85c26a33cfdac310.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/3e9a0092bee2ccf926e650e59c06503ec6b9ee65.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/d583cc2bc592cccd5ff68e81f8fce6bc48be8025.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/9750fca21baaee75e035f1baaf58df8e2f5dcc67.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/f09464ae6ddf165ef871115af711c89d6530057f.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/af0d32f65e9007b7edbde422787633e338fa9bff.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/7f54038f84e639bce5c45d1756018b94f17f6125.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/d0e24465d91469fa05da337659e25131f5295e3d.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/33ee27aa9c6b3036b40ec6c7f0c2a98ccaf32f40.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/b9aae9ad065dcf8b7a07d47b45a0667c6953810b.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/bdee5b69dd38909ad07702b3aebc29f8d5880658.png",
+    "https://bookface-images.s3.amazonaws.com/small_logos/72237ca3782563f0b12ffe1fe9869d878c153ab6.png",
+  ];
 
-export default function HowItWorks() {
   return (
-    <div className="flex flex-col gap-24 md:gap-36  bg-[#eaf0f6] dark:bg-gray p-6 md:p-12 lg:p-24 mt-12">
-      <div className="flex flex-col-reverse gap-8 lg:flex-row justify-between text-black">
-        <div className="lg:w-1/2 flex flex-col items-center gap-4">
-          <Balancer className="text-3xl md:text-4xl font-noto">
-            AI-Generated Content You Can Customize to Perfection.
-          </Balancer>
+    <div className="mt-28 md:mt-44">
+      <p className="font-bricolage font-semibold text-gray-500">
+        Trusted by top engineering teams worldwide
+      </p>
 
-          <Balancer>
-            Don&apos;t settle for one-size-fits-all content. With our AI-powered
-            blog writer, generate drafts tailored to your needs and easily
-            refine them to match your unique style and brand voice. The perfect
-            blog is just a few edits away.
-          </Balancer>
-        </div>
-
-        <div className=" lg:w-1/2 ">
-          <img
-            src="/sample2.png"
-            className="w-full rounded-md shadow-xl border border-netural-200"
-            aria-label="sample-image"
-          />
-        </div>
-      </div>
-      <div className=" flex flex-col gap-8 lg:flex-row justify-between">
-        <div className=" lg:w-1/2 ">
-          <img
-            src="/sample1.png"
-            className="w-full rounded-md shadow-xl border border-netural-200"
-            aria-label="sample-image"
-          />
-        </div>
-
-        <div className="lg:w-1/2 flex flex-col items-center gap-4">
-          <Balancer className="text-3xl text-black md:text-4xl font-noto">
-            Beat writer’s block with AI-written blog outlines and drafts.
-          </Balancer>
-
-          <Balancer className="text-black">
-            Creative roadblocks can put a major strain on your content marketing
-            efforts. Next time you feel like you&apos;re running out of ideas,
-            use the AI blog writer to create an outline and rough draft for your
-            next post, complete with your brand voice already incorporated, so
-            that you&apos;re ready to publish in no time.
-          </Balancer>
-        </div>
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6 place-items-center mt-16 sm:mt-24 w-3/4 sm:w-1/2 mx-auto">
+        {arr.map((e) => {
+          return <img src={e} className="size-12 md:size-16 saturate-75" />;
+        })}
       </div>
     </div>
   );
