@@ -2,7 +2,7 @@ import Balancer from "react-wrap-balancer";
 
 export default function HowItWorks() {
   return (
-    <div className="flex flex-col gap-24 md:gap-36  bg-[#eaf0f6] dark:bg-gray p-6 md:p-12 lg:p-24">
+    <div className="flex flex-col gap-24 md:gap-36  bg-[#eaf0f6] dark:bg-gray p-6 md:p-12 lg:p-24 mt-12">
       <div className="flex flex-col-reverse gap-8 lg:flex-row justify-between text-black">
         <div className="lg:w-1/2 flex flex-col items-center gap-4">
           <Balancer className="text-3xl md:text-4xl font-noto">

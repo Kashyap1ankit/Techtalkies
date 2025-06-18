@@ -6,7 +6,7 @@ import FAQ from "@/components/Landing/faq";
 
 export default function Landing() {
   return (
-    <div className=" overflow-x-hidden text-center ">
+    <div className=" overflow-x-hidden text-center w-11/12 mx-auto max-w-7xl ">
       <Navbar />
       <Hero />
       <HowItWorks />

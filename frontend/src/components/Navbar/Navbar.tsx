@@ -12,7 +12,7 @@ export default function Navbar() {
 
   return (
     <div>
-      <div className="fixed top-4 left-1/2 -translate-x-1/2 rounded-full flex justify-between items-center  w-11/12 sm:w-3/4  border-b-2  px-4 py-2  z-20  bg-white border-2 border-zinc-100 shadow-md">
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 rounded-full flex justify-between items-center  w-11/12 sm:w-3/4 max-w-7xl  border-b-2  px-4 py-2  z-20  bg-white border-2 border-zinc-100 shadow-md">
         <div className="flex gap-4 items-center">
           {/* Smaller screen tally  */}
 
