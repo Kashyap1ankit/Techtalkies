@@ -24,7 +24,7 @@ export default function Hero() {
             <ArrowRight className="size-4" />
           </div>
           <motion.div animate={{ y: [-100, 0] }} transition={{ duration: 1.1 }}>
-            <Balancer className="xsm:text-5xl md:text-6xl xl:text-8xl font-title dark:text-white">
+            <Balancer className="xsm:text-5xl md:text-6xl xl:text-8xl font-bricolage font-bold dark:text-white">
               Create Blogs Effortlessly with AI.
             </Balancer>
           </motion.div>
