@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import Star from "../../assets/svg/star.svg";
+import { RiAiGenerate2 } from "react-icons/ri";
 
 import { z } from "zod";
 import {
@@ -69,30 +70,36 @@ export default function AiModal() {
       <Dialog>
         <DialogTrigger asChild>
           <img
-            className="xsm:size-10 xl:size-14 bg-white p-2 border-2 rounded-full shadow-md z-50"
+            className="size-10 xl:size-14 bg-white p-2 border-2 rounded-full shadow-md z-50"
             src={Star}
             alt=""
           />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Generate with Ai ✨</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="font-bricolage text-xl">
+              ✨ Generate with Ai
+            </DialogTitle>
+            <DialogDescription className="font-manrope">
               Write down short brief of your blog topic
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="mt-4 flex flex-col gap-6"
+            >
               <FormField
                 control={form.control}
                 name="topic"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Topic</FormLabel>
+                    <FormLabel className="font-manrope">Topic Title</FormLabel>
                     <FormControl>
                       <Input
                         type="text"
                         placeholder="Write Blog on Web developement"
+                        className="rounded-lg outline-0 placeholder:font-manrope placeholder:text-gray-400 font-bricolage"
                         {...field}
                       />
                     </FormControl>
@@ -102,8 +109,12 @@ export default function AiModal() {
                 )}
               />
 
-              <Button className="bg-green" type="submit">
-                Generate ✨
+              <Button
+                className="bg-primary-btn hover:bg-primary-btn flex gap-2 items-center w-full"
+                type="submit"
+              >
+                <p className="font-manrope font-semibold">Generate</p>
+                <RiAiGenerate2 className="size-4" />
               </Button>
             </form>
           </Form>

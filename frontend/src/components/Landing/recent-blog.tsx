@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SideSkeletonCard from "../Dashboard/sidebar-card-skeleton";
 
 export default function RecentBlogsView() {
   const navigate = useNavigate();
@@ -49,9 +48,9 @@ export default function RecentBlogsView() {
                     src={e.thumbnail}
                     className="aspect-video object-cover rounded-md min-w-full"
                   />
-                  <p className="px-4 py-2 text-white bg-gray-500 font-sm font-manrope font-semibold w-fit rounded-full absolute top-4 left-4 text-xs ">
+                  {/* <p className="px-4 py-2 text-white bg-gray-500 font-sm font-manrope font-semibold w-fit rounded-full absolute top-4 left-4 text-xs ">
                     Web Development
-                  </p>
+                  </p> */}
                 </div>
 
                 <div className="flex items-center gap-2 font-manrope text-gray-600">
