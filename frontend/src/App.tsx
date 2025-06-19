@@ -14,6 +14,7 @@ const Account = lazy(() => import("@/components/Profile/Account"));
 const BookMark = lazy(() => import("@/components/Profile/Bookmark"));
 const Posts = lazy(() => import("@/components/Profile/Posts"));
 const Settings = lazy(() => import("@/components/Profile/Settings/Settings"));
+import { Toaster } from "@/components/ui/sonner";
 import useAuth from "@/hooks/auth";
 import { PacmanLoader } from "react-spinners";
 import ProtectedRoute from "./components/All/Protected";
@@ -51,6 +52,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </Suspense>
+      <Toaster />
     </div>
   );
 }
