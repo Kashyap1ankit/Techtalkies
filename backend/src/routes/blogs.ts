@@ -70,6 +70,7 @@ blogRouter.get("/:id", async (c) => {
         createdAt: true,
         id: true,
         published: true,
+        thumbnail: true,
         author: {
           select: {
             username: true,

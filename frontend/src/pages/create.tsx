@@ -1,9 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-// import { createBlogInput, createBlogSchema } from "package-medium";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
 import {
   Form,
   FormControl,
@@ -16,26 +14,21 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import AiModal from "@/components/Profile/ai";
 import { useRecoilState } from "recoil";
-import { geminiData, loader, errors, imageUrl } from "@/store/atoms";
-import LoadingAnimation from "../lottie/loading.json";
-import Lottie from "lottie-react";
-import Alert from "@/components/All/Alert";
+import { geminiData, loader, imageUrl } from "@/store/atoms";
 import ImageUpload from "@/components/Create/upload";
-import BackIcon from "../assets/svg/back.svg";
-import Image from "@/components/All/images";
 import { z } from "zod";
 import { createBlogInputModified } from "@/types/types";
+import { toast } from "sonner";
+import { ArrowLeftCircle } from "lucide-react";
 
 export default function CreateBlog() {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [aiData, setAiData] = useRecoilState(geminiData);
   const [loading, setLoading] = useRecoilState(loader);
-  const [error, setError] = useRecoilState(errors);
 
   const [thumbnailUrl, setThumbnailUrl] = useRecoilState(imageUrl);
 
@@ -69,16 +62,7 @@ export default function CreateBlog() {
 
         navigate("/dashboard");
       } catch (error) {
-        setError({
-          status: true,
-          message: "Some Error occured while posting",
-        });
-        setTimeout(() => {
-          setError({
-            status: false,
-            message: "",
-          });
-        }, 1500);
+        toast.error((error as Error).message, { richColors: true });
       } finally {
         setLoading(false);
       }
@@ -88,94 +72,79 @@ export default function CreateBlog() {
   }
 
   return (
-    <div className="overflow-hidden">
-      {/* <Background /> */}
+    <div className="overflow-hidden w-11/12 mx-auto max-w-7xl">
+      <div className="fixed bottom-12 right-6 z-50 ">
+        <AiModal />
+      </div>
 
-      {loading ? (
-        <div className="xsm:size-28 md:size-36 lg:size-52 mx-auto">
-          <Lottie animationData={LoadingAnimation} />
-        </div>
-      ) : (
-        <div>
-          {error.status ? <Alert message={error.message} /> : ""}
+      <ArrowLeftCircle
+        className="size-6 m-4 cursor-pointer text-gray-600"
+        onClick={() => navigate("/dashboard")}
+      />
 
-          {/* Ai icon  */}
+      <ImageUpload />
 
-          <div className="fixed bottom-12 right-6 z-50 ">
-            <AiModal />
-          </div>
+      <div className="w-full mt-12 mb-12">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex gap-2 items-center w-full items-center ">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem className="bg-white rounded-md w-2/3  md:w-4/5  lg:w-11/12">
+                    <FormControl>
+                      <Input
+                        className="outline-0 border-t-0 border-l-0 border-r-0 rounded-none border-b-red  placeholder:font-manrope placeholder:text-gray-400 font-bricolage font-bold"
+                        type="text"
+                        placeholder="Enter Title"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <div className="w-fit" onClick={() => navigate("/dashboard")}>
-            <Image src={BackIcon} className="size-6 m-4 dark:invert" />
-          </div>
-
-          <ImageUpload />
-
-          <div className="px-4 md:px-8 w-full mt-12 mb-12">
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className=" mx-auto "
+              <Button
+                className="bg-primary-btn w-1/3 md:w-1/5 lg:w-1/12 font-bricolage font-bold rounded-lg"
+                type="submit"
+                disabled={loading}
               >
-                <div className="flex place-items-center ">
-                  <FormField
-                    control={form.control}
-                    name="title"
-                    render={({ field }) => (
-                      <FormItem className="bg-white dark:bg-card px-4 py-4 rounded-md xsm:w-2/3  md:w-4/5  lg:w-11/12">
-                        <FormControl>
-                          <Input
-                            className="outline-0 border-t-0 border-l-0 border-r-0 rounded-none border-b-red"
-                            type="text"
-                            placeholder="Enter Title"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                {loading ? " Publishing..." : " Publish"}
+              </Button>
+            </div>
 
-                  <Button
-                    className="bg-green xsm:w-1/3 md:w-1/5 lg:w-1/12"
-                    type="submit"
-                  >
-                    Publish
-                  </Button>
-                </div>
-
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={() => (
-                    <FormItem className=" dark:bg-card drop-shadow-md h-screen overflow-y-scroll no-scrollbar w-full mx-auto px-4 py-4 rounded-md -z-50">
-                      <FormControl>
-                        <ReactQuill
-                          theme="snow"
-                          value={aiData}
-                          onChange={setAiData}
-                          modules={{
-                            toolbar: [
-                              [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                              ["bold", "italic", "underline", "strike"],
-                              ["link", "image"],
-                              ["blockquote", "code-block"],
-                              [{ list: "ordered" }, { list: "bullet" }],
-                              [{ script: "sub" }, { script: "super" }],
-                              [{ color: [] }, { background: [] }],
-                            ],
-                          }}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </form>
-            </Form>
-          </div>
-        </div>
-      )}
+            <FormField
+              control={form.control}
+              name="description"
+              render={() => (
+                <FormItem className="min-h-screen overflow-y-scroll no-scrollbar w-full mx-auto mt-12">
+                  <FormControl>
+                    <ReactQuill
+                      theme="snow"
+                      value={aiData}
+                      onChange={setAiData}
+                      modules={{
+                        toolbar: [
+                          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                          ["bold", "italic", "underline", "strike"],
+                          ["link", "image"],
+                          ["blockquote", "code-block"],
+                          [{ list: "ordered" }, { list: "bullet" }],
+                          [{ script: "sub" }, { script: "super" }],
+                          [{ color: [] }, { background: [] }],
+                        ],
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }

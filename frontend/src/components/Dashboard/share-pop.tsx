@@ -26,61 +26,59 @@ import {
 
 export default function SharePop({ url }: { url: string }) {
   return (
-    <div>
-      <Popover>
-        <PopoverTrigger>
-          <img
-            className="xsm:size-4 md:size-6 cursor-pointer xsm:mr-4 xl:mr-12 dark:invert"
-            src={Share}
-            alt=""
-            // onClick={handleShareClick}
+    <Popover>
+      <PopoverTrigger>
+        <img
+          className="size-4 cursor-pointer"
+          src={Share}
+          alt=""
+          // onClick={handleShareClick}
+        />
+      </PopoverTrigger>
+      <PopoverContent>
+        <div className="flex justify-evenly">
+          <TwitterShareButton
+            children={
+              <TwitterIcon size={32} round={true} iconFillColor="white" />
+            }
+            url={url}
           />
-        </PopoverTrigger>
-        <PopoverContent>
-          <div className="flex justify-evenly">
-            <TwitterShareButton
-              children={
-                <TwitterIcon size={32} round={true} iconFillColor="white" />
-              }
-              url={url}
-            />
 
-            <WhatsappShareButton
-              children={
-                <WhatsappIcon size={32} round={true} iconFillColor="white" />
-              }
-              url={url}
-            />
-            <LinkedinShareButton
-              children={
-                <LinkedinIcon size={32} round={true} iconFillColor="white" />
-              }
-              url={url}
-            />
+          <WhatsappShareButton
+            children={
+              <WhatsappIcon size={32} round={true} iconFillColor="white" />
+            }
+            url={url}
+          />
+          <LinkedinShareButton
+            children={
+              <LinkedinIcon size={32} round={true} iconFillColor="white" />
+            }
+            url={url}
+          />
 
-            <FacebookShareButton
-              children={
-                <FacebookIcon size={32} round={true} iconFillColor="white" />
-              }
-              url={url}
-            />
+          <FacebookShareButton
+            children={
+              <FacebookIcon size={32} round={true} iconFillColor="white" />
+            }
+            url={url}
+          />
 
-            <RedditShareButton
-              children={
-                <RedditIcon size={32} round={true} iconFillColor="white" />
-              }
-              url={url}
-            />
+          <RedditShareButton
+            children={
+              <RedditIcon size={32} round={true} iconFillColor="white" />
+            }
+            url={url}
+          />
 
-            <TelegramShareButton
-              children={
-                <TelegramIcon size={32} round={true} iconFillColor="white" />
-              }
-              url={url}
-            />
-          </div>
-        </PopoverContent>
-      </Popover>
-    </div>
+          <TelegramShareButton
+            children={
+              <TelegramIcon size={32} round={true} iconFillColor="white" />
+            }
+            url={url}
+          />
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 }

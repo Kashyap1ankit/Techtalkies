@@ -5,23 +5,31 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import faqData from "@/data/faq.json";
+import { BsFillQuestionSquareFill } from "react-icons/bs";
 
 export default function FAQ() {
   return (
-    <div className="p-6 md:p-12 lg:p-24">
-      <h1 className="xsm:text-2xl md:text-3xl xl:text-4xl font-bold font-title">
-        Frequently asked question{" "}
-      </h1>
+    <div className="mt-28 md:mt-44  w-11/12 mx-auto max-w-7xl">
+      <div className="flex justify-center items-center gap-6">
+        <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold font-bricolage ">
+          Frequently asked question
+        </h1>
+        <BsFillQuestionSquareFill className="fill-primary-btn size-8" />
+      </div>
       <Accordion
         type="single"
         collapsible
-        className="w-11/2 lg:w-3/4  mx-auto mt-12"
+        className="w-11/12 lg:w-3/4  mx-auto mt-12"
       >
         {faqData.map((e: { question: string; answer: string }, i: number) => {
           return (
             <AccordionItem value={`${i}`} key={i}>
-              <AccordionTrigger>{e.question}</AccordionTrigger>
-              <AccordionContent>{e.answer}</AccordionContent>
+              <AccordionTrigger className="font-manrope text-sm md:text-lg">
+                {e.question}
+              </AccordionTrigger>
+              <AccordionContent className="font-manrope font-light text-gray-500 text-xs md:text-lg">
+                {e.answer}
+              </AccordionContent>
             </AccordionItem>
           );
         })}

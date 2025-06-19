@@ -1,63 +1,56 @@
-import Background from "@/components/All/Bg";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Balancer from "react-wrap-balancer";
-import { ArrowRight } from "lucide-react";
+import { Mailbox } from "lucide-react";
+import { GiFallingStar } from "react-icons/gi";
+import { FaHandshake } from "react-icons/fa";
 
 export default function Hero() {
   const navigate = useNavigate();
 
-  function handleSignupClick() {
-    navigate("/signup");
-  }
-
-  function handleSigninClick() {
-    navigate("/signin");
-  }
   return (
-    <div className=" xsm:mt-16 ">
-      <Background>
-        <div className="pt-12 lg:pt-24 overflow-y-hidden px-6 md:px-12 lg:px-24 text-sm">
-          <div className="rounded-full bg-[#7e22ce] px-4 py-2 flex gap-2 items-center text-white w-fit mx-auto mb-6 shadow-xl border border-neutral-200">
-            <p>Start Your Journey ✨</p>
-            <ArrowRight className="size-4" />
-          </div>
-          <motion.div animate={{ y: [-100, 0] }} transition={{ duration: 1.1 }}>
-            <Balancer className="xsm:text-5xl md:text-6xl xl:text-8xl font-title dark:text-white">
-              Create Blogs Effortlessly with AI.
-            </Balancer>
-          </motion.div>
-
-          <motion.div animate={{ y: [100, 0] }} transition={{ duration: 1.1 }}>
-            <Balancer className="text-gray xsm:mt-4 xsm:text-sm md:text-md xl:text-xl font-kanit">
-              Transform your ideas into full-fledged blogs in minutes! Just
-              provide a prompt, and our AI-powered platform will craft
-              compelling, high-quality content for you. Blogging has never been
-              this simple.
-            </Balancer>
-          </motion.div>
+    <div className=" bg-primary-gray py-28 sm:py-36 md:py-48 ">
+      <div className=" w-11/12 mx-auto max-w-7xl ">
+        <div className="rounded-lg bg-primary-badge p-2 flex gap-2 items-center text-white w-fit mx-auto mb-6 shadow-xl  border-2 border-dashed ">
+          <Mailbox className="size-4 text-green-500" />
+          <p className="font-manrope font-semibold text-xs text-green-500">
+            Blogs
+          </p>
         </div>
+        <motion.div>
+          <Balancer className="text-4xl sm:text-6xl md:text-8xl xl:text-9xl font-bricolage font-bold dark:text-white">
+            Write Smarter. Publish Faster.
+          </Balancer>
+        </motion.div>
+
+        <motion.div className=" w-11/12 sm:w-3/4 mx-auto">
+          <Balancer className="text-gray-500 font-bold mt-4 text-sm md:text-md xl:text-xl font-manrope  w-full">
+            Explore the innovations that power our platform. From AI-assisted
+            writing tools to user success stories, we&apos;re proud of what
+            we've built."
+          </Balancer>
+        </motion.div>
 
         {/* Buton section  */}
 
-        <div className="flex flex-col md:flex-row gap-4 sm:gap-8 justify-center xsm:mt-12 px-6 md:px-8 lg:px-24 mx-auto">
-          <Button
-            className="bg-black  hover:bg-black text-white rounded-md xsm:text-sm md:text-lg w-full md:w-fit min-w-[150px]  "
-            onClick={handleSignupClick}
+        <div className="flex flex-row flex-wrap-reverse justify-center items-center mt-12 gap-4 mx-auto">
+          <Link
+            className={`bg-gray-50 text-black font-semibold font-manrope text-sm rounded-full px-4 sm:px-8 py-2 shadow-lg hover:bg-gray-100 border flex items-center gap-2`}
+            to="mailto:kashyap25ankit@gmail.com?subject=Work Enquiry"
           >
-            Signup
-          </Button>
-
+            <FaHandshake className="size-6" />
+            <p>Talk to Founder</p>
+          </Link>
           <Button
-            className="bg-slate dark:bg-gray font-bold rounded-md xsm:text-md md:text-lg w-full md:w-fit min-w-[150px] shadow-md"
-            onClick={handleSigninClick}
-            variant="outline"
+            className={`bg-primary-btn text-white font-manrope text-sm  rounded-full px-8 py-0 shadow-lg hover:bg-primary-btn flex items-center gap-2`}
+            onClick={() => navigate("/dashboard")}
           >
-            Login
+            <GiFallingStar className="size-6" />
+            <p>Get Started</p>
           </Button>
         </div>
-      </Background>
+      </div>
     </div>
   );
 }

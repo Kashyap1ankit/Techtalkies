@@ -1,4 +1,3 @@
-import Title from "../All/Title";
 import Bookmark from "../../assets/svg/bookmark.svg";
 import Bookmarked from "../../assets/svg/bookmarked.svg";
 import { useNavigate } from "react-router-dom";
@@ -7,27 +6,18 @@ import Alert from "../All/Alert";
 import SharePop from "./share-pop";
 import { useRecoilState } from "recoil";
 import { errors, loader } from "@/store/atoms";
-import Image from "../All/images";
 import DeleteAlert from "./delete-alert";
 import { ToastDemo } from "../All/Toast";
-import { Medal, UserCircle } from "lucide-react";
 import { useBookmarkClick } from "@/hooks/useBookmark";
 import { blogCardPropsType, bookmarkType } from "@/types/types";
 import useCheckBookmark from "@/hooks/useCheckBookmark";
+import { GoDotFill } from "react-icons/go";
 
 export default function BlogCard(props: blogCardPropsType) {
   const [loading, setLoading] = useRecoilState(loader);
   const [error, setError] = useRecoilState(errors);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-  //Converting the date
-  const date = new Date(props.createdAt);
-
-  const day = String(date.getDay()).padStart(2, "0");
-  const month = String(date.getMonth()).padStart(2, "0");
-  const year = String(date.getFullYear()).padStart(2, "0");
-  const formattedDay = `${day}-${month}-${year}`;
 
   //Bookmark custom hook
 
@@ -90,98 +80,66 @@ export default function BlogCard(props: blogCardPropsType) {
         </div>
       ) : (
         <div
-          className="border-2 border-zinc100 dark:border-neutral200  p-2 lg:p-4  w-full xl:w-3/4  rounded-2xl cursor-pointer mx-auto "
+          className="p-2 lg:p-4  w-full rounded-2xl cursor-pointer mx-auto flex flex-col gap-4"
           onClick={handleClick}
         >
+          <img
+            src={props.thumbnail}
+            className="aspect-video object-cover rounded-md min-w-full"
+          />
+
           {/* first part  */}
           <div className="flex items-center justify-between">
-            <div className="flex gap-2">
-              <UserCircle className="w-6 md:w-8 h-8" />
-              <div>
-                <Title
-                  text={` ${props.author.slice(0, 15)}`}
-                  className="text-black font-intro dark:text-gray"
-                />
-                <Title text={formattedDay} className="text-gray text-sm" />
-              </div>
+            <div className="flex items-center gap-2 font-manrope text-gray-600">
+              <p>{props.author}</p>
+              <GoDotFill />
+              <p>{new Date(props.createdAt).toLocaleDateString()}</p>
             </div>
 
-            <div className="flex gap-2 bg-lime200 p-2 rounded-full">
-              <Medal className="size-4 dark:text-black" />
-              <Title
-                text="Featured"
-                className="font-bold text-xs dark:text-black"
-              />
-            </div>
+            <p className="font-manrope text-gray-600">
+              {Math.round(props.des.length / 500)} min read
+            </p>
           </div>
 
           {/* second part  */}
-          <div className="block md:flex items-start gap-4 mt-2">
-            <div className="w-full md:w-3/4">
-              <Title
-                text={props.title}
-                className="truncate xl:mb-4 xsm:text-lg md:text-2xl xl:text-3xl font-intro tracking-wide xsm:text-center xsm:mt-4 xsm:mb-4 md:text-start xsm:m-0"
-                upercase={true}
-              />
 
-              <div className="w-fit">
-                <Title
-                  text={`${props.des.slice(0, 240).replace(/<[^>]+>/g, "")}...`}
-                  className=" text-xs md:text-sm tracking-wide  text-gray font-bold break-words w-full "
-                />
-              </div>
-            </div>
-
-            <div className="w-full mt-4  md:w-1/4">
-              <Image
-                src={
-                  props.thumbnail
-                    ? props.thumbnail
-                    : "https://res.cloudinary.com/ddnkrlfjn/image/upload/v1700826546/cld-sample-4.jpg"
-                }
-                className=" rounded-md aspect-video w-full md:w-fit "
-              />
-            </div>
-          </div>
+          <p className="font-bricolage text-left text-2xl font-bold">
+            {props.title}
+          </p>
 
           {/* third part  */}
           <div
-            className="mt-8 flex justify-between items-center w-full"
+            className=" flex justify-end items-center w-full"
             onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
               e.stopPropagation();
             }}
           >
-            <div></div>
-            <div className="flex gap-4  ">
+            <div className="flex items-center gap-4">
+              {bookmarked ? (
+                <img
+                  className={`size-4  cursor-pointer dark:invert`}
+                  src={Bookmarked}
+                  alt=""
+                  onClick={handleBookmarkClick}
+                />
+              ) : (
+                <img
+                  className={`size-4  cursor-pointer dark:invert`}
+                  src={Bookmark}
+                  alt=""
+                  onClick={handleBookmarkClick}
+                />
+              )}
+
+              {props.currentUser.username === props.author ? (
+                <DeleteAlert handleDelete={handleDelete} />
+              ) : (
+                ""
+              )}
+
               <SharePop
                 url={`${import.meta.env.VITE_SHARE_BASE_URL}/${props.id}`}
               />
-
-              <div>
-                {bookmarked ? (
-                  <img
-                    className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
-                    src={Bookmarked}
-                    alt=""
-                    onClick={handleBookmarkClick}
-                  />
-                ) : (
-                  <img
-                    className={`xsm:size-4 md:size-6 cursor-pointer dark:invert`}
-                    src={Bookmark}
-                    alt=""
-                    onClick={handleBookmarkClick}
-                  />
-                )}
-              </div>
-
-              <div>
-                {props.currentUser.username === props.author ? (
-                  <DeleteAlert handleDelete={handleDelete} />
-                ) : (
-                  ""
-                )}
-              </div>
             </div>
           </div>
         </div>
