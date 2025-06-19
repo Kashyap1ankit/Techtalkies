@@ -1,6 +1,5 @@
-import Background2 from "@/components/All/Bg2";
 import Navbar from "@/components/Navbar/Navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import SkeletonCard from "../components/Dashboard/card-skeleton";
@@ -9,24 +8,27 @@ import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import { useRecoilState } from "recoil";
 import { loader, singleBlog } from "@/store/atoms";
-import Title from "@/components/All/Title";
 import Footer from "../components/All/footer";
+import { GoDotFill } from "react-icons/go";
+import { ArrowLeftCircle } from "lucide-react";
 
 export default function Blog() {
   interface data {
     id: string;
     title: string;
     description: string;
+    createdAt: string;
     published: boolean;
     author: {
       username: string;
     };
+    thumbnail: string;
   }
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [data, setData] = useRecoilState(singleBlog);
   const [loading, setLoading] = useRecoilState(loader);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const { authloading, loggedIn } = useAuth();
   const { id } = useParams();
 
@@ -39,6 +41,7 @@ export default function Blog() {
             Authorization: localStorage.getItem("blog-token"),
           },
         });
+        console.log(res.data.post);
         setData(res.data.post);
       } catch (error) {
         console.log(error);
@@ -51,38 +54,46 @@ export default function Blog() {
   }, []);
 
   return (
-    <div className="w-11/12 mx-auto max-w-7xl">
+    <div className="w-11/12 mx-auto max-w-5xl mt-24 md:mt-36 mx-auto">
       {loading ? (
         <div className="mt-48 mx-auto bg-white  dark:bg-card xl:w-2/3 px-6 py-4">
           <SkeletonCard />
         </div>
       ) : (
         <div>
-          <Background2 />
           <Navbar />
 
           {data.map((e: data) => {
             return (
               <div
-                className="xsm:px-6 xsm:py-4 xsm:mt-24 md:mt-48 md:mx-auto bg-white dark:bg-card xsm:w-full xl:w-2/3"
+                className="md:mx-auto bg-white w-11/12 flex flex-col gap-4 mx-auto"
                 key={e.id}
               >
-                <Title
-                  text={e.title}
-                  className="text-left font-title xsm:text-2xl md:text-5xl xl:text-7xl "
+                <ArrowLeftCircle
+                  className="size-6 m-4 cursor-pointer text-gray-600"
+                  onClick={() => navigate("/dashboard")}
+                />
+                <img
+                  src={e.thumbnail}
+                  className="aspect-video object-cover rounded-md min-w-full max-h-[500px]"
                 />
 
-                <Title
-                  text={`Author @ ${e.author.username}`}
-                  className="mt-4 text-left font-title xl:text-lg text-gray"
-                />
+                <div className="flex items-center gap-2 font-manrope text-gray-600">
+                  <p>{e.author.username}</p>
+                  <GoDotFill />
+                  <p>{new Date(e.createdAt).toLocaleDateString()}</p>
+                </div>
+
+                <p className="text-left font-title text-2xl md:text-3xl lg:text-5xl font-bricolage ">
+                  {e.title}
+                </p>
 
                 <ReactQuill
                   modules={{ toolbar: false }}
                   readOnly={true}
                   theme="bubble"
                   value={e.description}
-                  className="break-words dark:bg-card xsm:mt-8 md:mt-4 xsm:text-md"
+                  className="break-words dark:bg-card mt-4 text-md text-left"
                 />
               </div>
             );

@@ -46,6 +46,18 @@ export default function AiModal() {
     resolver: zodResolver(aiSchema),
   });
 
+  function removeCodeBlockMarkers(str: string) {
+    const lines = str.trim().split("\n");
+    if (
+      lines[0].startsWith("```") &&
+      lines[lines.length - 1].startsWith("```")
+    ) {
+      lines.shift();
+      lines.pop();
+    }
+    return lines.join("\n");
+  }
+
   function onSubmit(data: aiInput) {
     const post = async () => {
       try {
@@ -56,7 +68,7 @@ export default function AiModal() {
 
         const text = response.text();
 
-        setAiData(text);
+        setAiData(removeCodeBlockMarkers(text));
         navigate("/blog/new");
       } catch (error) {
         console.log(error);

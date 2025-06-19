@@ -9,7 +9,7 @@ import { recentBlogType } from "@/types/types";
 export default function RecentBlogsView() {
   const navigate = useNavigate();
   const [recentBlogs, setRecentBlog] = useState<recentBlogType[] | []>([]);
-  const [loading, setLoading] = useState(false);
+  const [_, setLoading] = useState(false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
