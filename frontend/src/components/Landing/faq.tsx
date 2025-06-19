@@ -9,7 +9,7 @@ import { BsFillQuestionSquareFill } from "react-icons/bs";
 
 export default function FAQ() {
   return (
-    <div className="mt-28 md:mt-44">
+    <div className="mt-28 md:mt-44  w-11/12 mx-auto max-w-7xl">
       <div className="flex justify-center items-center gap-6">
         <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold font-bricolage ">
           Frequently asked question

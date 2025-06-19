@@ -15,8 +15,8 @@ export default function TrustedBy() {
   ];
 
   return (
-    <div className="mt-28 md:mt-44">
-      <p className="font-bricolage font-semibold text-gray-500">
+    <div className="mt-28 md:mt-44  w-11/12 mx-auto max-w-7xl">
+      <p className="text-xl font-bricolage font-semibold text-gray-500">
         Trusted by top engineering teams worldwide
       </p>
 
