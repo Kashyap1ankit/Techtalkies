@@ -3,8 +3,7 @@ import { CloudinaryConfig } from "@/lib/cloudconfig";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { imageFile, imageUploadLoader, imageUrl } from "@/store/atoms";
-import Lottie from "lottie-react";
-import Loader2 from "../../lottie/loading-2.json";
+
 import {
   Dialog,
   DialogContent,
@@ -20,6 +19,7 @@ import { toast } from "sonner";
 
 export default function ImageUpload() {
   const [previewUrl, setPreviewUrl] = useState<null | string>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -35,43 +35,31 @@ export default function ImageUpload() {
     }
   }
 
-  // useEffect(() => {
-  //   if (previewUrl) {
-  //     URL.revokeObjectURL(previewUrl);
-  //   }
-
-  //   if (imageFile) {
-  //     const objectUrl = URL.createObjectURL(imageFile);
-  //     setPreviewUrl(objectUrl);
-  //   } else {
-  //     setPreviewUrl(null);
-  //   }
-
-  //   return () => {
-  //     if (previewUrl) {
-  //       URL.revokeObjectURL(previewUrl);
-  //     }
-  //   };
-  // }, [imageFile]);
-
-  if (loader) {
-    return (
-      <div className="flex justify-center items-center w-screen h-screen">
-        <Lottie
-          animationData={Loader2}
-          className="sm:size-72 md:size-80 xl:size-96"
-        />
-      </div>
-    );
-  }
-
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {
       if (e.target.files[0].size >= 2097152) {
         toast.error("File size must be less than 2mb", { richColors: true });
         return;
       }
+
       setImageFile(e.target.files[0]);
+
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+
+      if (imageFile) {
+        const objectUrl = URL.createObjectURL(e.target.files[0]);
+        setPreviewUrl(objectUrl);
+      } else {
+        setPreviewUrl(null);
+      }
+
+      return () => {
+        if (previewUrl) {
+          URL.revokeObjectURL(previewUrl);
+        }
+      };
     }
   }
 
@@ -92,16 +80,21 @@ export default function ImageUpload() {
     } finally {
       setImageFile("");
       setLoader(false);
+      setDialogOpen(false);
     }
   }
+
   return (
     <div className="w-full px-4  md:px-8">
-      <Dialog>
-        <DialogTrigger className="flex gap-2 items-center rounded-full border px-4 py-2 bg-primary-btn text-white mx-auto">
+      <Dialog open={dialogOpen}>
+        <DialogTrigger
+          className="flex gap-2 items-center rounded-full border px-4 py-2 bg-primary-btn text-white mx-auto"
+          onClick={() => setDialogOpen(true)}
+        >
           <IoCloudUpload />
           <p className="font-bricolage font-semibold ">Upload Cover</p>
         </DialogTrigger>
-        <DialogContent className="rounded-md w-11/12 sm:w-fit">
+        <DialogContent className="rounded-md w-11/12 sm:w-fit max-h-[500px] md:max-h-[600px] overflow-y-scroll">
           <DialogHeader>
             <div
               className="border-2 rounded-2xl border-dashed p-6 cursor-pointer"
@@ -141,12 +134,21 @@ export default function ImageUpload() {
 
               <Button
                 className="w-full mt-6 bg-primary-btn hover:bg-primary-btn cursor-pointer"
-                disabled={!imageFile}
+                disabled={loader}
                 type="submit"
               >
-                <p className={`font-bricolage font-bold`}>Upload</p>
+                <p className={`font-bricolage font-bold`}>
+                  {loader ? "Uploading..." : "Upload"}
+                </p>
               </Button>
             </form>
+
+            <Button
+              className="w-full mt-12 bg-transparent hover:bg-transparent border text-black cursor-pointer"
+              onClick={() => setDialogOpen(false)}
+            >
+              Close
+            </Button>
           </DialogHeader>
         </DialogContent>
       </Dialog>
