@@ -1,45 +1,58 @@
 import axios from "axios";
 import { CloudinaryConfig } from "@/lib/cloudconfig";
-import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import {
-  imageFile,
-  imageUploadFailError,
-  imageUploadLoader,
-  imageUploadToast,
-  imageUrl,
-} from "@/store/atoms";
+import { imageFile, imageUploadLoader, imageUrl } from "@/store/atoms";
 import Lottie from "lottie-react";
 import Loader2 from "../../lottie/loading-2.json";
-
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { ToastDemo } from "../All/Toast";
+import { IoCloudUpload } from "react-icons/io5";
+import { Clapperboard } from "lucide-react";
+import { useRef, useState } from "react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 export default function ImageUpload() {
-  const [toastState, setToastState] = useRecoilState(imageUploadToast);
-  const [error, setFileError] = useRecoilState(imageUploadFailError);
+  const [previewUrl, setPreviewUrl] = useState<null | string>(null);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const form = useForm({});
 
   const [imagefile, setImageFile] = useRecoilState<string | Blob>(imageFile);
   const [loader, setLoader] = useRecoilState<boolean>(imageUploadLoader);
   const [_, setUrl] = useRecoilState(imageUrl);
+
+  function handleIconClick() {
+    if (inputRef && inputRef.current) {
+      inputRef.current.click();
+    }
+  }
+
+  // useEffect(() => {
+  //   if (previewUrl) {
+  //     URL.revokeObjectURL(previewUrl);
+  //   }
+
+  //   if (imageFile) {
+  //     const objectUrl = URL.createObjectURL(imageFile);
+  //     setPreviewUrl(objectUrl);
+  //   } else {
+  //     setPreviewUrl(null);
+  //   }
+
+  //   return () => {
+  //     if (previewUrl) {
+  //       URL.revokeObjectURL(previewUrl);
+  //     }
+  //   };
+  // }, [imageFile]);
 
   if (loader) {
     return (
@@ -52,23 +65,14 @@ export default function ImageUpload() {
     );
   }
 
-  if (toastState) {
-    return (
-      <div>
-        <ToastDemo
-          title="Success !"
-          description="Image Uploaded Successfully"
-        />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div>
-        <ToastDemo title="Error !" description="Image Upload Failed " />
-      </div>
-    );
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      if (e.target.files[0].size >= 2097152) {
+        toast.error("File size must be less than 2mb", { richColors: true });
+        return;
+      }
+      setImageFile(e.target.files[0]);
+    }
   }
 
   async function onSubmit2() {
@@ -79,18 +83,12 @@ export default function ImageUpload() {
       formData.append("upload_preset", CloudinaryConfig.uploadPreset);
       const res = await axios.post(
         `https://api.cloudinary.com/v1_1/${CloudinaryConfig.cloud_name}/image/upload`,
-        formData,
+        formData
       );
       setUrl(res.data.secure_url);
-      setToastState(true);
-      setTimeout(() => {
-        setToastState(false);
-      }, 2000);
+      toast.success("Image Uploaded Successfully", { richColors: true });
     } catch (error) {
-      setFileError(true);
-      setTimeout(() => {
-        setFileError(false);
-      }, 2000);
+      toast.error((error as Error).message, { richColors: true });
     } finally {
       setImageFile("");
       setLoader(false);
@@ -99,57 +97,56 @@ export default function ImageUpload() {
   return (
     <div className="w-full px-4  md:px-8">
       <Dialog>
-        <DialogTrigger className=" border-2 text-slate600 dark:text-white dark:bg-black px-4 py-2 font-bold bg-upload rounded-md xsm:w-full md:w-fit shadow-xl mt-6">
-          Add Thumbnail
+        <DialogTrigger className="flex gap-2 items-center rounded-full border px-4 py-2 bg-primary-btn text-white mx-auto">
+          <IoCloudUpload />
+          <p className="font-bricolage font-semibold ">Upload Cover</p>
         </DialogTrigger>
-        <DialogContent className="rounded-md">
+        <DialogContent className="rounded-md w-11/12 sm:w-fit">
           <DialogHeader>
-            <DialogTitle>Choose From Gallery</DialogTitle>
-            <DialogDescription></DialogDescription>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit2)}
-                className="mt-6 flex  flex-wrap gap-4 justify-center items-center  "
-              >
-                <FormField
-                  control={form.control}
-                  name="thumbnail"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          id="picture"
-                          type="file"
-                          {...field}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>,
-                          ) => {
-                            if (e.target.files) {
-                              if (e.target.files[0].size >= 2097152) {
-                                setFileError(true);
-                                setTimeout(() => {
-                                  setFileError(false);
-                                }, 2000);
-                                return;
-                              }
-                              setImageFile(e.target.files[0]);
-                            }
-                          }}
-                          className="p-16 bg-upload"
-                          required
-                        />
-                      </FormControl>
+            <div
+              className="border-2 rounded-2xl border-dashed p-6 cursor-pointer"
+              onClick={handleIconClick}
+            >
+              <div className="w-fit p-6 bg-green-100 rounded mx-auto text-green-600 rounded-md flex items-center justify-center">
+                <Clapperboard className="size-8" />
+              </div>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
+              <div className="my-6 text-center">
+                <p className={`font-bricolage text-lg`}>
+                  Drop your Blog Cover Image here or{" "}
+                  <span className="text-organg-500 font-bold">browse</span>
+                </p>
+                <p className={`font-bricolage text-xs text-gray-400`}>
+                  Support Png, Jpg, Jpeg or wbep upto 2mb
+                </p>
+              </div>
+
+              {previewUrl && (
+                <img
+                  src={previewUrl}
+                  width="400"
+                  className="mx-auto object-fit max-h-[500px] md:max-h-[600px] overflow-y-scroll"
                 />
+              )}
+            </div>
+            <form onSubmit={form.handleSubmit(onSubmit2)}>
+              <Input
+                id="video"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
+                ref={inputRef}
+              />
 
-                <Button className="bg-green font-bold dark:text-white">
-                  Upload
-                </Button>
-              </form>
-            </Form>
+              <Button
+                className="w-full mt-6 bg-primary-btn hover:bg-primary-btn cursor-pointer"
+                disabled={!imageFile}
+                type="submit"
+              >
+                <p className={`font-bricolage font-bold`}>Upload</p>
+              </Button>
+            </form>
           </DialogHeader>
         </DialogContent>
       </Dialog>

@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { recentBlogType } from "@/types/types";
 
 export default function RecentBlogsView() {
   const navigate = useNavigate();
-  const [recentBlogs, setRecentBlog] = useState([]);
+  const [recentBlogs, setRecentBlog] = useState<recentBlogType[] | []>([]);
   const [loading, setLoading] = useState(false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 

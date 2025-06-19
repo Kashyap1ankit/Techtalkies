@@ -27,6 +27,15 @@ export type blogCardPropsType = {
   createdAt: string;
 };
 
+export type recentBlogType = {
+  title: string;
+  description: string;
+  author: { username: string };
+  currentUser: currentUser;
+  thumbnail: string;
+  createdAt: string;
+};
+
 export type titleComponentType = {
   text: string;
   className: string;

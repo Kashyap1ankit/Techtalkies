@@ -28,7 +28,7 @@ export default function Blog() {
   const [loading, setLoading] = useRecoilState(loader);
   // const navigate = useNavigate();
   // const { authloading, loggedIn } = useAuth();
-  let { id } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
@@ -51,7 +51,7 @@ export default function Blog() {
   }, []);
 
   return (
-    <div>
+    <div className="w-11/12 mx-auto max-w-7xl">
       {loading ? (
         <div className="mt-48 mx-auto bg-white  dark:bg-card xl:w-2/3 px-6 py-4">
           <SkeletonCard />

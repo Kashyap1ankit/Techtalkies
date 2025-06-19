@@ -88,7 +88,7 @@ export default function CreateBlog() {
   }
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden w-11/12 mx-auto max-w-7xl">
       {/* <Background /> */}
 
       {loading ? (
@@ -137,7 +137,7 @@ export default function CreateBlog() {
                   />
 
                   <Button
-                    className="bg-green xsm:w-1/3 md:w-1/5 lg:w-1/12"
+                    className="bg-primary-btn w-1/3 md:w-1/5 lg:w-1/12 font-bricolage font-bold rounded-lg"
                     type="submit"
                   >
                     Publish

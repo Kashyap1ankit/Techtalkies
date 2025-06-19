@@ -7,7 +7,6 @@ import { useRecoilState } from "recoil";
 import { loader, totalBlogs } from "@/store/atoms";
 import { Button } from "@/components/ui/button";
 import Footer from "../components/All/footer";
-import SideSkeletonCard from "@/components/Dashboard/sidebar-card-skeleton";
 import BlogCard from "@/components/Dashboard/blogCard";
 
 export default function Dashboard() {
